@@ -27,26 +27,49 @@
 	font-size: 2rem;
 }
 
-.tb-size tr {
+.tb-size {
+	border-spacing: 5px;
+	border-collapse: separate;
+}
+
+.tb-size tbody tr {
 	border-collapse: collapse;
+	border: none;
+	height: 120px;
+
 }
 
 .tb-size tr td{
-	height: 120px;
 	border-radius: 15px;
-	border-color: 77adff;
+	/* border-color: 77adff; */
 	border-collapse: collapse;
+	opacity: 50%;
+	border: none;
 }
 
 .tb-size tr th {
 	height: 20px;
-	border-radius: 15px;
+	border-radius: 10px;
 	background-color: 77adff;
 	border-collapse: collapse;
+	border: none;
 }
 
 .icon-title {
 	width: 250px;
 	height: 210px;
 	padding: 10px;
+}
+
+.week {
+	height: 30px;
+	line-height: 30px;
+	
+	background: 77adff;
+}
+
+.day {
+	height: 120px;
+	line-height: 120px;
+	opacity: 50%;
 }
