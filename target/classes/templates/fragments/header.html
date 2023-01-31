@@ -16,9 +16,34 @@
 	<!-- th:fragment=다른 페이지에 포함시킬 영역을 만들어서 이름을 붙여줌 -->
 	<div th:fragment="header">
 		<div class="icon-title">
-	    	<button type="button" style="border: none; background: none;">
-				<img alt="logo" src="../images/logo.png" width="60%" height="60%">
-			</button>
+
+			<div class="accordion" id="accordionExample" style="border: none;">
+				<div class="accordion-item" style="border: none;">
+					<h2 class="accordion-header text-center" id="headingOne">
+						<button class="accordion-toggle mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="border: none; background: none;">
+							<img alt="logo" src="../images/logo.png" width="50%" height="50%">
+				      	</button>
+			    	</h2>
+					<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+			    		<div class="accordion-body">
+			    			<div class="d-grid gap-2 nav-icon">
+								<button class="btn btn-primary rounded-pill mx-auto" type="button">기입<br />하기</button>
+								<button class="btn btn-primary rounded-pill mx-auto" type="button">기간별<br />가계부<br />조회</button>
+								<div class="dropstart mx-auto">
+									<button class="btn dropdown-toggle btn-primary rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,100">설정</button>
+									<ul class="dropdown-menu text-bg-warning nav-icon-drop">
+										<li>프로필 수정</li>
+										<li>회원 탈퇴</li>
+										<li>로그 아웃</li>
+									</ul>
+								</div>
+							</div>
+			      		</div>
+			    	</div>
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 </body>
