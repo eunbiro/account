@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<th:block layout:fragment="css">
+	<style>
+		.logo-title > span, logo-title > p {
+			margin: 0;
+		}
+	</style>
+</th:block>
+</head>
+<body>
+	<!-- th:fragment=다른 페이지에 포함시킬 영역을 만들어서 이름을 붙여줌 -->
+	<div th:fragment="header">
+		<div class="icon-title">
+	    	<button type="button" style="border: none; background: none;">
+				<img alt="logo" src="../images/logo.png" width="60%" height="60%">
+			</button>
+		</div>
+	</div>
+</body>
+</html>

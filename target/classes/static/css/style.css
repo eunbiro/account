@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+.logo-title {
+	background-color: fff;
+	width: 170px;
+	height: 210px;
+}
+
+.logo-title > span, .logo-title > p {
+	color: rgba(154, 154, 154, 1);
+}
+
+.logo-title > .hit {
+	color: rgba(72, 68, 255, 1);"
+}
+
+.wrap {
+	padding-top: 30px;
+}
+
+.main-month {
+	height: 100px;
+	line-height: 100px;
+}
+
+.main-month > a {
+	font-size: 2rem;
+}
+
+.tb-size tr {
+	border-collapse: collapse;
+}
+
+.tb-size tr td{
+	height: 120px;
+	border-radius: 15px;
+	border-color: 77adff;
+	border-collapse: collapse;
+}
+
+.tb-size tr th {
+	height: 20px;
+	border-radius: 15px;
+	background-color: 77adff;
+	border-collapse: collapse;
+}
+
+.icon-title {
+	width: 250px;
+	height: 210px;
+	padding: 10px;
+}

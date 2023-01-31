@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>로그인 화면</title>
+
+<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
+<!-- 각 페이지에 스크립트가 작성될 위치 -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	
+	 //쿠키를 이용한 아이디 기억
+	$(document).ready(function() {
+		var userInputId = getCookie("userInputId");	// 쿠키의 key로 값을 가져온다.
+		var setCookieYN = getCookie("setCookieYN");
+
+		if (setCookieYN == 'Y') {
+			$("#id_save").prop("checked", true);	// 체크 박스에 check
+			$("#email").val(userInputId);
+		} else {
+			$("#id_save").prop("checked", false);	// 체크 해제
+		}
+
+		//로그인 버튼 클릭
+		$('#loginbtn').click(function() {
+			// 아이디를 쿠키에 저장
+			if ($("#id_save").is(":checked")) {				// id_save가 체크 되어있으면 true를 리턴
+				var userInputId = $("#email").val();		// 이메일 값을 가져온다.
+				setCookie("userInputId", userInputId, 60);	// 60일 동안 쿠키 저장
+				setCookie("setCookieYN", "Y", 60);
+			} else {
+				deleteCookie("userInputId");
+				deleteCookie("setCookieYN");
+			}
+		});
+	}); 
+	
+	 
+	</script>
+</th:block>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+  <style>
+     .error {
+        color: #bd2130;
+     }
+  </style>
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+		<form class="row g-3">
+  <div class="col-12">
+    <label for="inputAddress" class="form-label">Address</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+  </div>
+  <div class="col-12">
+    <label for="inputAddress2" class="form-label">Address 2</label>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+  </div>
+  <div class="col-md-6">
+    <label for="inputCity" class="form-label">City</label>
+    <input type="text" class="form-control" id="inputCity">
+  </div>
+  <div class="col-md-4">
+    <label for="inputState" class="form-label">State</label>
+    <select id="inputState" class="form-select">
+      <option selected>Choose...</option>
+      <option>...</option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <label for="inputZip" class="form-label">Zip</label>
+    <input type="text" class="form-control" id="inputZip">
+  </div>
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <label class="form-check-label" for="gridCheck">
+        Check me out
+      </label>
+    </div>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Sign in</button>
+  </div>
+</form>
+	</div>
+</body>
+</html>
