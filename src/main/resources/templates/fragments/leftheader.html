@@ -4,20 +4,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<th:block layout:fragment="css">
 
-</th:block>
 </head>
 <body>
 	<!-- th:fragment=다른 페이지에 포함시킬 영역을 만들어서 이름을 붙여줌 -->
 	<div th:fragment="leftheader">
-		<div class="logo-title">
-			<span class="hit fs-2 fw-bold p-2">은</span>
-			<span class="fs-2 fw-bold p-2">밀</span>
-			<span class="fs-2 fw-bold p-2">한</span>
-			<p class="hit fs-2 fw-bold m-0 px-2 py-1">비</p>
-			<p class="fs-2 fw-bold m-0 px-2 py-1">상</p>
-			<p class="fs-2 fw-bold m-0 px-2 py-1">금</p>
+		<div class="w-100 logo-wrap">
+			<div class="logo-title">
+				<div class="row">
+					<div class="hit col-4 text-start">은</div>
+					<div class="col-4 text-start">밀</div>
+					<div class="col-4 text-start">한</div>
+				</div>
+				<div class="row">
+					<div class="hit col-12 text-start">비</div>
+					<div class="col-12 text-start">상</div>
+					<div class="col-12 text-start">금</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>

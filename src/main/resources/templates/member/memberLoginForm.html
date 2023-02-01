@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout1}">
+      layout:decorate="~{layouts/layout2}">
 <head>
 <meta charset="UTF-8">
 <title>로그인 화면</title>
@@ -52,42 +52,82 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<form class="row g-3">
-  <div class="col-12">
-    <label for="inputAddress" class="form-label">Address</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-  </div>
-  <div class="col-12">
-    <label for="inputAddress2" class="form-label">Address 2</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">City</label>
-    <input type="text" class="form-control" id="inputCity">
-  </div>
-  <div class="col-md-4">
-    <label for="inputState" class="form-label">State</label>
-    <select id="inputState" class="form-select">
-      <option selected>Choose...</option>
-      <option>...</option>
-    </select>
-  </div>
-  <div class="col-md-2">
-    <label for="inputZip" class="form-label">Zip</label>
-    <input type="text" class="form-control" id="inputZip">
-  </div>
-  <div class="col-12">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck">
-      <label class="form-check-label" for="gridCheck">
-        Check me out
-      </label>
-    </div>
-  </div>
-  <div class="col-12">
-    <button type="submit" class="btn btn-primary">Sign in</button>
-  </div>
-</form>
+		<div class="container-md" style="height: 100%;">
+			<div class="login-wrap">
+				<!-- logo박스 -->
+				<div class="row w-50 mx-auto mt-5 mb-5">
+					<div class="col-5">
+						<div class="w-100 float-end">
+							<img class="float-end" alt="logo" src="../images/logo.png" width="50%" height="50%">
+						</div>
+					</div>
+					<div class="col-7 mt-5">
+						<div class="w-75">
+							<div class="login-title text-start">
+								<span class="hit fw-bold p-2">은</span>
+								<span class="fw-bold p-2">밀</span>
+								<span class="fw-bold p-2">한</span>
+							</div>
+							<div class="login-title text-start ms-5 mt-2">
+								<span class="hit fw-bold p-2">비</span>
+								<span class="fw-bold p-2">상</span>
+								<span class="fw-bold p-2">금</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 로그인박스 -->
+				<form>
+					<div class="w-50 mx-auto">
+						<div class="row mb-3">
+							<div class="col-8 login-ipt">
+								<input type="email" class="form-control mb-3 ps-4 w-75 mx-auto float-end py-3" id="inputEmail3" placeholder="아이디">
+								<input type="password" class="form-control ps-4 w-75 mx-auto float-end py-3" id="inputPassword3" placeholder="비밀번호">
+							</div>
+							<div class="col-4">
+								<button type="submit" class="login-btn mx-auto float-start">로그인</button>
+							</div>
+						</div>
+					</div>
+					
+					<!-- 카카오 및 어쩌고 -->
+					<div class="row w-50 mx-auto" style="height: 50px;">
+						<div class="col-4 fs-5" style="color: #B0B0B0;">
+						네이버로그인
+						</div>
+						<div class="col-4 fs-5" style="color: #B0B0B0;">
+						카카오로그인
+						</div>
+						<div class="col-4">
+							<div class="float-start ps-4">
+								<div class="form-check">
+									<label class="form-check-label m-75 ms-2" for="flexCheckDefault">
+								    	로그인 저장
+										<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+									</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label m-75 ms-2" for="flexCheckChecked">
+								    	자동 로그인
+										<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+									</label>
+								</div>
+						</div>
+						</div>
+					</div>
+				</form>
+				
+				<hr class="w-50 mx-auto">
+				<div class="w-50 fs-5 mx-auto d-flex justify-content-evenly login-btm">
+					<span>아이디 찾기</span>
+					<div class="vr"></div>
+					<span>비밀번호 찾기</span>
+					<div class="vr"></div>
+					<span>회원가입</span>
+				</div>
+			</div>
+			</div>
+		
 	</div>
 </body>
 </html>
