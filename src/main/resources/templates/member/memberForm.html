@@ -24,7 +24,66 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		회원가입페이지
+		<div class="container" style="height: 100%;">
+			<div class="reg-wrap">
+				<!-- logo박스 -->
+				<div class="row w-50 mx-auto mb-5">
+					<div class="col-5">
+						<div class="w-100 float-end">
+							<img class="float-end" alt="logo" src="../images/logo.png" width="40%" height="40%">
+						</div>
+					</div>
+					<div class="col-7 my-auto">
+						<div class="w-100 float-start mt-2 ms-2">
+							<img class="float-start" alt="logo" src="../images/word_logo_01.png" width="50%" height="50%">
+						</div>
+					</div>
+				</div>
+				<!-- 회원가입박스 -->
+				<form class="reg-form my-4">
+					<div class="row my-5 w-50 mx-auto">
+						<label for="inputid" class="col-3 col-form-label">아이디</label>
+						<div class="col-6">
+							<input type="email" class="form-control" id="inputid">
+						</div>
+						<button type="button" class="btn col-3 member-btn-id">중복확인</button>
+					</div>
+					<div class="row my-5 w-50 mx-auto">
+						<label for="inputPassword" class="col-sm-3 col-form-label">비밀번호</label>
+						<div class="col-sm-9">
+							<input type="password" class="form-control" id="inputPassword">
+						</div>
+					</div>
+					<div class="row my-5 w-50 mx-auto">
+						<label for="inputPassword1" class="col-sm-3 col-form-label">비밀번호 재확인</label>
+						<div class="col-sm-9">
+							<input type="password" class="form-control" id="inputPassword1">
+						</div>
+					</div>
+					<div class="row my-5 w-50 mx-auto">
+						<label for="inputname" class="col-sm-3 col-form-label">닉네임</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputname">
+						</div>
+					</div>
+					<div class="row my-5 w-50 mx-auto">
+						<label for="inputtegetprice" class="col-sm-3 col-form-label">월 목표 지출 금액</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputtegetprice">
+						</div>
+					</div>
+					<div class="row my-5 w-50 mx-auto">
+						<label for="inputtegetprice1" class="col-sm-3 col-form-label">월 목표 저축 금액</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputtegetprice1">
+						</div>
+					</div>
+					
+					<button type="submit" class="btn member-btn my-4">회원가입</button>
+				</form>
+				
+			</div>
+		</div>
 	</div>
 </body>
 </html>
