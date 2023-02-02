@@ -39,7 +39,7 @@ html {
 }
 
 .calendar {
-	width: 900px;
+	width: 1000px;
 	margin-top: 20px;
 }
 
@@ -83,7 +83,7 @@ html {
 }
 
 .dates {
-  height: 55rem;
+  height: 60rem;
 }
 
 .dates-in {
@@ -120,8 +120,8 @@ html {
 }
 
 .nav-icon button {
-	width: 8rem;
-	height: 8rem;
+	width: 9.6rem;
+	height: 9.6rem;
 	font-size: 1.5rem;
 	font-weight: bold;
 }
