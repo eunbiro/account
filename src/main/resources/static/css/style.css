@@ -11,50 +11,106 @@ html {
 	height: 60%;
 }
 
-/* 메인 */
-.wrap {
-	padding-top: 30px;
-}
-
-.main-month {
-	height: 100px;
-	line-height: 100px;
-}
-
-.main-month > a {
-	font-size: 3rem;
-	font-weight: 600;
-}
-
-.icon-title {
-	width: 300px;
-	height: 210px;
-	padding: 10px;
-}
-
-.week {
-	height: 30px;
-	line-height: 30px;
-}
-
-.week div {
-	font-size: 1.6rem;
-	background-color: #77adff;
-}
-
-.day-wrap {
+.grp-p {
+	width: 40px;
+	height: 300px;
+	border: 3px solid #BEE7ED;
+	border-radius: 5px;
+	background-color: #F4F4F4;
 	position: relative;
-	width: 100%;
-	height: 0;
-	overflow: hidden;
-	padding-bottom: 80%;
 }
 
-.day div {
-	height: 120px;
-	background-color: #77adff;
-	opacity: 50%;
+.grp-c {
+	position: absolute;
+	background-color: #FFD84D;
+	border-radius: 4px;
+	border: none;
+	width: 100%;
+	height: 60%;
+	bottom: 0;
+	left: 0px;
 }
+
+/* 메인 */
+.cal-wrap {
+	display: flex;
+	justify-content: center;
+	min-height: 90vh;
+}
+
+.calendar {
+	width: 900px;
+	margin-top: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow:nowrap;
+}
+
+.nav {
+  display: flex;
+  border-radius: 5px;
+  border: none;
+}
+
+.nav-btn {
+  width: 24rem;
+  height: 5rem;
+  border: none;
+  font-size: 4rem;
+  line-height: 5rem;
+  cursor: pointer;
+  background-color: #fff;
+  
+}
+
+/* 요일 */
+.days {
+  display: flex;
+  margin: 25px 0 3px;
+}
+
+.day {
+  width: calc(100% / 7);
+  text-align: center;
+  border-radius: 8px;
+  background-color: #77adff;
+  font-size: 1.6rem;
+  color: #e8f1ff;
+}
+
+.dates {
+  height: 55rem;
+}
+
+.dates-in {
+  display: flex;
+  height: 20%;
+}
+
+.date {
+	width: calc(100% / 7);
+	padding: 15px;
+	text-align: right;
+    border-radius: 8px;
+	background-color: #dbeaff;
+}
+
+.day:nth-child(7n + 1), .date:nth-child(7n + 1) {
+  color: #D13E3E;
+}
+
+.day:nth-child(7n), .date:nth-child(7n) {
+  color: #396EE2;
+}
+
+.main-word {
+	font-size: 1.4rem;
+}
+
 
 /* 오른쪽헤더 */
 .btn {
@@ -191,10 +247,36 @@ html {
 	height: 3rem;
 }
 
+/* 기입장 */
+.add-sel {
+	width: 10rem;
+	height: 3rem;
+	border: 1px solid #8F73DF;
+	border-radius: 5px;
+	color: #8F73DF;
+	font-size: 1.2rem;
+}
+
+.add-cont {
+	border: 1px solid #8F73DF;
+	border-radius: 5px;
+	color: #8F73DF;
+	font-size: 1.2rem;
+	width: 30rem;
+	height: 20rem;
+}
+
+.add-wrap {
+	background-color: #82C395;
+	width: 80rem;
+	height: 70rem;
+	margin-top: 100px;
+}
+
+
 @media all and (max-width: 1024px) {
-	.day div {
-		height: 60px;
-		line-height: 60px;
+	.dates {
+		height: 45rem;
 	}
 	
 	.nav-icon-drop {

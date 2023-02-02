@@ -9,16 +9,22 @@
 <body>
 	<!-- th:fragment=다른 페이지에 포함시킬 영역을 만들어서 이름을 붙여줌 -->
 	<div th:fragment="leftheader">
-		<div class="w-100 h-100 logo-wrap">
-			<div class="logo-title">
-				<div class="w-100 float-start mt-2 ms-2">
-					<img class="float-start" alt="logo" src="../images/word_logo.png">
+		<div class="d-flex align-items-start flex-column" style="height: 800px;">
+			<div class="w-100 mb-5">
+				<div class="logo-title">
+					<div class="w-100 float-start mt-2 ms-2">
+						<img class="float-start" alt="logo" src="../images/word_logo.png" onclick="location.href='/'">
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="target-graph">
 			
-		
+			<div class="w-100 mt-auto d-flex align-items-start flex-column">
+				<p class="p-2 m-auto" style="font-size: 1.4rem;">월 목표 지출금액까지</p>
+				<div class="grp-p mx-auto my-2 p-2">
+					<div class="grp-c"></div>
+				</div>
+				<p class="p-2 m-auto" style="font-size: 1.4rem;">사용!</p>
+			</div>
 		</div>
 	</div>
 </body>

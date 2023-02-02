@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>기입하기</title>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	
+	</script>
+</th:block>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-md text-center">
+			<div class="add-wrap mx-auto rounded-5">
+			
+				<div class="d-flex align-items-start flex-column mb-3" style="height: 100%;">
+					<h2 class="mx-auto my-5" style="font-size: 3rem; color: #8F73DF; font-weight: bold;">기입장</h2>
+					<form class="reg-form mx-auto w-100">
+					
+						<div class="row my-5 w-50 mx-auto">
+							<div class="col-sm-12">
+								<input type="date" class="form-control mx-auto text-center fs-5 w-100">
+							</div>
+						</div>
+						
+						<div class="row my-5 w-50 mx-auto">
+							<div class="col-sm-4 float-end">
+								<select class="float-start add-sel ps-2">
+									<option selected>지출 / 수입</option>
+									<option value="1">지출</option>
+									<option value="2">수입</option>
+								</select>
+							</div>
+							<div class="col-sm-7">
+								<input type="text" class="form-control w-100" id="inputsel">
+							</div>
+							<label for="inputsel" class="col-sm-1 col-form-label text-start my-auto">원</label>
+						</div>
+						
+						<div class="row my-5 w-50 mx-auto">
+							<div class="col-sm-4 float-end">
+								<select class="float-start add-sel ps-2">
+									<option selected>카테고리</option>
+									<option value="1">지출</option>
+									<option value="2">수입</option>
+								</select>
+							</div>
+							<div class="col-sm-8">
+								<input type="text" class="form-control w-100">
+							</div>
+						</div>
+						
+						<div class="row my-5 w-50 mx-auto">
+							<div class="col-sm-12">
+								<input type="text" class="form-control mx-auto text-center fs-5 w-100">
+							</div>
+						</div>
+						<div class="row my-5 w-50 mx-auto">
+							<textarea class="col-sm-12 add-cont mx-auto w-100"></textarea>
+						</div>
+						
+						<div class="row my-5 w-50 mx-auto">
+							<div class="col-sm-6">
+								<button type="submit" class="btn member-btn">기입하기</button>
+							</div>
+							<div class="col-sm-6">
+								<button type="button" class="btn member-btn">취소하기</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				
+			</div>
+		</div>
+		
+	</div>
+</body>
+</html>

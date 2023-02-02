@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>메인 페이지</title>
 <th:block layout:fragment="script">
+
 	<script th:inline="javascript">
 	
 	</script>
@@ -18,102 +19,40 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<div class="wrap container-md text-center">
-			<div class="row align-items-center">
-				<div class="col-4 main-month">
-					<a>◀</a>
-				</div>
-				<div class="col-4 main-month">
-					<a>3월</a>
-				</div>
-				<div class="col-4 main-month">
-					<a>▶</a>
-				</div>
-			</div>
-			<div class="row align-items-center my-2">
-				<div class="col-6">
-					<span class="text-start" style="font-size: 1.5rem;">today 지출금액 : 10,000원</span>
-				</div>
-				<div class="col-6">
-					<span class="text-end" style="font-size: 1.5rem;">today 저축금액 : 0원</span>
-				</div>
-			</div>
-			
-			<div class="container-md text-center w-75 mx-auto">
-				<div class="row week text-white">
-					<div class="col mx-1 rounded-4">일</div>
-			    	<div class="col mx-1 rounded-4">월</div>
-			    	<div class="col mx-1 rounded-4">화</div>
-			    	<div class="col mx-1 rounded-4">수</div>
-			    	<div class="col mx-1 rounded-4">목</div>
-			    	<div class="col mx-1 rounded-4">금</div>
-			    	<div class="col mx-1 rounded-4">토</div>
-				</div>
-			</div>
-			<div class="container-md w-75 mx-auto">
-				<div class="row my-1 day">
-					<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-				</div>
-			</div>
-			<div class="container-md w-75 mx-auto">
-				<div class="row my-1 day">
-					<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-				</div>
-			</div>
-			<div class="container-md w-75 mx-auto">
-				<div class="row my-1 day">
-					<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-				</div>
-			</div>
-			<div class="container-md w-75 mx-auto">
-				<div class="row my-1 day">
-					<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-				</div>
-			</div>
-			<div class="container-md w-75 mx-auto">
-				<div class="row my-1 day">
-					<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-			    	<div class="col mx-1 rounded-4"></div>
-				</div>
-			</div>
-			<div class="row align-items-center my-2">
-				<div class="col-6" style="font-size: 1.5rem;">
-					<span>목표 지출금액 : 500,000원</span>
-				</div>
-				<div class="col-6" style="font-size: 1.5rem;">
-					<span>목표 저축금액 : 500,000원</span>
-				</div>
-			</div>
+		<div class="cal-wrap container-md">
+		
+			<div class="calendar">
+		        <div class="header">
+		            <!-- <div class="year-month"></div> -->
+		            <div class="nav mx-auto my-5">
+		                <button class="nav-btn go-prev">◀</button>
+		                <button class="nav-btn go-today year-month"></button>
+		                <button class="nav-btn go-next">▶</button>
+		            </div>
+		        </div>
+		        <div class="row main-word mt-4">
+		        	<span class="col">TODAY 지출 금액: 10,000원</span>
+		        	<span class="col">TODAY 수입 금액: 0원</span>
+		        </div>
+		        <div class="main">
+		            <div class="days">
+		                <div class="day mx-1">일</div>
+		                <div class="day mx-1">월</div>
+		                <div class="day mx-1">화</div>
+		                <div class="day mx-1">수</div>
+		                <div class="day mx-1">목</div>
+		                <div class="day mx-1">금</div>
+		                <div class="day mx-1">토</div>
+		            </div>
+		            <div class="dates"></div>
+		            <div class="row main-word mt-4">
+			        	<span class="col">목표 지출 금액: 500,000원</span>
+			        	<span class="col">목표 수입 금액: 500,000원</span>
+			        </div>
+		        </div>
+		    </div>
 		</div>
+	<script type="text/javascript" src="../js/calendar.js"></script>
 	</div>
 </body>
 </html>
