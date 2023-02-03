@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>기간별 가계부 조회</title>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	
+	</script>
+</th:block>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-md text-center">
+			<div class="result-wrap mx-auto rounded-5">
+			
+				<div class="d-flex align-items-start flex-column mb-3" style="height: 100%;">
+					<h2 class="mx-auto my-5" style="font-size: 3rem; color: #8F73DF; font-weight: bold;">기간별 가계부 조회</h2>
+					<form class="reg-form mx-auto w-100">
+					
+						<div class="row my-5 w-50 mx-auto">
+							<div class="col-sm-8">
+								<input type="date" class="form-control mx-auto text-center fs-5 w-100">
+							</div>
+							<div class="col-sm-4 float-end">
+								<select class="float-start add-sel ps-2">
+									<option selected>카테고리</option>
+									<option value="1">지출</option>
+									<option value="2">수입</option>
+								</select>
+							</div>
+						</div>
+					</form>
+					
+					<div class="d-flex justify-content-center w-100 ctg-icon">
+						<div class="p2 mx-1">음식</div>
+						<div class="p2 mx-1">취미</div>
+						<div class="p2 mx-1">통신비</div>
+					</div>
+					
+					<div class="w-100">
+						<div class="mx-auto my-4" style="border-radius: 50%; background-color: yellow; width: 30rem; height: 30rem;">
+							<a>통계자리</a>
+						</div>
+					</div>
+					
+					<div class="w-100">
+						<div class="d-flex justify-content-center w-100 ctg-graph mx-auto">
+							<div class="p2 mx-1"></div>음식
+							<div class="p2 mx-1"></div>취미
+							<div class="p2 mx-1"></div>통신비
+						</div>
+					</div>
+					
+					<a class="text-start w-100 my-5 ps-5 fs-4" style="color: #8F73DF; text-decoration: underline;" href="/graph/result">← 리스트로 돌아가기</a>
+					<a class="text-end w-100 mt-5 pe-5 fs-5" style="color: green; text-decoration: underline;">엑셀파일로 다운받기↓</a>
+				</div>
+				
+			</div>
+		</div>
+		
+	</div>
+</body>
+</html>

@@ -14,8 +14,23 @@ public class AccBookController {
 
 	// 기입장 화면
 	@GetMapping(value = "/add")
-	public String memberForm(Model model) {
+	public String accBookAdd(Model model) {
 		
 		return "accounting/accbookadd";
+	}
+	
+	// 기입목록 화면
+	@GetMapping(value = "/list")
+	public String accBookList(Model model) {
+		
+		return "accounting/accBookLlist";
+		
+	}
+	
+	// 기입 상세목록 화면
+	@GetMapping(value = "/dtllist")
+	public String accBookDtlList(Model model) {
+		
+		return "accounting/accBookDtlList";
 	}
 }

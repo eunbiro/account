@@ -82,10 +82,6 @@ html {
   color: #e8f1ff;
 }
 
-.dates {
-  height: 60rem;
-}
-
 .dates-in {
   display: flex;
   height: 20%;
@@ -97,6 +93,7 @@ html {
 	text-align: right;
     border-radius: 8px;
 	background-color: #dbeaff;
+	height: 12rem;
 }
 
 .day:nth-child(7n + 1), .date:nth-child(7n + 1) {
@@ -105,6 +102,16 @@ html {
 
 .day:nth-child(7n), .date:nth-child(7n) {
   color: #396EE2;
+}
+
+.other {
+	background-color: #d0d0d0;
+}
+
+.today {
+	box-shadow: 0px 0px 43px -2px rgba(137,237,108,1) inset;
+	-webkit-box-shadow: 0px 0px 43px -2px rgba(137,237,108,1) inset;
+	-moz-box-shadow: 0px 0px 43px -2px rgba(137,237,108,1) inset;
 }
 
 .main-word {
@@ -202,6 +209,57 @@ html {
 	margin-top: 150px;
 }
 
+.ess1 {
+	position: relative;
+}
+
+.ess1::before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: -1;
+	display: block;
+	width: 10px;
+	height: 10px;
+	color: #FF0000;
+	content: '*';
+	transform: translate(-250%, -140%);
+}
+
+.ess2 {
+	position: relative;
+}
+
+.ess2::before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: -1;
+	display: block;
+	width: 10px;
+	height: 10px;
+	color: #FF0000;
+	content: '*';
+	transform: translate(-310%, -140%);
+}
+
+.ess3 {
+	position: relative;
+}
+
+.ess3::before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: -1;
+	display: block;
+	width: 10px;
+	height: 10px;
+	color: #FF0000;
+	content: '*';
+	transform: translate(-510%, -140%);
+}
+
 .member-btn {
 	border: 1px solid #8F73DF;
 	border-radius: 6px;
@@ -274,9 +332,66 @@ html {
 }
 
 
+
+
+/* 기입 목록 */
+.list-wrap {
+	width: 100%;
+	margin-top: 60px;
+}
+
+.list-wrap-img {
+	background-image: url("../images/note.png");
+	width: 60rem;
+	height: 70rem;
+	background-size: contain;
+	background-position: center;
+}
+
+.list-wrap-img > div {
+	position: relative;
+	transform: translate(-4%, 25%);        
+	z-index: 2;
+	width: 40rem;
+	height: 50rem;
+}
+
+.table-border {
+	border-bottom: 1px solid #6837F0;
+}
+
+.text-break {
+	margin-top: 10rem;
+}
+
+/* 기간별 가계부 조회 */
+.result-wrap {
+	background-color: #E5E5E8;
+	width: 80rem;
+	height: 70rem;
+	margin-top: 100px;
+}
+
+.ctg-icon .p2 {
+	background-color: #c9bbf0;
+	border-radius: 5px;
+	font-size: 1.2rem;
+	padding: 0.5rem 3rem 0.5rem 0.5rem;
+}
+
+.ctg-graph {
+	font-size: 1.2rem;
+}
+
+.ctg-graph .p2 {
+	background-color: #c9bbf0;
+	border-radius: 5px;
+	width: 0.5rem;
+}
+
 @media all and (max-width: 1024px) {
-	.dates {
-		height: 45rem;
+	.date {
+		height: 8rem;
 	}
 	
 	.nav-icon-drop {
@@ -289,11 +404,6 @@ html {
 @media all and (max-width: 768px) {
 	html {
 		font-size: 50%;
-	}
-	
-	.day div {
-		height: 30px;
-		line-height: 60px;
 	}
 	
 	.nav-icon-drop {
