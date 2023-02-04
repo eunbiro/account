@@ -14,14 +14,14 @@ public class GraphController {
 
 	// 가계부 조회 화면
 	@GetMapping(value = "/result")
-	public String result(Model model) {
+	public String result() {
 		
 		return "graph/result";
 	}
 	
 	// 그래프 조회 화면
 	@GetMapping(value = "/graph")
-	public String resultGraph(Model model) {
+	public String resultGraph() {
 		
 		return "graph/resultGraph";
 	}

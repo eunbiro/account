@@ -18,7 +18,7 @@
 
 		if (setCookieYN == 'Y') {
 			$("#id_save").prop("checked", true);	// 체크 박스에 check
-			$("#email").val(userInputId);
+			$("#userId").val(userInputId);
 		} else {
 			$("#id_save").prop("checked", false);	// 체크 해제
 		}
@@ -27,7 +27,7 @@
 		$('#loginbtn').click(function() {
 			// 아이디를 쿠키에 저장
 			if ($("#id_save").is(":checked")) {				// id_save가 체크 되어있으면 true를 리턴
-				var userInputId = $("#email").val();		// 이메일 값을 가져온다.
+				var userInputId = $("#userId").val();
 				setCookie("userInputId", userInputId, 60);	// 60일 동안 쿠키 저장
 				setCookie("setCookieYN", "Y", 60);
 			} else {
@@ -58,26 +58,27 @@
 				<div class="row w-50 mx-auto mt-5 mb-5">
 					<div class="col-5">
 						<div class="w-100 float-end">
-							<img class="float-end" alt="logo" src="../images/char_logo_01.png" width="50%" height="50%">
+							<img class="float-end" alt="logo" src="/images/char_logo_01.png" width="50%" height="50%">
 						</div>
 					</div>
 					<div class="col-7 my-auto">
 						<div class="w-100 float-start mt-2 ms-2">
-							<img class="float-start" alt="logo" src="../images/word_logo_01.png" width="60%" height="60%">
+							<img class="float-start" alt="logo" src="/images/word_logo_01.png" width="60%" height="60%">
 						</div>
 					</div>
 				</div>
 				<!-- 로그인박스 -->
-				<form>
+				<form action="/members/login" method="post">
 					<div class="w-50 mx-auto">
 						<div class="row mb-3">
 							<div class="col-8 login-ipt">
-								<input type="email" class="form-control mb-3 ps-4 w-100 mx-auto float-end py-3" id="inputEmail3" placeholder="아이디">
-								<input type="password" class="form-control ps-4 w-100 mx-auto float-end py-3" id="inputPassword3" placeholder="비밀번호">
+								<input type="text" class="form-control mb-3 ps-4 w-100 mx-auto float-end py-3" name="userId" id="userId" placeholder="아이디">
+								<input type="password" class="form-control ps-4 w-100 mx-auto float-end py-3" name="password" id="password" placeholder="비밀번호">
 							</div>
 							<div class="col-4">
-								<button type="submit" class="login-btn mx-auto float-start">로그인</button>
+								<button type="submit" class="login-btn mx-auto float-start" id="loginbtn">로그인</button>
 							</div>
+							<p th:if="${loginErrorMsg}" class="error fs-4 text-start ms-3 mt-3" th:text="${loginErrorMsg}"></p>
 						</div>
 					</div>
 					
@@ -92,20 +93,22 @@
 						<div class="col-4">
 							<div class="float-start ps-4">
 								<div class="form-check">
-									<label class="form-check-label m-75 ms-2" for="flexCheckDefault">
-								    	로그인 저장
-										<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+									
+									<label class="form-check-label m-75 ms-2">
+								    	아이디 저장
+										<input class="form-check-input" type="checkbox" name="id_save" id="id_save">
 									</label>
 								</div>
 								<div class="form-check">
 									<label class="form-check-label m-75 ms-2" for="flexCheckChecked">
 								    	자동 로그인
-										<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+										<input class="form-check-input" type="checkbox" id="flexCheckChecked">
 									</label>
 								</div>
 						</div>
 						</div>
 					</div>
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 				</form>
 				
 				<hr class="w-50 mx-auto">

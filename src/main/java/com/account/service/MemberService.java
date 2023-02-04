@@ -31,6 +31,7 @@ public class MemberService implements UserDetailsService {
 		return User.builder()
 				.username(member.getUserId())
 				.password(member.getPassword())
+				.roles(member.getRole().toString())
 				.build();
 	}
 	
@@ -46,7 +47,13 @@ public class MemberService implements UserDetailsService {
 		
 		if (findMember != null) {
 			
-			throw new IllegalStateException("이미 가입된 회원입니다.");
+			throw new IllegalStateException("중복된 아이디입니다.");
 		}
+	}
+	
+	// 아이디 중복체크
+	public boolean checkUserIdDuplicate(String userId) {
+		
+		return memberRepository.existsByUserId(userId);
 	}
 }

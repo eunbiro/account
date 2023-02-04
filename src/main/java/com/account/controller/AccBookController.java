@@ -14,22 +14,22 @@ public class AccBookController {
 
 	// 기입장 화면
 	@GetMapping(value = "/add")
-	public String accBookAdd(Model model) {
+	public String accBookAdd() {
 		
 		return "accounting/accbookadd";
 	}
 	
 	// 기입목록 화면
 	@GetMapping(value = "/list")
-	public String accBookList(Model model) {
+	public String accBookList() {
 		
-		return "accounting/accBookLlist";
+		return "accounting/accBookList";
 		
 	}
 	
 	// 기입 상세목록 화면
 	@GetMapping(value = "/dtllist")
-	public String accBookDtlList(Model model) {
+	public String accBookDtlList() {
 		
 		return "accounting/accBookDtlList";
 	}

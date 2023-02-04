@@ -2,6 +2,8 @@ package com.account.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,6 +11,7 @@ import javax.persistence.Table;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.account.constant.Role;
 import com.account.dto.MemberFormDto;
 
 import lombok.Getter;
@@ -30,15 +33,18 @@ public class Member {
 	@Column(length = 16, nullable = false)
 	private String userId;
 	
-	@Column(length = 25, nullable = false)
+	@Column(nullable = false)
 	private String password;
 	
-	@Column(length = 25, nullable = true)
+	@Column(length = 25, nullable = false)
 	private String nickname;
 	
 	private int targetExpend;
 	
 	private int targetSaving;
+	
+	@Enumerated(EnumType.STRING)
+	private Role role;
 	
 	public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 		
@@ -50,6 +56,8 @@ public class Member {
 		
 		String password = passwordEncoder.encode(memberFormDto.getPassword());
 		member.setPassword(password);
+		
+		member.setRole(Role.USER);
 		
 		return member;
 	}
