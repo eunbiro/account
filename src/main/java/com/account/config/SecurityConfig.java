@@ -33,17 +33,16 @@ public class SecurityConfig {
 			.and()
 			.logout()
 			.logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))	// 로그아웃 url
-			.logoutSuccessUrl("/");				// 로그아웃 성공 시 이동 할 url
+			.logoutSuccessUrl("/members/login");				// 로그아웃 성공 시 이동 할 url
 		
 		// 페이지의 접근에 관한 설정
 		http.authorizeRequests()
-			.mvcMatchers("/css/**", "/js/**", "/img/**").permitAll()	// 모든 사용자가 로그인(인증) 없이 접근할 수 있도록 설정
-			.mvcMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()	// 모든 사용자가 로그인(인증) 없이 접근할 수 있도록 설정
-			.mvcMatchers("/admin/**").hasRole("ADMIN")	// '/admin'으로 시작하는 경로페이지는 role이 ADMIN인 사용자만 접근 가능 할 수 있도록 설정
+			.mvcMatchers("/css/**", "/js/**", "/img/**").permitAll()
+			.mvcMatchers("/members/**", "/item/**", "/images/**").permitAll()
 			.anyRequest().authenticated();				// 그 외의 페이지는 모두 로그인(인증)을 받아야 한다.
 		
 		// 인증되지 않은 사용자가 리소스(페이지, 이미지 등..)에 접근했을 때 설정
-		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHanddler()).authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 		
 		return http.build();
 	}

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.account.dto.MemberFormDto;
 import com.account.entity.Member;
@@ -64,9 +66,11 @@ public class MemberController {
 	
 	// 아이디 중복체크
 	@GetMapping("/login/idcheck.action")
-	public ResponseEntity<Boolean> checkUserIdDuplicate(@PathVariable("userId") String userId) {
+	public @ResponseBody ResponseEntity<String> idCheck(@PathVariable("userId") String userId) {
 		
-		return ResponseEntity.ok(memberService.checkUserIdDuplicate(userId));
+		Member member = memberService.vaildateDuplicateId(userId);
+		
+		return new ResponseEntity<String>(userId, HttpStatus.OK);
 	}
 	
 //	@GetMapping("/userId/{userId}/exists")
@@ -81,20 +85,7 @@ public class MemberController {
 		
 		return "member/memberLoginForm";
 	}
-	
-	private final SessionManager sessionManager;
-	
-	public String loginMember2(HttpServletResponse response, HttpSession session, @RequestParam String userId) {
-		
-		System.out.println("userId : " + userId);
-		Cookie idCookie = new Cookie("userCooKieId", userId);
-		response.addCookie(idCookie);
-		
-		sessionManager.createSession(userId, response);
-		
-		return "member/memberLoginForm";
-	}
-	
+
 	@GetMapping(value = "/login/error")
 	public String loginError(Model model) {
 		

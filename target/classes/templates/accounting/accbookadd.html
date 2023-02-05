@@ -23,7 +23,9 @@
 			
 				<div class="d-flex align-items-start flex-column mb-3" style="height: 100%;">
 					<h2 class="mx-auto my-5" style="font-size: 3rem; color: #8F73DF; font-weight: bold;">기입장</h2>
-					<form class="reg-form mx-auto w-100">
+					
+					
+					<form class="reg-form mx-auto w-100" th:object="${accountBookDto}">
 					
 						<div class="row my-5 w-50 mx-auto">
 							<div class="col-sm-12">
@@ -45,26 +47,32 @@
 							<label for="inputsel" class="col-sm-1 col-form-label text-start my-auto">원</label>
 						</div>
 						
-						<div class="row my-5 w-50 mx-auto">
-							<div class="col-sm-4 float-end">
-								<select class="float-start add-sel ps-2">
-									<option selected>카테고리</option>
+						<div class="row mt-5 w-50 mx-auto">
+							<div class="col-sm-6 text-start">
+								<select th:field="*{mainCtgDto}" class="add-ctg-sel px-auto my-2">
+									<option selected>대분류카테고리</option>
+									<option th:each="mainCtgDto : ${mainCtgDtos}" th:value="${mainCtgDto.id}" th:text="${mainCtgDto.mainCtgName}"></option>
+								</select>
+							</div>
+							<div class="col-sm-6 text-end">
+								<select class="add-ctg-sel px-auto my-2">
+									<option selected>소분류카테고리</option>
 									<option value="1">지출</option>
 									<option value="2">수입</option>
 								</select>
 							</div>
-							<div class="col-sm-8">
-								<input type="text" class="form-control w-100">
+							<div class="col-sm-12 my-auto">
+								<input type="hidden" class="form-control w-100 fs-5 text-center" placeholder="카테고리를 입력해주세요">
 							</div>
 						</div>
 						
 						<div class="row my-5 w-50 mx-auto">
 							<div class="col-sm-12">
-								<input type="text" class="form-control mx-auto text-center fs-5 w-100">
+								<input type="text" class="form-control mx-auto text-center fs-5 w-100" placeholder="타이틀을 입력해주세요">
 							</div>
 						</div>
 						<div class="row my-5 w-50 mx-auto">
-							<textarea class="col-sm-12 add-cont mx-auto w-100"></textarea>
+							<textarea class="col-sm-12 add-cont mx-auto w-100 p-3" placeholder="상세내용"></textarea>
 						</div>
 						
 						<div class="row my-5 w-50 mx-auto">

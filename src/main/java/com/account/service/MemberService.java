@@ -31,7 +31,7 @@ public class MemberService implements UserDetailsService {
 		return User.builder()
 				.username(member.getUserId())
 				.password(member.getPassword())
-				.roles(member.getRole().toString())
+				.roles("USER")
 				.build();
 	}
 	
@@ -51,9 +51,8 @@ public class MemberService implements UserDetailsService {
 		}
 	}
 	
-	// 아이디 중복체크
-	public boolean checkUserIdDuplicate(String userId) {
+	public Member vaildateDuplicateId(String userId) {
 		
-		return memberRepository.existsByUserId(userId);
+		return memberRepository.findByUserId(userId);
 	}
 }

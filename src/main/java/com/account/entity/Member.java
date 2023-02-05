@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.account.constant.Role;
 import com.account.dto.MemberFormDto;
 
 import lombok.Getter;
@@ -43,9 +42,6 @@ public class Member {
 	
 	private int targetSaving;
 	
-	@Enumerated(EnumType.STRING)
-	private Role role;
-	
 	public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 		
 		Member member = new Member();
@@ -56,8 +52,6 @@ public class Member {
 		
 		String password = passwordEncoder.encode(memberFormDto.getPassword());
 		member.setPassword(password);
-		
-		member.setRole(Role.USER);
 		
 		return member;
 	}

@@ -60,4 +60,18 @@ class MemberControllerTest {
 				.andExpect(SecurityMockMvcResultMatchers.authenticated());
 	}
 	
+	@Test
+	@DisplayName("로그인 실패 테스트")
+	public void loginFailTest() throws Exception {
+		String userId = "umbi";
+		String password = "1234";
+		
+		this.createMember(userId, password);
+		
+		mockMvc.perform(formLogin().userParameter("userId")
+		.loginProcessingUrl("/members/login")						// 회원가입 메소드를 실행 후에 회원정보로 로그인이 되는지 테스트를 진행(해당 url로 로그인 요청)
+		.user(userId).password("12345"))
+		.andExpect(SecurityMockMvcResultMatchers.unauthenticated());	// 로그인이 성공해서 인증되면 테스트 코드를 통과시킨다.
+	}
+	
 }
