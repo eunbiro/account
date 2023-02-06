@@ -38,7 +38,7 @@ public class SecurityConfig {
 		// 페이지의 접근에 관한 설정
 		http.authorizeRequests()
 			.mvcMatchers("/css/**", "/js/**", "/img/**").permitAll()
-			.mvcMatchers("/members/**", "/item/**", "/images/**").permitAll()
+			.mvcMatchers("/members/**", "/images/**").permitAll()
 			.anyRequest().authenticated();				// 그 외의 페이지는 모두 로그인(인증)을 받아야 한다.
 		
 		// 인증되지 않은 사용자가 리소스(페이지, 이미지 등..)에 접근했을 때 설정

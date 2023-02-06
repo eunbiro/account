@@ -65,12 +65,12 @@ public class MemberController {
 	}
 	
 	// 아이디 중복체크
-	@GetMapping("/login/idcheck.action")
-	public @ResponseBody ResponseEntity<String> idCheck(@PathVariable("userId") String userId) {
+	@GetMapping("/login/{userId}")
+	public @ResponseBody ResponseEntity<Integer> idCheck(@PathVariable("userId") String userId) {
 		
-		Member member = memberService.vaildateDuplicateId(userId);
+		Integer result = memberService.vaildateDuplicateId(userId);
 		
-		return new ResponseEntity<String>(userId, HttpStatus.OK);
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
 //	@GetMapping("/userId/{userId}/exists")

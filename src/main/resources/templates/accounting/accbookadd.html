@@ -7,7 +7,46 @@
 <title>기입하기</title>
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
-	
+		
+		$(function() {
+			
+			
+			$('#mainCtg').change(function() {
+				
+				var mainCtgId = $('#mainCtg').val();
+				console.log("mainCtgId : " + mainCtgId);
+				
+				var url = "/accountbook/mainCtg/" + mainCtgId;
+				
+				if  (mainCtgId == 10) {
+					console.log("if문 10번");
+					
+					$('#otherCtgName').css('display', 'inline-block');
+				} else if (mainCtgId != '') {
+					console.log("if문 실행 : " + mainCtgId);
+					
+					$.ajax({
+						
+						type: 'GET',
+						url: url,
+						dataType: 'json',
+						cache : false,
+						success: function(result) {
+							$('#subCtg').empty();
+							
+							for (subCtg of result) {
+								
+								$("<option>").val(subCtg.id).text(subCtg.subCtgName).appendTo('#subCtg');
+							}
+						},
+						error: function(a, b, c) {
+							
+							console.log(a, b, c);
+						}
+					});
+				}
+			});
+		});
 	</script>
 </th:block>
 
@@ -25,54 +64,58 @@
 					<h2 class="mx-auto my-5" style="font-size: 3rem; color: #8F73DF; font-weight: bold;">기입장</h2>
 					
 					
-					<form class="reg-form mx-auto w-100" th:object="${accountBookDto}">
+					<form class="reg-form mx-auto w-100" action="/accountbook/add" method="post" th:object="${accountBookDto}">
 					
 						<div class="row my-5 w-50 mx-auto">
 							<div class="col-sm-12">
-								<input type="date" class="form-control mx-auto text-center fs-5 w-100">
+								<input type="date" th:field="*{accDate}" id="accDate" class="form-control mx-auto text-center fs-5 w-100">
+								<p th:if="${#fields.hasErrors('accDate')}" th:errors="*{accDate}" class="fieldError text-start fs-5">Incorrect Data</p>
 							</div>
 						</div>
 						
 						<div class="row my-5 w-50 mx-auto">
 							<div class="col-sm-4 float-end">
-								<select class="float-start add-sel ps-2">
+								<select th:name="*{accStatus}" class="float-start add-sel ps-2">
 									<option selected>지출 / 수입</option>
-									<option value="1">지출</option>
-									<option value="2">수입</option>
+									<option value="0">지출</option>
+									<option value="1">수입</option>
 								</select>
+								<p th:if="${#fields.hasErrors('accStatus')}" th:errors="*{accStatus}" class="fieldError text-start fs-5">Incorrect Data</p>
 							</div>
 							<div class="col-sm-7">
-								<input type="text" class="form-control w-100" id="inputsel">
+								<input type="text" th:field="*{money}" class="form-control w-100" id="money">
 							</div>
-							<label for="inputsel" class="col-sm-1 col-form-label text-start my-auto">원</label>
+							<label for="money" class="col-sm-1 col-form-label text-start my-auto">원</label>
+							<p th:if="${#fields.hasErrors('money')}" th:errors="*{money}" class="fieldError text-start fs-5">Incorrect Data</p>
 						</div>
 						
 						<div class="row mt-5 w-50 mx-auto">
 							<div class="col-sm-6 text-start">
-								<select th:field="*{mainCtgDto}" class="add-ctg-sel px-auto my-2">
+								<select id="mainCtg" class="add-ctg-sel px-auto my-2">
 									<option selected>대분류카테고리</option>
 									<option th:each="mainCtgDto : ${mainCtgDtos}" th:value="${mainCtgDto.id}" th:text="${mainCtgDto.mainCtgName}"></option>
 								</select>
+								<p th:if="${#fields.hasErrors('money')}" th:errors="*{money}" class="fieldError text-start fs-5">Incorrect Data</p>
 							</div>
 							<div class="col-sm-6 text-end">
-								<select class="add-ctg-sel px-auto my-2">
+								<select id="subCtg" th:name="${subCategoryDto}" class="add-ctg-sel px-auto my-2">
 									<option selected>소분류카테고리</option>
-									<option value="1">지출</option>
-									<option value="2">수입</option>
 								</select>
+								<p th:if="${#fields.hasErrors('money')}" th:errors="*{money}" class="fieldError text-start fs-5">Incorrect Data</p>
 							</div>
 							<div class="col-sm-12 my-auto">
-								<input type="hidden" class="form-control w-100 fs-5 text-center" placeholder="카테고리를 입력해주세요">
+								<input type="text" th:field="*{otherCtgName}" id="otherCtgName" class="form-control w-100 fs-5 text-center" placeholder="카테고리를 입력해주세요" style="display: none;">
 							</div>
 						</div>
 						
 						<div class="row my-5 w-50 mx-auto">
 							<div class="col-sm-12">
-								<input type="text" class="form-control mx-auto text-center fs-5 w-100" placeholder="타이틀을 입력해주세요">
+								<input type="text" th:field="*{accTitle}" class="form-control mx-auto text-center fs-5 w-100" placeholder="타이틀을 입력해주세요">
+								<p th:if="${#fields.hasErrors('accTitle')}" th:errors="*{accTitle}" class="fieldError text-start fs-5">Incorrect Data</p>
 							</div>
 						</div>
 						<div class="row my-5 w-50 mx-auto">
-							<textarea class="col-sm-12 add-cont mx-auto w-100 p-3" placeholder="상세내용"></textarea>
+							<textarea th:field="*{accDtlMemo}" class="col-sm-12 add-cont mx-auto w-100 p-3" placeholder="상세내용"></textarea>
 						</div>
 						
 						<div class="row my-5 w-50 mx-auto">
@@ -80,7 +123,7 @@
 								<button type="submit" class="btn member-btn">기입하기</button>
 							</div>
 							<div class="col-sm-6">
-								<button type="button" class="btn member-btn">취소하기</button>
+								<button type="button" class="btn member-btn" onclick="location.href='/'">취소하기</button>
 							</div>
 						</div>
 					</form>

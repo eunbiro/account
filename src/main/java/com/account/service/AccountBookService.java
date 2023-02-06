@@ -49,5 +49,18 @@ public class AccountBookService  {
 		
 		return mainCtgDtoList;
 	}
-
+	
+	public List<SubCategoryDto> getSubCtg(String mainCtgId) {
+		
+		List<SubCategory> subCtgList = subCategoryRepository.findByMainCategory(mainCtgId);
+		List<SubCategoryDto> subCtgDtoList = new ArrayList<>();
+		
+		for (SubCategory subCategory : subCtgList) {
+			
+			SubCategoryDto subCategoryDto = SubCategoryDto.of(subCategory);
+			subCtgDtoList.add(subCategoryDto);
+		}
+		
+		return subCtgDtoList;
+	}
 }

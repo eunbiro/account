@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import com.account.dto.AccountBookDto;
+import com.account.dto.SubCategoryDto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -55,6 +59,19 @@ public class AccountBook extends BaseTimeEntity {
 	@JoinColumn(name = "sub_ctg_id")
 	private SubCategory subCategory;		// 카테고리
 	
-	
+	public static AccountBook createAccountBook(AccountBookDto accountBookDto) {
+		
+		AccountBook accountBook = new AccountBook();
+		accountBook.setAccDate(accountBookDto.getAccDate());
+		accountBook.setAccStatus(accountBookDto.getAccStatus());
+		accountBook.setMoney(accountBookDto.getMoney());
+		accountBook.setOtherCtgName(accountBookDto.getOtherCtgName());
+		accountBook.setAccTitle(accountBookDto.getAccTitle());
+		accountBook.setAccDtlMemo(accountBookDto.getAccDtlMemo());
+		
+		accountBook.subCategory.setId(accountBookDto.getSubCategoryDto().getId());
+		
+		return accountBook;
+	}
 	
 }

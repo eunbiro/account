@@ -38,59 +38,54 @@
 					$('#chkNotice').html('비밀번호가 일치합니다.');
 					$('#chkNotice').attr('color', 'green');
 				}
-			})
-		})
-		
-		
-		
-		// 중복체크
-		/* $('#userId_chk').click(function() {
+			});
 			
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
 			
-			var = userId = $('#userId').html();
-			
-			var paramData = {
-					
-					userId : $('#userId').val()
-			}
-			
-			var param = JSON.stringify(paramData);
-			
-			if ($('#userId').val() != '') {
+			// 중복체크
+			$('#userId_chk').click(function() {
 				
-				$ajax({
+				var userId = $('#userId').val();
+				
+				var url = "/members/login/" + userId;
+				
+				if (userId != '') {
 					
-					type: 'GET',
-					url: '/login/' + $('#userId').val() + '/check',
-					data: param,
-					dataType: 'json',
-					cache : false,
-					beforeSend : function(xhr) {
-						xhr.setRequestHeader(header, token);
-					},
-					success: function(result) {
+					$.ajax({
 						
-						if (result == null) {
+						type: 'GET',
+						url: url,
+						dataType: 'json',
+						cache : false,
+						success: function(result) {
 							
-							$('#chk_result').html('사용 가능한 아이디입니다.');
-						} else {
+							if (result == 0) {
+								
+								$('#chk_result').html('사용 가능한 아이디입니다.');
+								$('#chk_result').attr('color', 'green');
+							} else {
+								
+								$('#chk_result').html('사용 가능불가 아이디입니다.');
+								$('#chk_result').attr('color', '#bd2130');
+							}
+						},
+						error: function(a, b, c) {
 							
-							$('#chk_result').html('사용 가능불가 아이디입니다.');
+							console.log(a, b, c);
 						}
-					},
-					error: function(a, b, c) {
-						
-						console.log(a, b, c);
-					}
-				});
-			} else {
-				
-				$('#chk_result').html('아이디를 입력해주세요.');
-				$('#userId').focus();
-			}
-		}); */
+					});
+					
+				} else {
+					
+					$('#chk_result').html('아이디를 입력해주세요.');
+					$('#userId').focus();
+				}
+			});
+			
+			
+		});
+		
+		
+		
 		
 	</script>
 </th:block>
@@ -126,10 +121,10 @@
 				<form class="reg-form my-4" action="/members/new" method="post" th:object="${memberFormDto}">
 					<div class="row my-5 w-50 mx-auto">
 						<label th:for="userId" class="col-3 col-form-label ess1">아이디</label>
-						<div class="col-7">
+						<div class="col-7 text-start">
 							<input type="text" th:field="*{userId}" id="userId" class="form-control fs-5" placeholder="4자 이상 16자 이하">
 							<p th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" class="fieldError text-start fs-5">Incorrect Data</p>
-							<font id="chk_result"></font>
+							<font id="chk_result" class="fs-5"></font>
 						</div>
 						<input type="button" id="userId_chk" class="btn col-2 member-btn-id" style="width: 8rem; font-size: 1.2rem;" value="중복확인" />
 					</div>
@@ -158,13 +153,13 @@
 					<div class="row my-5 w-50 mx-auto">
 						<label for="inputtegetprice" class="col-sm-3 col-form-label">월 목표 지출 금액</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="inputtegetprice">
+							<input type="text" class="form-control fs-5" id="inputtegetprice">
 						</div>
 					</div>
 					<div class="row my-5 w-50 mx-auto">
 						<label for="inputtegetprice1" class="col-sm-3 col-form-label">월 목표 저축 금액</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" id="inputtegetprice1">
+							<input type="text" class="form-control fs-5" id="inputtegetprice1">
 						</div>
 					</div>
 					

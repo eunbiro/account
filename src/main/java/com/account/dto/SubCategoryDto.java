@@ -11,6 +11,8 @@ import lombok.Setter;
 @Setter
 public class SubCategoryDto {
 
+	private Long id;
+	
 	private String subCtgName;
 	
 	private MainCategoryDto mainCategoryDto;

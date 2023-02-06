@@ -29,6 +29,4 @@ public class SubCategory {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "main_ctg_id")
 	private MainCategory mainCategory;
-	
-	
 }
