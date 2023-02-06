@@ -151,15 +151,15 @@
 						</div>
 					</div>
 					<div class="row my-5 w-50 mx-auto">
-						<label for="inputtegetprice" class="col-sm-3 col-form-label">월 목표 지출 금액</label>
+						<label th:for="targetExpend" class="col-sm-3 col-form-label">월 목표 지출 금액</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control fs-5" id="inputtegetprice">
+							<input type="text" th:field="*{targetExpend}" class="form-control fs-5" id="targetExpend">
 						</div>
 					</div>
 					<div class="row my-5 w-50 mx-auto">
-						<label for="inputtegetprice1" class="col-sm-3 col-form-label">월 목표 저축 금액</label>
+						<label th:for="targetSaving" class="col-sm-3 col-form-label">월 목표 저축 금액</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control fs-5" id="inputtegetprice1">
+							<input type="text" th:field="*{targetSaving}" class="form-control fs-5" id="targetSaving">
 						</div>
 					</div>
 					

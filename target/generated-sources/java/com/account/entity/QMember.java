@@ -25,6 +25,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath password = createString("password");
 
+    public final StringPath role = createString("role");
+
     public final NumberPath<Integer> targetExpend = createNumber("targetExpend", Integer.class);
 
     public final NumberPath<Integer> targetSaving = createNumber("targetSaving", Integer.class);

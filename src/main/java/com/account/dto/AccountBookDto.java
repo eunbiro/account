@@ -12,7 +12,7 @@ import lombok.Setter;
 public class AccountBookDto {
 
 	@NotNull(message = "날짜는 필수 입력 값입니다.")
-	private LocalDateTime accDate;			// 입력날짜
+	private String accDate;			// 입력날짜
 	
 	@NotNull(message = "수입/지출은 필수 입력 값입니다.")
 	private String accStatus;				// 수입지출

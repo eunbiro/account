@@ -28,7 +28,7 @@ public class SecurityConfig {
 		http.formLogin()
 			.loginPage("/members/login")		// 로그인 페이지 url설정
 			.defaultSuccessUrl("/")				// 로그인 성공 시 이동 할 페이지
-			.usernameParameter("userId")			// 로그인 시 사용 할 파라메터 이름
+			.usernameParameter("userId")		// 로그인 시 사용 할 파라메터 이름
 			.failureUrl("/members/login/error")	// 로그인 실패 시 이동 할 url
 			.and()
 			.logout()
@@ -42,7 +42,7 @@ public class SecurityConfig {
 			.anyRequest().authenticated();				// 그 외의 페이지는 모두 로그인(인증)을 받아야 한다.
 		
 		// 인증되지 않은 사용자가 리소스(페이지, 이미지 등..)에 접근했을 때 설정
-		http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHanddler()).authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 		
 		return http.build();
 	}

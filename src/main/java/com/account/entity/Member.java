@@ -42,13 +42,30 @@ public class Member {
 	
 	private int targetSaving;
 	
+	private String role;
+	
 	public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 		
 		Member member = new Member();
 		member.setUserId(memberFormDto.getUserId());
 		member.setNickname(memberFormDto.getNickname());
-		member.setTargetExpend(memberFormDto.getTargetExpend());
-		member.setTargetSaving(memberFormDto.getTargetSaving());
+		member.setRole("USER");
+		
+		if (memberFormDto.getTargetExpend() == 0) {
+			
+			member.setTargetExpend(500000);
+		} else {
+			
+			member.setTargetExpend(memberFormDto.getTargetExpend());
+		}
+		
+		if (memberFormDto.getTargetSaving() == 0) {
+			
+			member.setTargetSaving(500000);
+		} else {
+			
+			member.setTargetSaving(memberFormDto.getTargetSaving());
+		}
 		
 		String password = passwordEncoder.encode(memberFormDto.getPassword());
 		member.setPassword(password);
