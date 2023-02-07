@@ -24,7 +24,7 @@ public class QAccountBook extends EntityPathBase<AccountBook> {
 
     public final QBaseTimeEntity _super = new QBaseTimeEntity(this);
 
-    public final DateTimePath<java.time.LocalDateTime> accDate = createDateTime("accDate", java.time.LocalDateTime.class);
+    public final DatePath<java.time.LocalDate> accDate = createDate("accDate", java.time.LocalDate.class);
 
     public final StringPath accDtlMemo = createString("accDtlMemo");
 
@@ -36,7 +36,7 @@ public class QAccountBook extends EntityPathBase<AccountBook> {
 
     public final QMember member;
 
-    public final NumberPath<Integer> money = createNumber("money", Integer.class);
+    public final NumberPath<Long> money = createNumber("money", Long.class);
 
     public final StringPath otherCtgName = createString("otherCtgName");
 

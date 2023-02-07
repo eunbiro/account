@@ -1,6 +1,9 @@
 package com.account.entity;
 
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,10 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.account.dto.AccountBookDto;
-import com.account.dto.SubCategoryDto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,10 +35,10 @@ public class AccountBook extends BaseTimeEntity {
 	private Long id;						// 가계부 아이디
 	
 	@Column(nullable = false)
-	private int money;						// 입력금액
+	private Long money;						// 입력금액
 	
 	@Column(nullable = false)
-	private LocalDateTime accDate;			// 입력날짜
+	private LocalDate accDate;			// 입력날짜
 	
 	@Column(nullable = false)
 	private String accStatus;				// 수입지출
@@ -59,17 +60,26 @@ public class AccountBook extends BaseTimeEntity {
 	@JoinColumn(name = "sub_ctg_id")
 	private SubCategory subCategory;		// 카테고리
 	
-	public static AccountBook createAccountBook(AccountBookDto accountBookDto) {
+	public static AccountBook createAccountBook(AccountBookDto accountBookDto, Member member) {
 		
 		AccountBook accountBook = new AccountBook();
-		accountBook.setAccDate(accountBookDto.getAccDate());
+		
 		accountBook.setAccStatus(accountBookDto.getAccStatus());
 		accountBook.setMoney(accountBookDto.getMoney());
 		accountBook.setOtherCtgName(accountBookDto.getOtherCtgName());
 		accountBook.setAccTitle(accountBookDto.getAccTitle());
 		accountBook.setAccDtlMemo(accountBookDto.getAccDtlMemo());
 		
-		accountBook.subCategory.setId(accountBookDto.getSubCategoryDto().getId());
+		SubCategory subCtg = new SubCategory();
+		subCtg.setId(accountBookDto.getSubCategoryDto().getId());
+		
+		accountBook.setSubCategory(subCtg);
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate date = LocalDate.parse(accountBookDto.getAccDate(), formatter);
+		accountBook.setAccDate(date);
+		
+		accountBook.setMember(member);
 		
 		return accountBook;
 	}

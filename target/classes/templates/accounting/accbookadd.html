@@ -19,6 +19,8 @@
 				
 				if  (mainCtgId == 10) {
 					
+					$('#subCtg').empty();
+					$("<option>").val(33).text('기타').appendTo('#subCtg');
 					$('#otherCtgName').css('display', 'inline-block');
 				} else if (mainCtgId != '') {
 					
@@ -82,8 +84,8 @@
 						<div class="w-100 mx-auto">
 							<div class="row mx-auto w-50">
 								<div class="col-sm-4 float-end">
-									<select th:name="*{accStatus}" class="float-start add-sel ps-2">
-										<option value="" selected>지출 / 수입</option>
+									<select th:field="*{accStatus}" class="float-start add-sel ps-2">
+										<option value="">지출 / 수입</option>
 										<option value="0">지출</option>
 										<option value="1">수입</option>
 									</select>
@@ -102,12 +104,12 @@
 							<div class="row w-50 mx-auto">
 								<div class="col-sm-6 text-start">
 									<select id="mainCtg" class="add-ctg-sel px-auto">
-										<option selected>대분류카테고리</option>
+										<option value="">대분류카테고리</option>
 										<option th:each="mainCtgDto : ${mainCtgDtos}" th:value="${mainCtgDto.id}" th:text="${mainCtgDto.mainCtgName}"></option>
 									</select>
 								</div>
 								<div class="col-sm-6 text-end">
-									<select id="subCtg" th:name="${subCategoryDto}" class="add-ctg-sel px-auto">
+									<select th:field="*{subCategoryDto.id}" id="subCtg" class="add-ctg-sel px-auto">
 										<option value="" selected>소분류카테고리</option>
 									</select>
 								</div>

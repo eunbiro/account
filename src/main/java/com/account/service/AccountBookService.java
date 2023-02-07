@@ -34,6 +34,7 @@ public class AccountBookService  {
 		return accountBookRepository.save(accountBook);
 	}
 	
+	// 메인 카테고리 가져옴
 	@Transactional(readOnly = true)
 	public List<MainCategoryDto> getMainCtg() {
 		
@@ -50,6 +51,7 @@ public class AccountBookService  {
 		return mainCtgDtoList;
 	}
 	
+	// 섭카테고리 가져옴
 	public List<SubCategoryDto> getSubCtg(String mainCtgId) {
 		
 		List<SubCategory> subCtgList = subCategoryRepository.findByMainCategory(mainCtgId);

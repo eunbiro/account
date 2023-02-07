@@ -51,6 +51,12 @@ public class MemberService implements UserDetailsService {
 		}
 	}
 	
+	public Member getMember(String userId) {
+		
+		Member member = memberRepository.findByUserId(userId);
+		return member;
+	}
+	
 	public int vaildateDuplicateId(String userId) {
 		
 		Member member = memberRepository.findByUserId(userId);

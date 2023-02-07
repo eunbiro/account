@@ -6,5 +6,4 @@ import com.account.entity.MainCategory;
 
 public interface MainCategoryRepository extends JpaRepository<MainCategory, Long> {
 
-	List<MainCategory> findAllBy();
 }

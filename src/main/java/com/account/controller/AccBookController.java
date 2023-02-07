@@ -1,5 +1,6 @@
 package com.account.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ import com.account.dto.SubCategoryDto;
 import com.account.entity.AccountBook;
 import com.account.entity.Member;
 import com.account.service.AccountBookService;
+import com.account.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,33 +34,38 @@ public class AccBookController {
 
 	private final AccountBookService accountBookService;
 	
+	private final MemberService memberService;
+	
 	// 기입장 화면
 	@GetMapping(value = "/add")
 	public String accBookAdd(Model model) {
 		
-		List<MainCategoryDto> mainCtgDtos = accountBookService.getMainCtg();
-		
-		model.addAttribute("mainCtgDtos", mainCtgDtos);
+		getMainCtg(model);
 		model.addAttribute("accountBookDto", new AccountBookDto());
 		return "accounting/accbookadd";
 	}
 	
 	// 기입하기 눌렀을때
 	@PostMapping(value = "/add")
-	public String accBookForm(@Valid AccountBookDto accountBookDto, BindingResult bindingResult, Model model) {
+	public String accBookForm(@Valid AccountBookDto accountBookDto, BindingResult bindingResult, Model model, Principal principal) {
 		
 		if (bindingResult.hasErrors()) {
 			
+			getMainCtg(model);
 			return "accounting/accbookadd";
 		}
 		
+		String userId = principal.getName();
+		
 		try {
 			
-			AccountBook accountBook = AccountBook.createAccountBook(accountBookDto);
+			Member member = memberService.getMember(userId);
+			AccountBook accountBook = AccountBook.createAccountBook(accountBookDto, member);
 			accountBookService.saveAccount(accountBook);
 		} catch (Exception e) {
 			
 			model.addAttribute("errorMessage", "기입장 등록 중 에러가 발생했습니다.");
+			getMainCtg(model);
 			return "accounting/accbookadd";
 		}
 		
@@ -66,14 +73,21 @@ public class AccBookController {
 	}
 	
 	// 소분류 카테고리 가져오기
-		@GetMapping("/mainCtg/{mainCtgId}")
-		public @ResponseBody ResponseEntity<List<SubCategoryDto>> idCheck(@PathVariable("mainCtgId") String mainCtgId) {
-			
-			List<SubCategoryDto> subCtg = accountBookService.getSubCtg(mainCtgId);
-			
-			return new ResponseEntity<List<SubCategoryDto>>(subCtg, HttpStatus.OK);
-		}
+	@GetMapping("/mainCtg/{mainCtgId}")
+	public @ResponseBody ResponseEntity<List<SubCategoryDto>> getSubCtg(@PathVariable("mainCtgId") String mainCtgId) {
+		
+		List<SubCategoryDto> subCtg = accountBookService.getSubCtg(mainCtgId);
+		
+		return new ResponseEntity<List<SubCategoryDto>>(subCtg, HttpStatus.OK);
+	}
 	
+	// 대분류 카테고리 가져오기
+	public Model getMainCtg(Model model) {
+		
+		List<MainCategoryDto> mainCtgDtos = accountBookService.getMainCtg();
+		
+		return model.addAttribute("mainCtgDtos", mainCtgDtos);
+	}
 	
 	
 	
