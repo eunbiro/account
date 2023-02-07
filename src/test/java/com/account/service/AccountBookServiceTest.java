@@ -39,7 +39,6 @@ class AccountBookServiceTest {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDateTime date = LocalDateTime.parse("20230207", formatter);
-		accountBook.setAccDate(date);
 		
 		return accountBook;
 	}
