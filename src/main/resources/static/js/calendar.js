@@ -5,6 +5,8 @@ const renderCalendar = () => {
 	const viewYear = date.getFullYear();
 	const viewMonth = date.getMonth();
 	
+	const viewAllDay = 
+	
 	// main 중앙 월 표시
 	document.querySelector('.year-month').textContent = `${viewMonth + 1}월`;
 	
@@ -49,17 +51,29 @@ const renderCalendar = () => {
 	
 	dates.forEach((date, i) => {
 		
+		const viewAllDay = viewYear
+						+ (viewMonth + 1 < 10 ? "0" + (viewMonth + 1) : viewMonth + 1)
+						+ (date < 10 ? "0" + date : date);
+		
 		const condition = i >= firstDateIndex && i < lastDateIndex + 1 ? 'this' : 'other';
 		
 		if (i == 0 || i % 7 == 0) {
 			
-			dates[i] = `<div class = "dates-in"> <div class="date m-1 ${condition}">${date}</div>`;
+			dates[i] = `<div class = "dates-in">
+							<div class="date m-1 ${condition}">
+								<a class="date-a" href="/accountbook/list/${viewAllDay}">${viewAllDay}</a>
+							</div>`;
 		} else if ((i+1) % 7 == 0) {
 			
-			dates[i] = `<div class="date m-1 ${condition}">${date}</div> </div>`;
+			dates[i] = `	<div class="date m-1 ${condition}">
+								<a class="date-a" href="/accountbook/list/${viewAllDay}">${viewAllDay}</a>
+							</div>
+						</div>`;
 		} else {
 			
-			dates[i] = `<div class="date m-1 ${condition}">${date}</div>`;
+			dates[i] = `	<div class="date m-1 ${condition}">
+								<a class="date-a" href="/accountbook/list/${viewAllDay}">${viewAllDay}</a>
+							</div>`;
 		}
 	})
 	

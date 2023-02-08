@@ -91,8 +91,10 @@ public class AccBookController {
 	
 	
 	// 기입목록 화면
-	@GetMapping(value = "/list")
-	public String accBookList() {
+	@GetMapping(value = {"/list", "/accountbook/list/{accDate}"})
+	public String accBookList(@PathVariable("accDate") String accDate) {
+		
+		// TODO 서비스에 받아온 날짜를 매개로 해당 달짜 가계부리스트 불러오기
 		
 		return "accounting/accBookList";
 		

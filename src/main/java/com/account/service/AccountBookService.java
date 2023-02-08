@@ -102,4 +102,28 @@ public class AccountBookService  {
 		
 		return accBookDtoList;
 	}
+	
+	// TODO : main - 날짜 그룹화해서 가져오는 repository
+	public List<AccountBookDto> getAccDate(String MemberId) {
+		
+		List<AccountBook> accDateList = accountBookRepository.findAccDateGroupAccDateByMemberId(MemberId);
+		List<AccountBookDto> accDateDtoList = new ArrayList<>();
+		
+		for (AccountBook accountBook : accDateList) {
+			
+			AccountBookDto accBookDto = new AccountBookDto();
+			
+			String accDate = accountBook.getAccDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			accBookDto.setAccDate(accDate);
+			
+			accDateDtoList.add(accBookDto);
+		}
+		
+		return accDateDtoList;
+	}
+	
+	// TODO : main - 이번달 총 지출 금액 가져오는 repository
+	
+	
+	// TODO : main - 오늘(now로 조회?) 지출/수입 금액 가져오는 repository
 }

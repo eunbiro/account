@@ -9,4 +9,6 @@ import com.account.entity.AccountBook;
 public interface AccountBookRepository extends JpaRepository<AccountBook, Long>  {
 
 	List<AccountBook> findByMemberId(Long MemberId);
+	
+	List<AccountBook> findAccDateGroupAccDateByMemberId(String MemberId);
 }
