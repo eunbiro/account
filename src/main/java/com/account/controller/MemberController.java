@@ -73,12 +73,6 @@ public class MemberController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
-//	@GetMapping("/userId/{userId}/exists")
-//	public ResponseEntity<Boolean> checkUserIdDuplicate(@PathVariable String userId) {
-//		
-//		return ResponseEntity.ok(memberService.checkUserIdDuplicate(userId));
-//	}
-	
 	// 로그인 화면
 	@GetMapping(value = "/login")
 	public String loginMember() {

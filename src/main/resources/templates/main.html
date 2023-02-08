@@ -47,8 +47,16 @@
 		            <div class="dates"></div>
 		        </div>
 	            <div class="row main-word mt-4 text-center">
-		        	<span class="col">목표 지출 금액: 500,000원</span>
-		        	<span class="col">목표 수입 금액: 500,000원</span>
+	            	<div class="col">
+		            	<span>목표 지출 금액 : </span>
+			        	<span th:text="${memberFormDto.targetExpend}"></span>
+			        	<span>원</span>
+	            	</div>
+	            	<div class="col">
+		            	<span>목표 저축 금액 : </span>
+			        	<span th:text="${memberFormDto.targetSaving}"></span>
+			        	<span>원</span>
+	            	</div>
 		        </div>
 		    </div>
 		</div>

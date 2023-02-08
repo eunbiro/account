@@ -1,11 +1,13 @@
 package com.account.service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.account.dto.AccountBookDto;
 import com.account.dto.MainCategoryDto;
 import com.account.dto.SubCategoryDto;
 import com.account.entity.AccountBook;
@@ -64,5 +66,40 @@ public class AccountBookService  {
 		}
 		
 		return subCtgDtoList;
+	}
+	
+	// 가계부 가져옴
+	public List<AccountBookDto> getAccBook(Long memberId) {
+		
+		List<AccountBookDto> accBookDtoList = new ArrayList<>();
+		List<AccountBook> accBookList = accountBookRepository.findByMemberId(memberId);
+		
+		for (AccountBook accountBook : accBookList) {
+			
+			AccountBookDto accBookDto = new AccountBookDto();
+			String accDate = accountBook.getAccDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			accBookDto.setAccDate(accDate);
+			accBookDto.setAccStatus(accountBook.getAccStatus());
+			accBookDto.setMoney(accountBook.getMoney());
+			accBookDto.setAccTitle(accountBook.getAccTitle());
+			
+			SubCategoryDto subCategoryDto = new SubCategoryDto();
+			subCategoryDto.setId(accountBook.getSubCategory().getId());
+			accBookDto.setSubCategoryDto(subCategoryDto);
+			
+			if (accountBook.getOtherCtgName() != null) {
+				
+				accBookDto.setOtherCtgName(accountBook.getOtherCtgName());
+			}
+			
+			if (accountBook.getAccDtlMemo() != null) {
+				
+				accBookDto.setAccDtlMemo(accountBook.getAccDtlMemo());
+			}
+			
+			accBookDtoList.add(accBookDto);
+		}
+		
+		return accBookDtoList;
 	}
 }

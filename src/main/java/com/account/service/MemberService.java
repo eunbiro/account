@@ -51,12 +51,14 @@ public class MemberService implements UserDetailsService {
 		}
 	}
 	
+	// 멤버 가져옴
 	public Member getMember(String userId) {
 		
 		Member member = memberRepository.findByUserId(userId);
 		return member;
 	}
 	
+	// 멤버 여부확인
 	public int vaildateDuplicateId(String userId) {
 		
 		Member member = memberRepository.findByUserId(userId);
@@ -69,4 +71,5 @@ public class MemberService implements UserDetailsService {
 		
 		return chk = 1;
 	}
+	
 }

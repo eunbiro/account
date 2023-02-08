@@ -5,6 +5,8 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.account.entity.Member;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,4 +29,15 @@ public class MemberFormDto {
 	private int targetExpend;
 	
 	private int targetSaving;
+	
+	private Long memberId;
+	
+	public void creatMemberFormDto(Member member) {
+		
+		this.memberId = member.getId();
+		this.userId = member.getUserId();
+		this.nickname = member.getNickname();
+		this.targetExpend = member.getTargetExpend();
+		this.targetSaving = member.getTargetSaving();
+	}
 }
