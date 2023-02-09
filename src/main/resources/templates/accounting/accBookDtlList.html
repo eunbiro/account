@@ -20,38 +20,32 @@
 	<div layout:fragment="content">
 		<div class="container-md text-center list-wrap">
 			<div class="list-wrap-img mx-auto">
-			
 				<div class="mx-auto">
-				
-					<div class="fs-1 my-5">2023년 02월 03일</div>
+					<div class="fs-1 my-5" th:text="${#temporals.format(accDtl.accDate, 'yyyy월 MM월 dd일')}"></div>
 					
 					<table class="table table-border fs-4">
 						<tr>
 							<th>금액 : </th>
-							<td>10,000원</td>
+							<td th:text="${accDtl.money}"></td>
 						</tr>
 						<tr>
 							<th>카테고리 : </th>
-							<td>움식</td>
+							<td>
+								<span th:if="${accDtl.subCategoryDto.id == 33}" th:text="${ctg.mainCategoryDto.mainCtgName} + '-' + ${accDtl.otherCtgName}"></span>
+								<span th:unless="${accDtl.subCategoryDto.id == 33}" th:text="${ctg.mainCategoryDto.mainCtgName} + '-' + ${ctg.subCtgName}"></span>
+							</td>
 						</tr>
 						<tr>
 							<th>내용 : </th>
-							<td>불백</td>
+							<td th:text="${accDtl.accTitle}"></td>
 						</tr>
 					</table>
 					<div>
-						<p class="text-break w-75 mx-auto fs-4">
-							오늘 저짝 라멘집쪽 제주집인가 어딘가 갔다왔는데 맛있었다.
-							사람들이 좀 많아서 음식이 늦게 나왔지만 나쁘지않음!
-						</p>
+						<p class="text-break w-75 mx-auto fs-4" th:text="${accDtl.accDtlMemo}"></p>
 					</div>
-					
 				</div>
-				
-				
 			</div>
 		</div>
-		
 	</div>
 </body>
 </html>

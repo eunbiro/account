@@ -23,20 +23,19 @@
 			
 				<div class="mx-auto">
 				
-					<div class="fs-1 my-5">02월 03일</div>
+					<div class="fs-1 my-5" th:text="${#temporals.format(accDate, 'yyyy월 MM월 dd일')}"></div>
 					
 					<table class="table table-hover table-border fs-4">
 						<tr>
 							<th>내용</th>
+							<th>구분</th>
 							<th>금액</th>
 						</tr>
-						<tr>
-							<td>불백</td>
-							<td>10,000</td>
-						</tr>
-						<tr>
-							<td>새콤달콤</td>
-							<td>500</td>
+						<tr th:each="accBook : ${accList}" th:onclick="|location.href='@{/accountbook/dtllist/{accId}(accId = ${accBook.accId})}'|">
+							<td th:text="${accBook.accTitle}"></td>
+							<td th:if="${accBook.accStatus == 0}" th:text="지출"></td>
+							<td th:unless="${accBook.accStatus == 1}" th:text="수입"></td>
+							<td th:text="${accBook.money}"></td>
 						</tr>
 					</table>
 					

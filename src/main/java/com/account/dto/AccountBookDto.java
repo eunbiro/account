@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 public class AccountBookDto {
 
+	private Long accId;
+	
 	private String accDate;			// 입력날짜
 	
 	@NotNull(message = "수입/지출은 필수 입력 값입니다.")

@@ -88,22 +88,36 @@ public class AccBookController {
 		return model.addAttribute("mainCtgDtos", mainCtgDtos);
 	}
 	
-	
-	
 	// 기입목록 화면
-	@GetMapping(value = {"/list", "/accountbook/list/{accDate}"})
-	public String accBookList(@PathVariable("accDate") String accDate) {
+	@GetMapping(value = {"/list", "/list/{accDate}"})
+	public String accBookList(@PathVariable("accDate") String accDate, Model model, Principal principal) {
 		
-		// TODO 서비스에 받아온 날짜를 매개로 해당 달짜 가계부리스트 불러오기
+		Member member = memberService.getMember(principal.getName());
 		
-		return "accounting/accBookList";
+		List<AccountBookDto> accList = accountBookService.getAccList(accDate, member.getId());
 		
+			
+		if (accList.size() == 0) {
+			
+			getMainCtg(model);
+			return "redirect:/accountbook/add";
+		}
+		
+		model.addAttribute("accDate", accDate);
+		model.addAttribute("accList", accList);
+		return "accounting/accBookList";	
 	}
 	
 	// 기입 상세목록 화면
-	@GetMapping(value = "/dtllist")
-	public String accBookDtlList() {
+	@GetMapping(value = "/dtllist/{accId}")
+	public String accBookDtlList(@PathVariable("accId") Long accId, Model model) {
 		
+		
+		AccountBookDto accDtl = accountBookService.getDtlList(accId);
+		SubCategoryDto ctg = accountBookService.getCtg(accDtl.getSubCategoryDto().getId());
+		
+		model.addAttribute("accDtl", accDtl);
+		model.addAttribute("ctg", ctg);
 		return "accounting/accBookDtlList";
 	}
 }

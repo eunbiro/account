@@ -25,9 +25,9 @@ public class MainController {
 	public String main(Model model, Principal principal) {
 		
 		MemberFormDto memberFormDto = mainService.getMember(principal.getName());
-//		List<AccountBookDto> accDate = accountBookService.getAccDate(principal.getName());
+		List<AccountBookDto> AccDate = accountBookService.getAccDate(memberFormDto.getMemberId());
 		
-//		model.addAttribute("accDate", accDate);
+		model.addAttribute("AccDate", AccDate);
 		model.addAttribute("memberFormDto", memberFormDto);
 		return "main";
 	}
