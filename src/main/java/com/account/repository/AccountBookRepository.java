@@ -14,7 +14,7 @@ public interface AccountBookRepository extends JpaRepository<AccountBook, Long> 
 
 	List<AccountBook> findByMemberId(Long memberId);
 	
-	@Query(value = "select a.acc_date from accounts a where a.member_id = :MemberId group by acc_date", nativeQuery = true)
+	@Query(value = "select a.acc_date as accDate from accounts a where a.member_id = :MemberId group by acc_date", nativeQuery = true)
 	List<LocalDate> findAccDateByMemberId(@Param("MemberId") Long memberId);
 	
 	@Query(value = "select * from accounts a where a.member_id = :MemberId and a.acc_date = :accDate", nativeQuery = true)

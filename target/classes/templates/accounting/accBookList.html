@@ -20,11 +20,8 @@
 	<div layout:fragment="content">
 		<div class="container-md text-center list-wrap">
 			<div class="list-wrap-img mx-auto">
-			
 				<div class="mx-auto">
-				
-					<div class="fs-1 my-5" th:text="${#temporals.format(accDate, 'yyyy월 MM월 dd일')}"></div>
-					
+					<div class="fs-1 my-5" th:text="${#temporals.createDate(accDate, 'yyyyMMdd')}"></div>
 					<table class="table table-hover table-border fs-4">
 						<tr>
 							<th>내용</th>
@@ -33,18 +30,14 @@
 						</tr>
 						<tr th:each="accBook : ${accList}" th:onclick="|location.href='@{/accountbook/dtllist/{accId}(accId = ${accBook.accId})}'|">
 							<td th:text="${accBook.accTitle}"></td>
-							<td th:if="${accBook.accStatus == 0}" th:text="지출"></td>
-							<td th:unless="${accBook.accStatus == 1}" th:text="수입"></td>
+							<td th:if="${accBook.accStatus == '0'}" th:text="지출"></td>
+							<td th:unless="${accBook.accStatus == '0'}" th:text="수입"></td>
 							<td th:text="${accBook.money}"></td>
 						</tr>
 					</table>
-					
 				</div>
-				
-				
 			</div>
 		</div>
-		
 	</div>
 </body>
 </html>

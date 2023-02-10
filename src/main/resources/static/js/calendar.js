@@ -51,9 +51,11 @@ const renderCalendar = () => {
 	
 	dates.forEach((date, i) => {
 		
+		const months = firstDateIndex > i  ? viewMonth : i < lastDateIndex + 1 ? viewMonth + 1 : viewMonth + 2;
+		
 		const viewAllDay = viewYear
-						+ (viewMonth + 1 < 10 ? "0" + (viewMonth + 1) : viewMonth + 1)
-						+ (date < 10 ? "0" + date : date);
+						 + (months < 10 ? "0" + months : months)
+						 + (date < 10 ? "0" + date : date);
 		
 		const condition = i >= firstDateIndex && i < lastDateIndex + 1 ? 'this' : 'other';
 		
@@ -61,18 +63,18 @@ const renderCalendar = () => {
 			
 			dates[i] = `<div class = "dates-in">
 							<div class="date m-1 ${condition}">
-								<a class="date-a" href="/accountbook/list/${viewAllDay}">${viewAllDay}</a>
+								<a class="date-a" id="inChk" href="/accountbook/list/${viewAllDay}">${date}</a>
 							</div>`;
 		} else if ((i+1) % 7 == 0) {
 			
-			dates[i] = `	<div class="date m-1 ${condition}">
-								<a class="date-a" href="/accountbook/list/${viewAllDay}">${viewAllDay}</a>
+			dates[i] = `	<div class="date m-1 ${condition}" id="inChk">
+								<a class="date-a" href="/accountbook/list/${viewAllDay}">${date}</a>
 							</div>
 						</div>`;
 		} else {
 			
-			dates[i] = `	<div class="date m-1 ${condition}">
-								<a class="date-a" href="/accountbook/list/${viewAllDay}">${viewAllDay}</a>
+			dates[i] = `	<div class="date m-1 ${condition}" id="inChk">
+								<a class="date-a" href="/accountbook/list/${viewAllDay}">${date}</a>
 							</div>`;
 		}
 	})

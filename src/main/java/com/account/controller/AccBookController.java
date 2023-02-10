@@ -1,6 +1,7 @@
 package com.account.controller;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,8 +41,12 @@ public class AccBookController {
 	@GetMapping(value = "/add")
 	public String accBookAdd(Model model) {
 		
+		LocalDate today = LocalDate.now();
+		System.out.println(today);
+		
 		getMainCtg(model);
 		model.addAttribute("accountBookDto", new AccountBookDto());
+		model.addAttribute("today", today);
 		return "accounting/accbookadd";
 	}
 	
@@ -89,7 +95,7 @@ public class AccBookController {
 	}
 	
 	// 기입목록 화면
-	@GetMapping(value = {"/list", "/list/{accDate}"})
+	@GetMapping(value = {"/list/{accDate}"})
 	public String accBookList(@PathVariable("accDate") String accDate, Model model, Principal principal) {
 		
 		Member member = memberService.getMember(principal.getName());
@@ -112,12 +118,61 @@ public class AccBookController {
 	@GetMapping(value = "/dtllist/{accId}")
 	public String accBookDtlList(@PathVariable("accId") Long accId, Model model) {
 		
-		
 		AccountBookDto accDtl = accountBookService.getDtlList(accId);
 		SubCategoryDto ctg = accountBookService.getCtg(accDtl.getSubCategoryDto().getId());
 		
 		model.addAttribute("accDtl", accDtl);
 		model.addAttribute("ctg", ctg);
 		return "accounting/accBookDtlList";
+	}
+	
+	// 기입 수정 화면
+	@GetMapping(value = "/modify/{accId}")
+	public String accBookModify(@PathVariable("accId") Long accId, Model model) {
+		
+		try {
+			
+			getMainCtg(model);
+			AccountBookDto accountBookDto = accountBookService.getDtlList(accId);
+			model.addAttribute("accountBookDto", accountBookDto);
+		} catch (Exception e) {
+			
+			model.addAttribute("errorMessage", "존재하지 않는 가계부입니다.");
+			model.addAttribute("accountBookDto", new AccountBookDto());
+			return "accounting/accbookadd";
+		}
+		
+		return "accounting/accbookadd";
+	}
+	
+	// 기입 수정 클릭했을 때 화면
+	@PostMapping(value = "/modify/{accId}")
+	public String accBookUpdate(@Valid AccountBookDto accountBookDto, BindingResult bindingResult, Model model, Principal principal) {
+
+		if (bindingResult.hasErrors()) {
+			
+			getMainCtg(model);
+			return "accounting/accbookadd";
+		}
+		
+		try {
+			
+			accountBookService.updateAccBook(accountBookDto);
+		} catch (Exception e) {
+			
+			model.addAttribute("errorMessage", "기입장 수정 중 에러가 발생하였습니다.");
+			return "accounting/accbookadd";
+		}
+		
+		String accIc = Long.toString(accountBookDto.getAccId());
+		
+		return "redirect:/accountbook/dtllist/" + accIc;
+	}
+	
+	@DeleteMapping(value = "/dtllist/{accId}/delete")
+	public @ResponseBody ResponseEntity deleteAccBook(@PathVariable("accId") Long accId, Principal principal) {
+		
+		accountBookService.deleteAccBook(accId);
+		return new ResponseEntity<Long>(accId, HttpStatus.OK);
 	}
 }

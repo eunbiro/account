@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +50,6 @@ public class AccountBookService  {
 		List<MainCategoryDto> mainCtgDtoList = new ArrayList<>();
 		
 		for (MainCategory MainCategory : mainCtgList) {
-
 			
 			MainCategoryDto mainCategoryDto = MainCategoryDto.of(MainCategory);
 			mainCtgDtoList.add(mainCategoryDto);
@@ -57,6 +59,7 @@ public class AccountBookService  {
 	}
 	
 	// 섭카테고리 가져옴
+	@Transactional(readOnly = true)
 	public List<SubCategoryDto> getSubCtg(String mainCtgId) {
 		
 		List<SubCategory> subCtgList = subCategoryRepository.findByMainCategory(mainCtgId);
@@ -72,16 +75,17 @@ public class AccountBookService  {
 	}
 	
 	// main - 날짜 그룹화해서 가져오는 repository
+	@Transactional(readOnly = true)
 	public List<AccountBookDto> getAccDate(Long memberId) {
 		
-		List<LocalDate> accDateList = accountBookRepository.findAccDateByMemberId(memberId);
+		List<AccountBook> accDateList = accountBookRepository.findByMemberId(memberId);
 		List<AccountBookDto> accDateDtoList = new ArrayList<>();
 		
-		for (LocalDate date : accDateList) {
+		for (AccountBook date : accDateList) {
 			
 			AccountBookDto accBookDto = new AccountBookDto();
 			
-			String accDate = dateToString(date);
+			String accDate = dateToString(date.getAccDate());
 			accBookDto.setAccDate(accDate);
 			
 			accDateDtoList.add(accBookDto);
@@ -94,6 +98,7 @@ public class AccountBookService  {
 	
 	
 	// TODO : main - 오늘(now로 조회?) 지출/수입 금액 가져오는 repository
+	@Transactional(readOnly = true)
 	public int getTodayMoney (Long memberId) {
 		
 		LocalDate nowDate = LocalDate.now();
@@ -104,6 +109,7 @@ public class AccountBookService  {
 	}
 	
 	// list - 매개로 받은 날짜로 해당일 타이틀, 지출구분, 금액 가져오기
+	@Transactional(readOnly = true)
 	public List<AccountBookDto> getAccList(String accDate, Long memberId) {
 		
 		List<AccountBookDto> accListDto = new ArrayList<>();
@@ -129,35 +135,40 @@ public class AccountBookService  {
 	}
 	
 	// dtlList account_id를 매개로 금액, 카테고리, 타이틀, 상세타이틀 가져오기
+	@Transactional(readOnly = true)
 	public AccountBookDto getDtlList(Long accId) {
 		
 		Optional<AccountBook> accountBook = accountBookRepository.findById(accId);
 		AccountBook accBook = accountBook.orElse(new AccountBook());
 		AccountBookDto accDtl = new AccountBookDto();
 		
+		accDtl.setAccId(accId);
 		accDtl.setAccDate(dateToString(accBook.getAccDate()));
+		accDtl.setAccStatus(accBook.getAccStatus());
 		accDtl.setMoney(accBook.getMoney());
 		accDtl.setAccTitle(accBook.getAccTitle());
 		accDtl.setAccDtlMemo(accBook.getAccDtlMemo());
 		accDtl.setOtherCtgName(accBook.getOtherCtgName());
 		
-		SubCategoryDto subCategoryDto = new SubCategoryDto();
-		subCategoryDto.setId(accBook.getSubCategory().getId());
-		accDtl.setSubCategoryDto(subCategoryDto);
+		accDtl.setSubCategoryDto(getCtg(accBook.getSubCategory().getId()));
 		
 		return accDtl;
 	}
 	
-	// main / sub 카테고리 이름가져옴
+	// main, sub 카테고리 이름가져옴
+	@Transactional(readOnly = true)
 	public SubCategoryDto getCtg(Long subId) {
 		
 		SubCategory subCategory = subCategoryRepository.findBySubId(subId);
 		SubCategoryDto subCategoryDto = new SubCategoryDto();
 		
+		subCategoryDto.setId(subId);
 		subCategoryDto.setSubCtgName(subCategory.getSubCtgName());
 		
 		MainCategoryDto mainCategoryDto = new MainCategoryDto();
+		mainCategoryDto.setId(subCategory.getMainCategory().getId());
 		mainCategoryDto.setMainCtgName(subCategory.getMainCategory().getMainCtgName());
+		
 		subCategoryDto.setMainCategoryDto(mainCategoryDto);
 		
 		return subCategoryDto;
@@ -179,4 +190,23 @@ public class AccountBookService  {
 		
 		return date;
 	}
+	
+	// 기입장 수정하기
+	public Long updateAccBook(AccountBookDto accountBookDto) {
+		
+		AccountBook accountBook = accountBookRepository.findById(accountBookDto.getAccId())
+													   .orElseThrow(EntityNotFoundException::new);
+		accountBook.updateAccountBook(accountBookDto);
+		
+		return accountBookDto.getAccId();
+	}
+
+	// 기입장 삭제
+	public void deleteAccBook(Long accId) {
+
+		AccountBook accountBook = accountBookRepository.findById(accId)
+													   .orElseThrow(EntityNotFoundException::new);
+		accountBookRepository.delete(accountBook);
+	}
+	
 }

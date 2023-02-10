@@ -84,4 +84,18 @@ public class AccountBook extends BaseTimeEntity {
 		return accountBook;
 	}
 	
+	public void updateAccountBook(AccountBookDto accountBookDto) {
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate date = LocalDate.parse(accountBookDto.getAccDate(), formatter);
+		
+		this.accDate = date;
+		this.accStatus = accountBookDto.getAccStatus();
+		this.money = accountBookDto.getMoney();
+		this.otherCtgName = accountBookDto.getOtherCtgName();
+		this.accTitle = accountBookDto.getAccTitle();
+		this.accDtlMemo = accountBookDto.getAccDtlMemo();
+		this.subCategory.setId(accountBookDto.getSubCategoryDto().getId());
+	}
+	
 }

@@ -4,10 +4,60 @@
       layout:decorate="~{layouts/layout1}">
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <title>목록 상세내용</title>
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
-	
+		$(document).ready(function() {
+			
+			var errorMessage = [[${errorMessage}]];
+			if (errorMessage != null) {
+				
+				alert(errorMessage);
+			}
+		});
+		
+		function deleteAccBook(accId) {
+			
+			const deleteConf = confirm("삭제하시겠습니까?");
+			
+			if (!deleteConf) return;
+			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			
+			var url = "/accountbook/dtllist/" + accId + "/delete";
+			
+			$.ajax({
+				
+				url: url,
+				type : "DELETE",
+				contentType : "application/json",
+				beforeSend : function(xhr) {
+					
+					xhr.setRequestHeader(header, token)
+				},
+				dataType :"Json",
+				cache : false,
+				success : function(result, status) {
+					
+					alert("기입내용이 삭제되었습니다.");
+					location.href = '/accountbook/list/' + [[${accDtl.accDate}]];
+				},
+				error : function(jqXHR, status, error) {
+
+					if (jqXHR.status == '401') {
+						
+						alert('로그인 후 이용하시오.');
+						location.href = '/members/login';
+					} else {
+						
+						alert(jqXHR.responseText);
+					}
+				}
+			});
+		}
 	</script>
 </th:block>
 
@@ -21,12 +71,12 @@
 		<div class="container-md text-center list-wrap">
 			<div class="list-wrap-img mx-auto">
 				<div class="mx-auto">
-					<div class="fs-1 my-5" th:text="${#temporals.format(accDtl.accDate, 'yyyy월 MM월 dd일')}"></div>
-					
+					<div class="fs-1 my-5" th:text="${#temporals.createDate(accDtl.accDate, 'yyyyMMdd')}"></div>
+						
 					<table class="table table-border fs-4">
 						<tr>
 							<th>금액 : </th>
-							<td th:text="${accDtl.money}"></td>
+							<td th:text="${accDtl.money} + 원"></td>
 						</tr>
 						<tr>
 							<th>카테고리 : </th>
@@ -41,7 +91,11 @@
 						</tr>
 					</table>
 					<div>
-						<p class="text-break w-75 mx-auto fs-4" th:text="${accDtl.accDtlMemo}"></p>
+						<p class="w-75 my-5 mx-auto fs-4 h-100" th:text="${accDtl.accDtlMemo}"></p>
+					</div>
+					<div class="my-5" style="height: 30px;">
+						<button type="submit" class="btn fs-3" th:onclick="|location.href='@{/accountbook/modify/{accId}(accId = ${accDtl.accId})}'|">수정하기</button>
+						<button type="button" th:value="${accDtl.accId}" onclick="deleteAccBook(this.value)" class="btn fs-3">삭제하기</button>
 					</div>
 				</div>
 			</div>
