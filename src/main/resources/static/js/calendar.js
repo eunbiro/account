@@ -62,19 +62,19 @@ const renderCalendar = () => {
 		if (i == 0 || i % 7 == 0) {
 			
 			dates[i] = `<div class = "dates-in">
-							<div class="date m-1 ${condition}">
-								<a class="date-a" id="inChk" href="/accountbook/list/${viewAllDay}">${date}</a>
+							<div class="date m-1">
+								<a class="date-a ${condition}" id="inChk" href="/accountbook/list/${viewAllDay}">${date}</a>
 							</div>`;
 		} else if ((i+1) % 7 == 0) {
 			
-			dates[i] = `	<div class="date m-1 ${condition}" id="inChk">
-								<a class="date-a" href="/accountbook/list/${viewAllDay}">${date}</a>
+			dates[i] = `	<div class="date m-1" id="inChk">
+								<a class="date-a ${condition}" href="/accountbook/list/${viewAllDay}">${date}</a>
 							</div>
 						</div>`;
 		} else {
 			
-			dates[i] = `	<div class="date m-1 ${condition}" id="inChk">
-								<a class="date-a" href="/accountbook/list/${viewAllDay}">${date}</a>
+			dates[i] = `	<div class="date m-1" id="inChk">
+								<a class="date-a ${condition}" href="/accountbook/list/${viewAllDay}">${date}</a>
 							</div>`;
 		}
 	})

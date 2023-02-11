@@ -10,56 +10,55 @@
 		
 		$(function() {
 			
-			$('#mainCtg').change();
-			
-			if ([[${accountBookDto.subCategoryDto.mainCategoryDto.id}]] != "") {
+			$('#mainCtg').change(function() {
 				
-				$('#mainCtg').change(function() {
+				var mainCtgId = $('#mainCtg').val();
+				
+				var url = "/accountbook/mainCtg/" + mainCtgId;
+				
+				if (mainCtgId == 10) {
 					
-					var mainCtgId = $('#mainCtg').val();
+					$('#subCtg').empty();
+					$("<option>").val(33).text('기타').appendTo('#subCtg');
+					$('#otherCtgName').css('display', 'inline-block');
+				} else if (mainCtgId != '') {
 					
-					var url = "/accountbook/mainCtg/" + mainCtgId;
-					
-					if (mainCtgId == 10) {
+					$.ajax({
 						
-						$('#subCtg').empty();
-						$("<option>").val(33).text('기타').appendTo('#subCtg');
-						$('#otherCtgName').css('display', 'inline-block');
-					} else if (mainCtgId != '') {
-						
-						$.ajax({
+						type: 'GET',
+						url: url,
+						dataType: 'json',
+						cache : false,
+						success: function(result) {
+							$('#subCtg').empty();
+							$('#otherCtgName').css('display', 'none');
+							$("<option>").val('').text('소분류카테고리').appendTo('#subCtg');
 							
-							type: 'GET',
-							url: url,
-							dataType: 'json',
-							cache : false,
-							success: function(result) {
-								$('#subCtg').empty();
-								$('#otherCtgName').css('display', 'none');
-								$("<option>").val('').text('소분류카테고리').appendTo('#subCtg');
+							for (subCtg of result) {
 								
-								for (subCtg of result) {
+								if ([[${accountBookDto.subCategoryDto.id}]] == subCtg.id) {
 									
-									if (subCtg.id == [[${accountBookDto.subCategoryDto.id}]]) {
-										
-										$("<option>").val(subCtg.id).text(subCtg.subCtgName).attr("selected", "selected").appendTo('#subCtg');
-									} else {
-										
-										$("<option>").val(subCtg.id).text(subCtg.subCtgName).appendTo('#subCtg');
-									}
+									$("<option>").val(subCtg.id).text(subCtg.subCtgName).attr("selected", "selected").appendTo('#subCtg');
+								} else {
+									
+									$("<option>").val(subCtg.id).text(subCtg.subCtgName).appendTo('#subCtg');
 								}
-							},
-							error: function(a, b, c) {
-								
-								console.log(a, b, c);
 							}
-						});
-					}
-				});
-			}
-			
-			
+						},
+						error: function(a, b, c) {
+							
+							console.log(a, b, c);
+						}
+					});
+				}
+			});
 		});
+		
+		if ([[${accountBookDto.subCategoryDto.id}]] !== null || [[${accountBookDto.subCategoryDto.id}]] !== "") {
+			
+			$('#mainCtg').change();
+		}
+		
 	</script>
 </th:block>
 
@@ -91,6 +90,10 @@
 									<input type="date" id="accDate" th:max="${today}" th:field="*{accDate}" class="form-control mx-auto text-center fs-5 w-100">
 									<p th:if="${#fields.hasErrors('accDate')}" th:errors="*{accDate}" class="fieldError text-start">Incorrect Data</p>
 								</div>
+								<!-- <div class="col-sm-12 mx-auto" th:unless="${#strings.isEmpty(accountBookDto.accId)}">
+									<input type="text" id="accDate" th:field="*{accDate}" class="form-control mx-auto text-center fs-5 w-100" readonly>
+									<p th:if="${#fields.hasErrors('accDate')}" th:errors="*{accDate}" class="fieldError text-start">Incorrect Data</p>
+								</div> -->
 							</div>
 						</div>
 						
@@ -128,8 +131,11 @@
 								</div>
 								<div class="col-sm-6 text-end">
 									<select th:field="*{subCategoryDto.id}" id="subCtg" class="add-ctg-sel px-auto">
-										<th:block th:value="${accountBookDto.subCategoryDto.id}">
+										<th:block th:if="${#strings.isEmpty(accountBookDto.accId)}" th:value="${accountBookDto.subCategoryDto.id}">
 											<option value="" selected>소분류카테고리</option>
+										</th:block>
+										<th:block th:unless="${#strings.isEmpty(accountBookDto.accId)}" th:value="${accountBookDto.subCategoryDto.id}">
+											<option th:selected="${accountBookDto.subCategoryDto.id}" th:value="${accountBookDto.subCategoryDto.id}" th:text="${accountBookDto.subCategoryDto.subCtgName}"></option>
 										</th:block>
 									</select>
 								</div>

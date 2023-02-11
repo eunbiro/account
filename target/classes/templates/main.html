@@ -25,8 +25,12 @@
 		            </div>
 		        </div>
 		        <div class="row main-word mt-4 text-center">
-		        	<span class="col">TODAY 지출 금액: 10,000원</span>
-		        	<span class="col">TODAY 수입 금액: 0원</span>
+			        <div th:each="tmoney : ${todayM}" class="col">
+				        <th:block th:switch="${tmoney.accStatus}">
+			        		<span th:case="0" th:text="'TODAY 지출금액 : ' + ${tmoney.money} + '원'"></span>
+			        		<span th:case="1" th:text="'TODAY 수입금액 : ' + ${tmoney.money} + '원'"></span>
+				        </th:block>
+			        </div>
 		        </div>
 		        <div class="main">
 		            <div class="days">

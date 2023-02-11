@@ -30,11 +30,12 @@
 								<input type="date" class="form-control mx-auto text-center fs-5 w-100">
 							</div>
 							<div class="col-sm-4 float-end">
-								<select class="float-start add-sel ps-2">
-									<option selected>카테고리</option>
-									<option value="1">지출</option>
-									<option value="2">수입</option>
-								</select>
+								<select id="mainCtg" class="add-ctg-sel px-auto">
+										<option value="">카테고리</option>
+										<th:block th:each="mainCtgDto : ${mainCtgDtos}">
+											<option th:value="${mainCtgDto.id}" th:text="${mainCtgDto.mainCtgName}"></option>
+										</th:block>
+									</select>
 							</div>
 						</div>
 					</form>

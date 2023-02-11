@@ -16,6 +16,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.account.dto.AccountBookDto;
 
 import lombok.Getter;
@@ -37,8 +39,9 @@ public class AccountBook extends BaseTimeEntity {
 	@Column(nullable = false)
 	private Long money;						// 입력금액
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(nullable = false)
-	private LocalDate accDate;			// 입력날짜
+	private LocalDate accDate;				// 입력날짜
 	
 	@Column(nullable = false)
 	private String accStatus;				// 수입지출

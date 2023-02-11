@@ -4,7 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
 
+	</script>
+</th:block>
 </head>
 <body>
 	<!-- th:fragment=다른 페이지에 포함시킬 영역을 만들어서 이름을 붙여줌 -->
@@ -19,13 +23,24 @@
 			</div>
 			
 			<div class="w-100 m-auto d-flex align-items-start flex-column">
-				<p class="p-2 m-auto" style="font-size: 1.4rem;">월 목표 저축금액까지</p>
-				<div class="grp-p mx-auto my-2 p-2">
-					<div class="grp-c"></div>
+				<!-- <p class="p-2 m-auto" style="font-size: 1.4rem;">월 목표 저축금액까지</p>
+				<div id="pointIn" class="grp-p mx-auto my-2 p-2">
 				</div>
-				<p class="p-2 m-auto" style="font-size: 1.4rem;">사용!</p>
+					<div class="grp-c exp-p" th:text="${expendP}" ></div>
+				<p class="p-2 m-auto" style="font-size: 1.4rem;">사용!</p> -->
 			</div>
 		</div>
+		<!-- <script type="text/javascript">
+			var exPoint = [[${expendP}]];
+			
+			const render = () => {
+				
+				const grp = "<div class='grp-c exp-p' style='" + exPoint + "'>" + exPoint + "</div>";
+				document.querySelector('#pointIn').innerHTML = grp.join('');
+			}
+			
+			render();
+		</script> -->
 	</div>
 </body>
 </html>

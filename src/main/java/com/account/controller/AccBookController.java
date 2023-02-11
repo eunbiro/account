@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.account.dto.AccountBookDto;
 import com.account.dto.MainCategoryDto;
+import com.account.dto.MemberFormDto;
 import com.account.dto.SubCategoryDto;
 import com.account.entity.AccountBook;
 import com.account.entity.Member;
 import com.account.service.AccountBookService;
+import com.account.service.MainService;
 import com.account.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,18 +36,25 @@ import lombok.RequiredArgsConstructor;
 public class AccBookController {
 
 	private final AccountBookService accountBookService;
-	
+	private final MainService mainService;
 	private final MemberService memberService;
 	
 	// 기입장 화면
 	@GetMapping(value = "/add")
-	public String accBookAdd(Model model) {
+	public String accBookAdd(Model model, Principal principal) {
+		
+		MainCategoryDto mainCtgDto = new MainCategoryDto();
+		SubCategoryDto subCtgDto = new SubCategoryDto();
+		AccountBookDto accBookDto = new AccountBookDto();
+		subCtgDto.setMainCategoryDto(mainCtgDto);
+		accBookDto.setSubCategoryDto(subCtgDto);
 		
 		LocalDate today = LocalDate.now();
-		System.out.println(today);
 		
+		
+		expendGP(model, principal.getName());
 		getMainCtg(model);
-		model.addAttribute("accountBookDto", new AccountBookDto());
+		model.addAttribute("accountBookDto", accBookDto);
 		model.addAttribute("today", today);
 		return "accounting/accbookadd";
 	}
@@ -56,6 +65,7 @@ public class AccBookController {
 		
 		if (bindingResult.hasErrors()) {
 			
+			expendGP(model, principal.getName());
 			getMainCtg(model);
 			return "accounting/accbookadd";
 		}
@@ -71,6 +81,7 @@ public class AccBookController {
 			
 			model.addAttribute("errorMessage", "기입장 등록 중 에러가 발생했습니다.");
 			getMainCtg(model);
+			expendGP(model, principal.getName());
 			return "accounting/accbookadd";
 		}
 		
@@ -109,6 +120,7 @@ public class AccBookController {
 			return "redirect:/accountbook/add";
 		}
 		
+		expendGP(model, principal.getName());
 		model.addAttribute("accDate", accDate);
 		model.addAttribute("accList", accList);
 		return "accounting/accBookList";	
@@ -116,11 +128,12 @@ public class AccBookController {
 	
 	// 기입 상세목록 화면
 	@GetMapping(value = "/dtllist/{accId}")
-	public String accBookDtlList(@PathVariable("accId") Long accId, Model model) {
+	public String accBookDtlList(@PathVariable("accId") Long accId, Model model, Principal principal) {
 		
 		AccountBookDto accDtl = accountBookService.getDtlList(accId);
 		SubCategoryDto ctg = accountBookService.getCtg(accDtl.getSubCategoryDto().getId());
 		
+		expendGP(model, principal.getName());
 		model.addAttribute("accDtl", accDtl);
 		model.addAttribute("ctg", ctg);
 		return "accounting/accBookDtlList";
@@ -128,15 +141,22 @@ public class AccBookController {
 	
 	// 기입 수정 화면
 	@GetMapping(value = "/modify/{accId}")
-	public String accBookModify(@PathVariable("accId") Long accId, Model model) {
+	public String accBookModify(@PathVariable("accId") Long accId, Model model, Principal principal) {
 		
 		try {
 			
 			getMainCtg(model);
 			AccountBookDto accountBookDto = accountBookService.getDtlList(accId);
+			String date = accountBookDto.getAccDate();
+			LocalDate today = LocalDate.now();
+			
+			expendGP(model, principal.getName());
+			model.addAttribute("today", today);
+			model.addAttribute("date", date);
 			model.addAttribute("accountBookDto", accountBookDto);
 		} catch (Exception e) {
 			
+			expendGP(model, principal.getName());
 			model.addAttribute("errorMessage", "존재하지 않는 가계부입니다.");
 			model.addAttribute("accountBookDto", new AccountBookDto());
 			return "accounting/accbookadd";
@@ -151,6 +171,7 @@ public class AccBookController {
 
 		if (bindingResult.hasErrors()) {
 			
+			expendGP(model, principal.getName());
 			getMainCtg(model);
 			return "accounting/accbookadd";
 		}
@@ -160,6 +181,7 @@ public class AccBookController {
 			accountBookService.updateAccBook(accountBookDto);
 		} catch (Exception e) {
 			
+			expendGP(model, principal.getName());
 			model.addAttribute("errorMessage", "기입장 수정 중 에러가 발생하였습니다.");
 			return "accounting/accbookadd";
 		}
@@ -174,5 +196,13 @@ public class AccBookController {
 		
 		accountBookService.deleteAccBook(accId);
 		return new ResponseEntity<Long>(accId, HttpStatus.OK);
+	}
+	
+	public Model expendGP (Model model, String userId) {
+		
+		MemberFormDto memberFormDto = mainService.getMember(userId);
+		String expendP = mainService.getExpendP(memberFormDto.getMemberId(), memberFormDto.getTargetExpend());
+		
+		return model.addAttribute("expendP", expendP);
 	}
 }

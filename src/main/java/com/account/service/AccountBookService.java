@@ -1,14 +1,12 @@
 package com.account.service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,18 +92,53 @@ public class AccountBookService  {
 		return accDateDtoList;
 	}
 	
-	// TODO : main - 이번달 총 지출 금액 가져오는 repository
-	
-	
-	// TODO : main - 오늘(now로 조회?) 지출/수입 금액 가져오는 repository
+	// main - 이번달 총 지출 금액 가져오는 repository
 	@Transactional(readOnly = true)
-	public int getTodayMoney (Long memberId) {
+	public Long getTotalExpend(Long memberId) {
+		
+		LocalDate month = LocalDate.now();
+		String date = month.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+		
+		Long totalExpend = accountBookRepository.findByMoney(date, memberId);
+		
+		return totalExpend;
+	}
+	
+	
+	// main - 오늘(now로 조회?) 지출/수입 금액 가져오는 repository
+	@Transactional(readOnly = true)
+	public List<AccountBookDto> getTodayMoney (Long memberId) {
 		
 		LocalDate nowDate = LocalDate.now();
 		
 		List<AccountBook> getMoney = accountBookRepository.findbyAccDateAndMemberId(dateToString(nowDate), memberId);
+		List<AccountBookDto> money = new ArrayList<>();
+		AccountBookDto statusEx = new AccountBookDto();
+		AccountBookDto statusSa = new AccountBookDto();
+		long ex = 0;
+		long sa = 0;
 		
-		return 0;
+		for (AccountBook accBook : getMoney) {
+			
+			
+			if (accBook.getAccStatus().equals("0")) {
+				
+				ex += accBook.getMoney();
+			} else {
+				
+				sa += accBook.getMoney();
+			}
+		}
+		
+		statusEx.setAccStatus("0");
+		statusEx.setMoney(ex);
+		money.add(statusEx);
+		
+		statusSa.setAccStatus("1");
+		statusSa.setMoney(sa);
+		money.add(statusSa);
+		
+		return money;
 	}
 	
 	// list - 매개로 받은 날짜로 해당일 타이틀, 지출구분, 금액 가져오기

@@ -22,5 +22,6 @@ public interface AccountBookRepository extends JpaRepository<AccountBook, Long> 
 	
 	Optional<AccountBook> findById(Long accId);
 	
-	
+	@Query(value = "select sum(money) as money from accounts a where a.member_id = :MemberId and a.acc_date like :accDate% and not acc_status = 1", nativeQuery = true)
+	Long findByMoney(@Param("accDate") String date, @Param("MemberId") Long memberId);
 }
