@@ -25,13 +25,13 @@ public class MainController {
 	public String main(Model model, Principal principal) {
 		
 		MemberFormDto memberFormDto = mainService.getMember(principal.getName());
-		List<AccountBookDto> AccDate = accountBookService.getAccDate(memberFormDto.getMemberId());
+//		List<AccountBookDto> AccDate = accountBookService.getAccDate(memberFormDto.getMemberId());
 		String expendP = mainService.getExpendP(memberFormDto.getMemberId(), memberFormDto.getTargetExpend());
 		List<AccountBookDto> todayM = accountBookService.getTodayMoney(memberFormDto.getMemberId());
 		
 		model.addAttribute("todayM", todayM);
 		model.addAttribute("expendP", expendP);
-		model.addAttribute("AccDate", AccDate);
+//		model.addAttribute("AccDate", AccDate);
 		model.addAttribute("memberFormDto", memberFormDto);
 		return "main";
 	}

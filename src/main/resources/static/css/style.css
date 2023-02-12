@@ -401,13 +401,32 @@ html {
 	width: 80rem;
 	height: 70rem;
 	margin-top: 100px;
+
 }
 
-.ctg-icon .p2 {
+.ctgTag {
 	background-color: #c9bbf0;
 	border-radius: 5px;
 	font-size: 1.2rem;
 	padding: 0.5rem 3rem 0.5rem 0.5rem;
+	border: none;
+	text-decoration: none;
+	color: #8F73DF;
+	position: relative;
+}
+
+.ctgTagX {
+	position: absolute;
+	text-decoration: none;
+	color: #8F73DF;
+	width: 30%;
+	height: 60%;
+	left: 0px;
+	top: -5px;
+	transform: translate(188%, 48%);
+	cursor: pointer;
+	background: none;
+	border: none;
 }
 
 .ctg-graph {

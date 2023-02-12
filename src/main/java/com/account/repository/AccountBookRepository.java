@@ -24,4 +24,7 @@ public interface AccountBookRepository extends JpaRepository<AccountBook, Long> 
 	
 	@Query(value = "select sum(money) as money from accounts a where a.member_id = :MemberId and a.acc_date like :accDate% and not acc_status = 1", nativeQuery = true)
 	Long findByMoney(@Param("accDate") String date, @Param("MemberId") Long memberId);
+
+	@Query(value = "select * from accounts a where a.member_id = :MemberId and a.acc_date like :accDate% and not acc_status = 1", nativeQuery = true)
+	List<AccountBook> findByResult(LocalDate accDate, String mainCtgId);
 }
