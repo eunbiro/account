@@ -13,6 +13,7 @@ import com.account.dto.AccountBookDto;
 import com.account.dto.AccountBookSearchDto;
 import com.account.dto.MainCategoryDto;
 import com.account.service.AccountBookService;
+import com.account.service.GraphService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class GraphController {
 
 	private final AccountBookService accountBookService;
+	private final GraphService graphService;
 	
 	// 가계부 조회 화면
 	@GetMapping(value = "/result")
@@ -39,7 +41,9 @@ public class GraphController {
 	@PostMapping(value = "/result")
 	public String resultSearch(AccountBookSearchDto accountBookSearchDto, Model model) {
 		
+		List<AccountBookDto> AccountBookDto = graphService.getSearchAccBook(accountBookSearchDto);
 		
+		model.addAttribute("AccountBookDto", AccountBookDto);
 		model.addAttribute("accountBookSearchDto", accountBookSearchDto);
 		return "graph/result";
 	}
