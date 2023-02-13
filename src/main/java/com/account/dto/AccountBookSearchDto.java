@@ -9,5 +9,5 @@ public class AccountBookSearchDto {
 
 	private String searchDateType;
 	
-	private String mainCtgId;
+	private Long mainCtgId;
 }

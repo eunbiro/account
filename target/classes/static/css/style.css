@@ -161,14 +161,16 @@ html {
 	height: 250px;
 	border: none;
 	padding: 10px 20px;
+	background-color: #fdef8e;
+	border-radius: 50%;
 }
 
 .nav-icon-drop li {
 	display: flex;
-	height: 33%;
+	height: 50%;
 	align-items: center;
 	font-size: 1.4rem;
-	
+	justify-content: center;
 }
 
 
@@ -397,7 +399,7 @@ html {
 
 /* 기간별 가계부 조회 */
 .result-wrap {
-	background-color: #E5E5E8;
+	background-color: #fcc9ba;
 	width: 80rem;
 	height: 70rem;
 	margin-top: 100px;
@@ -438,6 +440,17 @@ html {
 	border-radius: 5px;
 	width: 0.5rem;
 }
+
+/* 마이페이지 */
+
+.my-wrap {
+	background-color: #fdef8e;
+	width: 80rem;
+	height: 70rem;
+	margin-top: 100px;
+}
+
+
 
 @media all and (max-width: 1024px) {
 	.date {

@@ -23,7 +23,6 @@
 				
 				var teg = $(this).parent().attr("id");
 				
-				/* $(teg).detach(); */
 				$(this).parent().remove();
 			});
 			
@@ -51,7 +50,7 @@
 							<div class="col-sm-6 float-end">
 								<select th:field="*{searchDateType}" id="searchDate" class="add-ctg-sel px-auto">
 									<th:block th:value="${AccountBookSearchDto.searchDateType}">
-										<option value="">기간전체</option>
+										<option value="all">기간전체</option>
 										<option value="1d">1일</option>
 										<option value="1w">1주</option>
 										<option value="1m">1달</option>
@@ -74,17 +73,17 @@
 						</div> -->
 						
 						<table class="table table-border fs-4 w-75 mx-auto mt-2 mb-5">
-							<tr>
+							<tr style="color: #8F73DF;">
 								<th>날짜</th>
 								<th>내용</th>
 								<th>카테고리</th>
 								<th>금액</th>
 							</tr>
 							<tr th:each="AccBook : ${AccountBookDto}">
-								<td th:text="${AccBook.accDate}">23.02.06</td>
-								<td th:text="${AccBook.accTitle}">치킨</td>
-								<td th:text="${AccBook.subCategoryDto.mainCategoryDto.mainCtgName}">음식</td>
-								<td th:text="${AccBook.money}">33,000</td>
+								<td th:text="${AccBook.accDate}"></td>
+								<td th:text="${AccBook.accTitle}"></td>
+								<td th:text="${AccBook.subCategoryDto.mainCategoryDto.mainCtgName}"></td>
+								<td th:text="${AccBook.money}"></td>
 							</tr>
 						</table>
 						<div class="d-flex justify-content-center">

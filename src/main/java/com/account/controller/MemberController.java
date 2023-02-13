@@ -1,5 +1,7 @@
 package com.account.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -7,10 +9,12 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,7 +65,7 @@ public class MemberController {
 			return "member/memberForm";
 		}
 		
-		return "member/memberLoginForm";
+		return "redirect:/members/login";
 	}
 	
 	// 아이디 중복체크
@@ -84,6 +88,56 @@ public class MemberController {
 	public String loginError(Model model) {
 		
 		model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
+		return "redirect:/members/login";
+	}
+	
+
+	// 마이페이지 화면
+	@GetMapping(value = "/mypage")
+	public String myPageForm(Model model, Principal principal) {
+		
+		MemberFormDto memberFormDto = memberService.getMemberDto(principal.getName());
+		
+		model.addAttribute("memberFormDto",memberFormDto);
+		return "member/memberMyPage";
+	}
+	
+	// 마이페이지 수정 눌렀을 때 작동하는 메소드
+	@PostMapping(value = "/mypage")
+	public String myPageForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
+		
+//		if (bindingResult.hasErrors()) {
+//			
+//			return "member/memberMyPage";
+//		}
+		
+		try {
+
+			Long memberId = memberService.updateMember(memberFormDto);
+		} catch (IllegalStateException e) {
+			
+			model.addAttribute("errorMessage", e.getMessage());
+			return "member/memberMyPage";
+		}
+		
+		return "redirect:/";
+	}
+	
+	@DeleteMapping(value = "/mypage/{memberId}/delete")
+	public @ResponseBody ResponseEntity deleteMember(@PathVariable("memberId") Long memberId, Principal principal) {
+		
+		memberService.deleteMember(memberId);
+		
+		SecurityContextHolder.clearContext();
+		return new ResponseEntity<Long>(memberId, HttpStatus.OK);
+	}
+	
+//	@PostMapping(value = "/login2")
+	public String loginMember2(HttpServletResponse response, HttpSession session, @RequestParam String userID) {
+		
+		Cookie idCookie = new Cookie("userCookieId", userID);
+		response.addCookie(idCookie);
+		
 		return "member/memberLoginForm";
 	}
 }

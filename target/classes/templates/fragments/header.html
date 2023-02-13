@@ -23,10 +23,11 @@
 								<button class="btn rounded-pill mx-auto my-3" style="background-color: #BBD6FF;" type="button" sec:authorize="isAuthenticated()" onclick="location.href='/accountbook/add'">기입<br />하기</button>
 								<button class="btn rounded-pill mx-auto my-3" style="background-color: #BBD6FF;" type="button" sec:authorize="isAuthenticated()" onclick="location.href='/graph/result'">기간별<br />가계부<br />조회</button>
 								<div class="dropstart mx-auto h-100 my-3">
-									<button class="btn dropdown-toggle rounded-pill" style="background-color: #BBD6FF;" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,60">설정</button>
-									<ul class="dropdown-menu text-bg-warning nav-icon-drop">
-										<li>프로필 수정</li>
-										<li>회원 탈퇴</li>
+									<button class="btn dropdown-toggle rounded-pill" style="background-color: #BBD6FF;" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="-50,30">설정</button>
+									<ul class="dropdown-menu nav-icon-drop">
+										<li>
+											<a class="nav-link" sec:authorize="isAuthenticated()" href="/members/mypage">프로필 수정</a>
+										</li>
 										<li>
 											<a class="nav-link" sec:authorize="isAuthenticated()" href="/members/logout">로그아웃</a>
 										</li>

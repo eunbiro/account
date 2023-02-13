@@ -1,10 +1,12 @@
 package com.account.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,22 +31,22 @@ public class GraphController {
 	@GetMapping(value = "/result")
 	public String result(Model model) {
 		
-		List<MainCategoryDto> mainCtgDtos = accountBookService.getMainCtg();
-		
-		model.addAttribute("mainCtgDtos", mainCtgDtos);
+		getMainCtg(model);
 		model.addAttribute("AccountBookSearchDto", new AccountBookSearchDto());
-		
 		return "graph/result";
 	}
 	
 	// 가계부 조회 화면
 	@PostMapping(value = "/result")
-	public String resultSearch(AccountBookSearchDto accountBookSearchDto, Model model) {
+	public String resultSearch(AccountBookSearchDto accountBookSearchDto, Model model, Principal principal) {
 		
-		List<AccountBookDto> AccountBookDto = graphService.getSearchAccBook(accountBookSearchDto);
+		AccountBookSearchDto accBookSearchDto =  new AccountBookSearchDto();
+		accBookSearchDto = accountBookSearchDto;
+		List<AccountBookDto> AccountBookDto = graphService.getSearchAccBook(accountBookSearchDto, principal.getName());
 		
+		getMainCtg(model);
 		model.addAttribute("AccountBookDto", AccountBookDto);
-		model.addAttribute("accountBookSearchDto", accountBookSearchDto);
+		model.addAttribute("AccountBookSearchDto", accBookSearchDto);
 		return "graph/result";
 	}
 	
@@ -53,5 +55,13 @@ public class GraphController {
 	public String resultGraph() {
 		
 		return "graph/resultGraph";
+	}
+	
+	// 대분류 카테고리 가져오기
+	public Model getMainCtg(Model model) {
+		
+		List<MainCategoryDto> mainCtgDtos = accountBookService.getMainCtg();
+		
+		return model.addAttribute("mainCtgDtos", mainCtgDtos);
 	}
 }

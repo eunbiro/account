@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
@@ -13,7 +15,10 @@ import com.account.dto.AccountBookSearchDto;
 import com.account.dto.MainCategoryDto;
 import com.account.dto.SubCategoryDto;
 import com.account.entity.AccountBook;
+import com.account.entity.MainCategory;
+import com.account.entity.Member;
 import com.account.repository.AccountBookRepository;
+import com.account.repository.MainCategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,33 +29,87 @@ public class GraphService {
 
 	private final AccountBookService accountBookService;
 	private final AccountBookRepository accountBookRepository;
+	private final MainCategoryRepository mainCategoryRepository;
+	private final MemberService memberService;
 	
-	public List<AccountBookDto> getSearchAccBook(AccountBookSearchDto AccountBookSearchDto) {
+	public List<AccountBookDto> getSearchAccBook(AccountBookSearchDto AccountBookSearchDto, String userId) {
 		
-		LocalDate accDate = accDateAfter(AccountBookSearchDto.getSearchDateType());
-		List<AccountBook> accountBookList = accountBookRepository.findByResult(accDate, AccountBookSearchDto.getMainCtgId());
+		List<AccountBook> accountBookList;
 		List<AccountBookDto> accountBookDtoList = new ArrayList<>();
+		Member member = memberService.getMember(userId);
+		Long memberId = member.getId();
+		LocalDate accDate = accDateAfter(AccountBookSearchDto.getSearchDateType());
 		
-		for (AccountBook accountBook : accountBookList) {
+		if (accDate == null) {
 			
-			AccountBookDto accountBookDto = new AccountBookDto();
-			accountBookDto.setAccDate(accountBookService.dateToString(accountBook.getAccDate()));
-			accountBookDto.setAccTitle(accountBook.getAccTitle());
-			accountBookDto.setMoney(accountBook.getMoney());
+			accountBookList = accountBookRepository.findByMemberId(memberId);
+		} else {
 			
-			MainCategoryDto mainCategoryDto = new MainCategoryDto();
-			mainCategoryDto.setMainCtgName(accountBook.getSubCategory().getMainCategory().getMainCtgName());
+			accountBookList = accountBookRepository.findByMemberIdAndAccDateAfter(memberId, accDate);
+		}
+		
+		if (AccountBookSearchDto.getMainCtgId() == null) {
 			
-			SubCategoryDto subCategoryDto = new SubCategoryDto();
-			subCategoryDto.setMainCategoryDto(mainCategoryDto);
+			for (AccountBook accountBook : accountBookList) {
+				
+				AccountBookDto accountBookDto = new AccountBookDto();
+				accountBookDto.setAccDate(accountBookService.dateToString(accountBook.getAccDate()));
+				accountBookDto.setAccTitle(accountBook.getAccTitle());
+				accountBookDto.setMoney(accountBook.getMoney());
+				
+				accountBookDto.setSubCategoryDto(getSubCategoryDto(accountBook));
+				
+				accountBookDtoList.add(accountBookDto);
+			}
+		} else {
 			
-			accountBookDto.setSubCategoryDto(subCategoryDto);
-			
-			accountBookDtoList.add(accountBookDto);
+			for (AccountBook accountBook : accountBookList) {
+				
+				AccountBookDto accountBookDto = new AccountBookDto();
+				
+				if (accountBook.getSubCategory().getMainCategory().getId() == AccountBookSearchDto.getMainCtgId()) {
+					
+					accountBookDto.setAccDate(accountBookService.dateToString(accountBook.getAccDate()));
+					accountBookDto.setAccTitle(accountBook.getAccTitle());
+					accountBookDto.setMoney(accountBook.getMoney());
+					
+					accountBookDto.setSubCategoryDto(getSubCategoryDto(accountBook));
+					
+					accountBookDtoList.add(accountBookDto);
+				}
+			}
 		}
 		
 		return accountBookDtoList;
 	}
+	
+	// 카테고리 전체조회시 가져오는거
+	public SubCategoryDto getSubCategoryDto(AccountBook accountBook) {
+		
+		MainCategoryDto mainCategoryDto = new MainCategoryDto();
+		mainCategoryDto.setId(accountBook.getSubCategory().getMainCategory().getId());
+		mainCategoryDto.setMainCtgName(accountBook.getSubCategory().getMainCategory().getMainCtgName());
+		
+		SubCategoryDto subCategoryDto = new SubCategoryDto();
+		subCategoryDto.setId(accountBook.getSubCategory().getId());
+		subCategoryDto.setSubCtgName(accountBook.getSubCategory().getSubCtgName());
+		subCategoryDto.setMainCategoryDto(mainCategoryDto);
+		
+		return subCategoryDto;
+	}
+	
+	// 카테고리 지정조회시 가져오는거
+//	public MainCategoryDto getMainCategoryDto(AccountBookSearchDto AccountBookSearchDto) {
+//		
+//		MainCategoryDto mainCategoryDto = new MainCategoryDto();
+//		MainCategory mainCategory = mainCategoryRepository.findById(AccountBookSearchDto.getMainCtgId())
+//														  .orElseThrow(EntityNotFoundException::new);
+//		
+//		mainCategoryDto.setId(mainCategory.getId());
+//		mainCategoryDto.setMainCtgName(mainCategory.getMainCtgName());
+//		
+//		return mainCategoryDto;
+//	}
 	
 	private LocalDate accDateAfter(String searchDateType) {
 		

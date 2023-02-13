@@ -1,5 +1,7 @@
 package com.account.service;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -7,6 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.account.dto.MemberFormDto;
+import com.account.entity.AccountBook;
 import com.account.entity.Member;
 import com.account.repository.MemberRepository;
 
@@ -52,6 +56,7 @@ public class MemberService implements UserDetailsService {
 	}
 	
 	// 멤버 가져옴
+	@Transactional(readOnly = true)
 	public Member getMember(String userId) {
 		
 		Member member = memberRepository.findByUserId(userId);
@@ -59,6 +64,7 @@ public class MemberService implements UserDetailsService {
 	}
 	
 	// 멤버 여부확인
+	@Transactional(readOnly = true)
 	public int vaildateDuplicateId(String userId) {
 		
 		Member member = memberRepository.findByUserId(userId);
@@ -70,6 +76,41 @@ public class MemberService implements UserDetailsService {
 		}
 		
 		return chk = 1;
+	}
+	
+	// 마이페이지 정보가져옴
+	@Transactional(readOnly = true)
+	public MemberFormDto getMemberDto(String userId) {
+		
+		MemberFormDto memberFormDto = new MemberFormDto();
+		Member member = getMember(userId);
+		
+		memberFormDto.setMemberId(member.getId());
+		memberFormDto.setNickname(member.getNickname());
+		memberFormDto.setTargetExpend(member.getTargetExpend());
+		memberFormDto.setTargetSaving(member.getTargetSaving());
+
+		return memberFormDto;
+	}
+	
+	// 회원정보 수정
+	public Long updateMember(MemberFormDto memberFormDto) {
+		
+		Member member = memberRepository.findById(memberFormDto.getMemberId())
+										.orElseThrow(EntityNotFoundException::new);
+		
+		member.updateMember(memberFormDto);
+		
+		return memberFormDto.getMemberId();
+	}
+	
+	// 회원탈퇴
+	public void deleteMember(Long memberId) {
+
+		Member member = memberRepository.findById(memberId)
+													   .orElseThrow(EntityNotFoundException::new);
+		
+		memberRepository.delete(member);
 	}
 	
 }
