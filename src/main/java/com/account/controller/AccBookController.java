@@ -182,6 +182,7 @@ public class AccBookController {
 		} catch (Exception e) {
 			
 			expendGP(model, principal.getName());
+			getMainCtg(model);
 			model.addAttribute("errorMessage", "기입장 수정 중 에러가 발생하였습니다.");
 			return "accounting/accbookadd";
 		}

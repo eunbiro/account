@@ -32,6 +32,7 @@ public class GraphService {
 	private final MainCategoryRepository mainCategoryRepository;
 	private final MemberService memberService;
 	
+	// 기간별 목록조회시 데이터 가져옴
 	public List<AccountBookDto> getSearchAccBook(AccountBookSearchDto AccountBookSearchDto, String userId) {
 		
 		List<AccountBook> accountBookList;
@@ -78,6 +79,38 @@ public class GraphService {
 					accountBookDtoList.add(accountBookDto);
 				}
 			}
+		}
+		
+		return accountBookDtoList;
+	}
+	
+	// 기간별 그래프조회시 데이터 가져옴
+	public List<AccountBookDto> getSearchGraph(AccountBookSearchDto AccountBookSearchDto, String userId) {
+		
+		List<AccountBook> accountBookList;
+		List<AccountBookDto> accountBookDtoList = new ArrayList<>();
+		Member member = memberService.getMember(userId);
+		Long memberId = member.getId();
+		LocalDate accDate = accDateAfter(AccountBookSearchDto.getSearchDateType());
+		
+		if (accDate == null) {
+			
+			accountBookList = accountBookRepository.findByMemberId(memberId);
+		} else {
+			
+			accountBookList = accountBookRepository.findByMemberIdAndAccDateAfter(memberId, accDate);
+		}
+		
+		for (AccountBook accountBook : accountBookList) {
+			
+			AccountBookDto accountBookDto = new AccountBookDto();
+			accountBookDto.setAccDate(accountBookService.dateToString(accountBook.getAccDate()));
+			accountBookDto.setAccTitle(accountBook.getAccTitle());
+			accountBookDto.setMoney(accountBook.getMoney());
+			
+			accountBookDto.setSubCategoryDto(getSubCategoryDto(accountBook));
+			
+			accountBookDtoList.add(accountBookDto);
 		}
 		
 		return accountBookDtoList;

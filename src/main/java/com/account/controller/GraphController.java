@@ -51,10 +51,24 @@ public class GraphController {
 	}
 	
 	// 그래프 조회 화면
-	@GetMapping(value = "/graph")
-	public String resultGraph() {
+	@GetMapping(value = "/pieGp")
+	public String resultGraph(Model model) {
 		
+		model.addAttribute("AccountBookSearchDto", new AccountBookSearchDto());
 		return "graph/resultGraph";
+	}
+	
+	// 가계부 조회 화면
+	@PostMapping(value = "/pieGp")
+	public String resultGraph(AccountBookSearchDto accountBookSearchDto, Model model, Principal principal) {
+		
+		AccountBookSearchDto accBookSearchDto =  new AccountBookSearchDto();
+		accBookSearchDto = accountBookSearchDto;
+		List<AccountBookDto> AccountBookDto = graphService.getSearchAccBook(accountBookSearchDto, principal.getName());
+		
+		model.addAttribute("AccountBookDto", AccountBookDto);
+		model.addAttribute("AccountBookSearchDto", accBookSearchDto);
+		return "graph/result";
 	}
 	
 	// 대분류 카테고리 가져오기

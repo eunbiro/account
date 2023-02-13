@@ -8,7 +8,7 @@
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
 	
-/* 	$(function() {
+ 	/* $(function() {
 		var num = 0;
 
 		$('#mainCtg').off().on("change",function() {
@@ -58,7 +58,7 @@
 									</th:block>
 								</select>
 							</div>
-							<div class="col-sm-6 float-end">
+							<div class="col-sm-6 float-end selup">
 								<select th:field="*{mainCtgId}" id="mainCtg" class="add-ctg-sel px-auto">
 									<option value="">카테고리</option>
 									<th:block th:each="mainCtgDto : ${mainCtgDtos}">
@@ -68,10 +68,6 @@
 							</div>
 						</div>
 					
-<!-- 						<div class="d-flex justify-content-center w-100 ctg-icon">
-							
-						</div> -->
-						
 						<table class="table table-border fs-4 w-75 mx-auto mt-2 mb-5">
 							<tr style="color: #8F73DF;">
 								<th>날짜</th>
@@ -89,7 +85,7 @@
 						<div class="d-flex justify-content-center">
 							<a class="text-start w-25 my-5 pe-5 fs-5" style="color: #8F73DF; text-decoration: underline;"></a>
 							<button type="submit" class="btn member-btn mx-auto">조회하기</button>
-							<a class="text-end w-25 my-5 pe-5 fs-5" style="color: #8F73DF; text-decoration: underline;" href="/graph/graph">통계로 확인하기 →</a>
+							<a class="text-end w-25 my-5 pe-5 fs-5" style="color: #8F73DF; text-decoration: underline;" href="/graph/pieGp">통계로 확인하기 →</a>
 						</div>
 						<a class="text-end w-100 mt-3 pe-5 fs-5" style="color: green; text-decoration: underline;">엑셀파일로 다운받기 ↓</a>
 					</div>
