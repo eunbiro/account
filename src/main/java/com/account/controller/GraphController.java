@@ -64,11 +64,11 @@ public class GraphController {
 		
 		AccountBookSearchDto accBookSearchDto =  new AccountBookSearchDto();
 		accBookSearchDto = accountBookSearchDto;
-		List<AccountBookDto> AccountBookDto = graphService.getSearchAccBook(accountBookSearchDto, principal.getName());
+		List<AccountBookSearchDto> searchDtoList = graphService.getSearchGraph(accountBookSearchDto, principal.getName());
 		
-		model.addAttribute("AccountBookDto", AccountBookDto);
+		model.addAttribute("searchDtoList", searchDtoList);
 		model.addAttribute("AccountBookSearchDto", accBookSearchDto);
-		return "graph/result";
+		return "graph/resultGraph";
 	}
 	
 	// 대분류 카테고리 가져오기

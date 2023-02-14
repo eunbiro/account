@@ -1,37 +1,36 @@
 /*<![CDATA[*/
-var ctg = new Array();
-ctg = /*[[${AccountBookDto.subCategoryDto.mainCategoryDto.id}]]*/;
-var money = new Array();
-money = /*[[${AccountBookDto.money}]]*/;
-
-var AccountBookDto = /*[[$AccountBookDto]]*/;
+var searchDtoList = /*[[$searchDtoList]]*/
 /*]]>*/
-for (ctg of AccountBookDto) {
+
+
+for (searchDto of searchDtoList) {
 	
-	switch(ctg.subCategoryDto.mainCategoryDto.id) {
+}
+/*
+	switch(searchDto.mainCtgId) {
 		
-		case '1': var income = ctg.money;
+		case '1': var income = [searchDto.money, searchDto.mainCtgName];
 		break;
-		case '2': var saving = ctg.money;
+		case '2': var saving = [searchDto.money, searchDto.mainCtgName];
 		break;
-		case '3': var living = ctg.money;
+		case '3': var living = [searchDto.money, searchDto.mainCtgName];
 		break;
-		case '4': var food = ctg.money;
+		case '4': var food = [searchDto.money, searchDto.mainCtgName];
 		break;
-		case '5': var cloth = ctg.money;
+		case '5': var cloth = [searchDto.money, searchDto.mainCtgName];
 		break;
-		case '6': var hobby = ctg.money;
+		case '6': var hobby = [searchDto.money, searchDto.mainCtgName];
 		break;
-		case '7': var comm = ctg.money;
+		case '7': var comm = [searchDto.money, searchDto.mainCtgName];
 		break;
-		case '8': var car = ctg.money;
+		case '8': var car = [searchDto.money, searchDto.mainCtgName];
 		break;
-		case '9': var insurance = ctg.money;
+		case '9': var insurance = [searchDto.money, searchDto.mainCtgName];
 		break;
-		case '10': var other = ctg.money;
+		case '10': var other = [searchDto.money, searchDto.mainCtgName];
 		break;
 	}
-}
+*/
 
 var context = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(context, {
@@ -40,14 +39,14 @@ var myChart = new Chart(context, {
 						
 						labels: [
                         //x 축
-                        '소득','저축','생활비','식비','의류잡화비','여가비','통신비', '교통비', '보험비', '기타'
+                        income[1], saving[1], living[1], food[1], cloth[1], hobby[1], comm[1], car[1], insurance[1], other[1]
                     	],
                     	datasets: [
                         { //데이터
                             label: 'test1', //차트 제목
                             fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                             data: [
-                                income,saving,living,food,cloth,hobby,comm,car,insurance,other //x축 label에 대응되는 데이터 값
+                                income[0], saving[0], living[0], food[0], cloth[0], hobby[0], comm[0], car[0], insurance[0], other[0] //x축 label에 대응되는 데이터 값
                             ],
                             backgroundColor: [
                                 //색상
@@ -76,16 +75,7 @@ var myChart = new Chart(context, {
                                 'rgba(102, 000, 204, 1)'
                             ],
                             borderWidth: 1 //경계선 굵기
-                        }/* ,
-                        {
-                            label: 'test2',
-                            fill: false,
-                            data: [
-                                8, 34, 12, 24
-                            ],
-                            backgroundColor: 'rgb(157, 109, 12)',
-                            borderColor: 'rgb(157, 109, 12)'
-                        } */
+                        }
                     ]
                 },
                 options: {

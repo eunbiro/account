@@ -85,10 +85,10 @@ public class GraphService {
 	}
 	
 	// 기간별 그래프조회시 데이터 가져옴
-	public List<AccountBookDto> getSearchGraph(AccountBookSearchDto AccountBookSearchDto, String userId) {
+	public List<AccountBookSearchDto> getSearchGraph(AccountBookSearchDto AccountBookSearchDto, String userId) {
 		
 		List<AccountBook> accountBookList;
-		List<AccountBookDto> accountBookDtoList = new ArrayList<>();
+		List<AccountBookSearchDto> accBookSearchDtoList = new ArrayList<>();
 		Member member = memberService.getMember(userId);
 		Long memberId = member.getId();
 		LocalDate accDate = accDateAfter(AccountBookSearchDto.getSearchDateType());
@@ -103,17 +103,25 @@ public class GraphService {
 		
 		for (AccountBook accountBook : accountBookList) {
 			
-			AccountBookDto accountBookDto = new AccountBookDto();
-			accountBookDto.setAccDate(accountBookService.dateToString(accountBook.getAccDate()));
-			accountBookDto.setAccTitle(accountBook.getAccTitle());
-			accountBookDto.setMoney(accountBook.getMoney());
+			AccountBookSearchDto accBookSearchDto = new AccountBookSearchDto();
 			
-			accountBookDto.setSubCategoryDto(getSubCategoryDto(accountBook));
+			if (accountBook.getAccStatus().equals("0")) {
+				
+				
+				accBookSearchDto.setMoney(-(accountBook.getMoney()));
+				accBookSearchDto.setMainCtgId(accountBook.getSubCategory().getMainCategory().getId());
+				accBookSearchDto.setMainCtgName(accountBook.getSubCategory().getMainCategory().getMainCtgName());
+			} else {
+				
+				accBookSearchDto.setMoney(accountBook.getMoney());
+				accBookSearchDto.setMainCtgId(accountBook.getSubCategory().getMainCategory().getId());
+				accBookSearchDto.setMainCtgName(accountBook.getSubCategory().getMainCategory().getMainCtgName());
+			}
 			
-			accountBookDtoList.add(accountBookDto);
+			accBookSearchDtoList.add(accBookSearchDto);
 		}
 		
-		return accountBookDtoList;
+		return accBookSearchDtoList;
 	}
 	
 	// 카테고리 전체조회시 가져오는거

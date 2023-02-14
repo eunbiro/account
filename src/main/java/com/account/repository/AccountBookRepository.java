@@ -33,6 +33,11 @@ public interface AccountBookRepository extends JpaRepository<AccountBook, Long> 
 
 	@Query(value = "select sum(money) as money , s.main_ctg_id as mainCtgId"
 			+ " from accounts a, sub_category s where a.sub_ctg_id = s.sub_ctg_id and a.acc_date > :accDate and a.member_id = :memberId"
-			+ " group by s.main_ctg_id order by money desc;", nativeQuery = true)
+			+ " group by s.main_ctg_id order by money desc", nativeQuery = true)
 	List<AccountBook> findByGraph(@Param("memberId")Long memberId, @Param("accDate")LocalDate accDate);
+	
+	@Query(value = "select sum(money) as money , s.main_ctg_id as mainCtgId"
+			+ " from accounts a, sub_category s where a.sub_ctg_id = s.sub_ctg_id and a.member_id = :memberId"
+			+ " group by s.main_ctg_id order by money desc", nativeQuery = true)
+	List<AccountBook> findByAllGraph(@Param("memberId")Long memberId);
 }

@@ -10,4 +10,8 @@ public class AccountBookSearchDto {
 	private String searchDateType;
 	
 	private Long mainCtgId;
+	
+	private String mainCtgName;
+	
+	private Long money;
 }
