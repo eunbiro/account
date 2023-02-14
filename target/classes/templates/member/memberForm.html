@@ -52,41 +52,34 @@
 					
 					$.ajax({
 						
-						type: 'GET',
-						url: url,
-						dataType: 'json',
-						cache : false,
-						success: function(result) {
+						type		: 'GET',
+						url			: url,
+						dataType	: 'json',
+						cache 		: false,
+						success		: function(result) {
 							
-							if (result == 0) {
-								
-								$('#chk_result').html('사용 가능한 아이디입니다.');
-								$('#chk_result').attr('color', 'green');
-							} else {
-								
-								$('#chk_result').html('사용 가능불가 아이디입니다.');
-								$('#chk_result').attr('color', '#bd2130');
-							}
+										if (result == 0) {
+											
+											$('#chk_result').html('사용 가능한 아이디입니다.');
+											$('#chk_result').attr('color', 'green');
+										} else {
+											
+											$('#chk_result').html('사용 가능불가 아이디입니다.');
+											$('#chk_result').attr('color', '#bd2130');
+										}
 						},
-						error: function(a, b, c) {
+						error		: function(a, b, c) {
 							
-							console.log(a, b, c);
-						}
-					});
-					
+										console.log(a, b, c);
+										}
+							});
 				} else {
 					
 					$('#chk_result').html('아이디를 입력해주세요.');
 					$('#userId').focus();
 				}
 			});
-			
-			
 		});
-		
-		
-		
-		
 	</script>
 </th:block>
 
@@ -141,7 +134,6 @@
 							<input type="password" class="form-control fs-5 inputPw" id="pwCheck" placeholder="비밀번호를 한번 더 입력해주세요">
 							<font id="chkNotice" class="text-start fs-5"></font>
 						</div>
-						
 					</div>
 					<div class="row my-5 w-50 mx-auto">
 						<label th:for="nickname" class="col-sm-3 col-form-label">닉네임</label>
@@ -162,12 +154,9 @@
 							<input type="text" th:field="*{targetSaving}" class="form-control fs-5" id="targetSaving">
 						</div>
 					</div>
-					
 					<button type="submit" class="btn member-btn my-4">회원가입</button>
-					
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 				</form>
-				
 			</div>
 		</div>
 	</div>

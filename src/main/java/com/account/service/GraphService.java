@@ -139,19 +139,7 @@ public class GraphService {
 		return subCategoryDto;
 	}
 	
-	// 카테고리 지정조회시 가져오는거
-//	public MainCategoryDto getMainCategoryDto(AccountBookSearchDto AccountBookSearchDto) {
-//		
-//		MainCategoryDto mainCategoryDto = new MainCategoryDto();
-//		MainCategory mainCategory = mainCategoryRepository.findById(AccountBookSearchDto.getMainCtgId())
-//														  .orElseThrow(EntityNotFoundException::new);
-//		
-//		mainCategoryDto.setId(mainCategory.getId());
-//		mainCategoryDto.setMainCtgName(mainCategory.getMainCtgName());
-//		
-//		return mainCategoryDto;
-//	}
-	
+	// 검색 옵션 기간정하기
 	private LocalDate accDateAfter(String searchDateType) {
 		
 		LocalDate localDate = LocalDate.now();

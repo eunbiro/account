@@ -5,39 +5,38 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인 화면</title>
-
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript" th:src="@{/js/cookie.js}"></script>
 <!-- 각 페이지에 스크립트가 작성될 위치 -->
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
 	
-	 //쿠키를 이용한 아이디 기억
-	$(document).ready(function() {
-		var userInputId = getCookie("userInputId");	// 쿠키의 key로 값을 가져온다.
-		var setCookieYN = getCookie("setCookieYN");
-
-		if (setCookieYN == 'Y') {
-			$("#id_save").prop("checked", true);	// 체크 박스에 check
-			$("#userId").val(userInputId);
-		} else {
-			$("#id_save").prop("checked", false);	// 체크 해제
-		}
-
-		//로그인 버튼 클릭
-		$('#loginbtn').click(function() {
-			// 아이디를 쿠키에 저장
-			if ($("#id_save").is(":checked")) {				// id_save가 체크 되어있으면 true를 리턴
-				var userInputId = $("#userId").val();
-				setCookie("userInputId", userInputId, 60);	// 60일 동안 쿠키 저장
-				setCookie("setCookieYN", "Y", 60);
-			} else {
-				deleteCookie("userInputId");
-				deleteCookie("setCookieYN");
-			}
-		});
-	}); 
+		 //쿠키를 이용한 아이디 기억
+		$(document).ready(function() {
+			var userInputId = getCookie("userInputId");	// 쿠키의 key로 값을 가져온다.
+			var setCookieYN = getCookie("setCookieYN");
 	
-	 
+			if (setCookieYN == 'Y') {
+				$("#id_save").prop("checked", true);	// 체크 박스에 check
+				$("#userId").val(userInputId);
+			} else {
+				$("#id_save").prop("checked", false);	// 체크 해제
+			}
+	
+			//로그인 버튼 클릭
+			$('#loginbtn').click(function() {
+				// 아이디를 쿠키에 저장
+				if ($("#id_save").is(":checked")) {				// id_save가 체크 되어있으면 true를 리턴
+					var userInputId = $("#userId").val();
+					setCookie("userInputId", userInputId, 60);	// 60일 동안 쿠키 저장
+					setCookie("setCookieYN", "Y", 60);
+				} else {
+					deleteCookie("userInputId");
+					deleteCookie("setCookieYN");
+				}
+			});
+		});
+		
 	</script>
 </th:block>
 
@@ -81,14 +80,19 @@
 							<p th:if="${loginErrorMsg}" class="error fs-4 text-start ms-3 mt-3" th:text="${loginErrorMsg}"></p>
 						</div>
 					</div>
-					
 					<!-- 카카오 및 어쩌고 -->
 					<div class="row w-50 mx-auto" style="height: 50px;">
 						<div class="col-4 fs-5" style="color: #B0B0B0;">
 						네이버로그인
 						</div>
 						<div class="col-4 fs-5" style="color: #B0B0B0;">
-						카카오로그인
+							<ul>
+								<li onclick="kakaoLogin();" style="list-style: none;">
+							      <a href="javascript:void(0)">
+							          <span>카카오 로그인</span>
+							      </a>
+								</li>
+							</ul>
 						</div>
 						<div class="col-4">
 							<div class="float-start ps-4">
@@ -110,7 +114,6 @@
 					</div>
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 				</form>
-				
 				<hr class="w-50 mx-auto">
 				<div class="w-50 mx-auto d-flex justify-content-evenly login-btn-bt">
 					<button type="button" class="btn fs-5">아이디 찾기</button>
@@ -121,7 +124,30 @@
 				</div>
 			</div>
 		</div>
-		
+		<script th:inline="javascript">
+		 
+			Kakao.init('dd497cf0cb9fdd978ada1c700c14b46a'); //발급받은 키 중 javascript키를 사용해준다.
+			console.log(Kakao.isInitialized()); // sdk초기화여부판단
+			//카카오로그인
+			function kakaoLogin() {
+			    Kakao.Auth.login({
+			      success		: function (response) {
+			        				Kakao.API.request({
+							          url		: '/members/login',
+							          success	: function (response) {
+							        	  			console.log(response)
+							          },
+							          fail		: function (error) {
+							            			console.log(error)
+							          },
+							        })
+							      },
+			      fail			: function (error) {
+			        				console.log(error)
+			      },
+			    })
+			  }
+		</script>
 	</div>
 </body>
 </html>

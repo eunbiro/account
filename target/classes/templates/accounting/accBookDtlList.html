@@ -31,21 +31,21 @@
 			
 			$.ajax({
 				
-				url: url,
-				type : "DELETE",
+				url			: url,
+				type 		: "DELETE",
 				contentType : "application/json",
-				beforeSend : function(xhr) {
+				beforeSend 	: function(xhr) {
 					
 					xhr.setRequestHeader(header, token)
 				},
-				dataType :"Json",
-				cache : false,
-				success : function(result, status) {
+				dataType 	:"Json",
+				cache 		: false,
+				success 	: function(result, status) {
 					
 					alert("기입내용이 삭제되었습니다.");
 					location.href = '/accountbook/list/' + [[${accDtl.accDate}]];
 				},
-				error : function(jqXHR, status, error) {
+				error 		: function(jqXHR, status, error) {
 
 					if (jqXHR.status == '401') {
 						
@@ -72,7 +72,6 @@
 			<div class="list-wrap-img mx-auto">
 				<div class="mx-auto">
 					<div class="fs-1 my-5" th:text="${#temporals.createDate(accDtl.accDate, 'yyyyMMdd')}"></div>
-						
 					<table class="table table-border fs-4">
 						<tr>
 							<th>금액 : </th>

@@ -33,30 +33,30 @@
 					
 					$.ajax({
 						
-						type: 'GET',
-						url: url,
+						type	: 'GET',
+						url		: url,
 						dataType: 'json',
-						cache : false,
-						success: function(result) {
-							$('#subCtg').empty();
-							$('#otherCtgName').css('display', 'none');
-							$("<option>").val('').text('소분류카테고리').appendTo('#subCtg');
-							
-							for (subCtg of result) {
-								
-								if ([[${accountBookDto.subCategoryDto.id}]] == subCtg.id) {
+						cache 	: false,
+						success	: function(result) {
+									$('#subCtg').empty();
+									$('#otherCtgName').css('display', 'none');
+									$("<option>").val('').text('소분류카테고리').appendTo('#subCtg');
 									
-									$("<option>").val(subCtg.id).text(subCtg.subCtgName).attr("selected", "selected").appendTo('#subCtg');
-								} else {
-									
-									$("<option>").val(subCtg.id).text(subCtg.subCtgName).appendTo('#subCtg');
-								}
-							}
+									for (subCtg of result) {
+										
+										if ([[${accountBookDto.subCategoryDto.id}]] == subCtg.id) {
+											
+											$("<option>").val(subCtg.id).text(subCtg.subCtgName).attr("selected", "selected").appendTo('#subCtg');
+										} else {
+											
+											$("<option>").val(subCtg.id).text(subCtg.subCtgName).appendTo('#subCtg');
+										}
+									}
 						},
-						error: function(a, b, c) {
+						error	: function(a, b, c) {
 							
-							console.log(a, b, c);
-						}
+									console.log(a, b, c);
+							}
 					});
 				}
 			});
@@ -92,10 +92,6 @@
 									<input type="date" id="accDate" th:max="${today}" th:field="*{accDate}" class="form-control mx-auto text-center fs-5 w-100">
 									<p th:if="${#fields.hasErrors('accDate')}" th:errors="*{accDate}" class="fieldError text-start">Incorrect Data</p>
 								</div>
-								<!-- <div class="col-sm-12 mx-auto" th:unless="${#strings.isEmpty(accountBookDto.accId)}">
-									<input type="text" id="accDate" th:field="*{accDate}" class="form-control mx-auto text-center fs-5 w-100" readonly>
-									<p th:if="${#fields.hasErrors('accDate')}" th:errors="*{accDate}" class="fieldError text-start">Incorrect Data</p>
-								</div> -->
 							</div>
 						</div>
 						

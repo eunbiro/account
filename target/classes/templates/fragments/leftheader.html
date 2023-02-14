@@ -11,7 +11,6 @@
 </th:block>
 </head>
 <body>
-	<!-- th:fragment=다른 페이지에 포함시킬 영역을 만들어서 이름을 붙여줌 -->
 	<div th:fragment="leftheader">
 		<div class="d-flex align-items-start flex-column" style="height: 800px;">
 			<div class="w-100 mb-5">
@@ -30,17 +29,6 @@
 				<p class="p-2 m-auto" style="font-size: 1.4rem;">사용!</p> -->
 			</div>
 		</div>
-		<!-- <script type="text/javascript">
-			var exPoint = [[${expendP}]];
-			
-			const render = () => {
-				
-				const grp = "<div class='grp-c exp-p' style='" + exPoint + "'>" + exPoint + "</div>";
-				document.querySelector('#pointIn').innerHTML = grp.join('');
-			}
-			
-			render();
-		</script> -->
 	</div>
 </body>
 </html>
