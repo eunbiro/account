@@ -88,13 +88,15 @@
 						<!-- 날짜 -->
 						<div class="w-100 mx-auto">
 							<div class="row mx-auto w-50">
-								<div class="col-sm-12 mx-auto">
+								<div class="col-sm-12 mx-auto" th:if="${#strings.isEmpty(accountBookDto.accId)}">
 									<input type="date" id="accDate" th:max="${today}" th:field="*{accDate}" class="form-control mx-auto text-center fs-5 w-100">
 									<p th:if="${#fields.hasErrors('accDate')}" th:errors="*{accDate}" class="fieldError text-start">Incorrect Data</p>
 								</div>
+								<div class="col-sm-12 mx-auto" th:unless="${#strings.isEmpty(accountBookDto.accId)}">
+									<input type="text" id="accDate" th:field="*{accDate}" class="form-control mx-auto text-center fs-5 w-100" readonly>
+								</div>
 							</div>
 						</div>
-						
 						<!-- 지출/수입 금액 -->
 						<div class="w-100 mx-auto">
 							<div class="row mx-auto w-50">

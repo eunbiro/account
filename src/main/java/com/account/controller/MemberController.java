@@ -88,7 +88,7 @@ public class MemberController {
 	public String loginError(Model model) {
 		
 		model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
-		return "redirect:/members/login";
+		return "member/memberLoginForm";
 	}
 	
 

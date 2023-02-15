@@ -101,6 +101,66 @@ public class GraphService {
 			accountBookList = accountBookRepository.findByMemberIdAndAccDateAfter(memberId, accDate);
 		}
 		
+//		for (AccountBook accountBook : accountBookList) {
+//			
+//			AccountBookSearchDto accBookSearchDto = new AccountBookSearchDto();
+//			
+//			if (accountBook.getAccStatus().equals("0")) {
+//				
+//				if (accBookSearchDtoList.size() == 0) {
+//					
+//					accBookSearchDto.setMoney(accountBook.getMoney());
+//					accBookSearchDto.setMainCtgId(accountBook.getSubCategory().getMainCategory().getId());
+//					accBookSearchDto.setMainCtgName(accountBook.getSubCategory().getMainCategory().getMainCtgName());
+//				} else {
+//					
+//					for (int i = 0; i < accBookSearchDtoList.size(); i++) {
+//						
+//						
+//						int idx = accBookSearchDtoList.get(i).getMainCtgName().indexOf(accountBook.getSubCategory().getMainCategory().getMainCtgName());
+//						
+//						if (idx > -1) {
+//							
+//							long money = accBookSearchDtoList.get(idx).getMoney();
+//							money += accountBook.getMoney();
+//							accBookSearchDtoList.get(idx).setMoney(money);
+//						} else {
+//							
+//							accBookSearchDto.setMoney(accountBook.getMoney());
+//							accBookSearchDto.setMainCtgId(accountBook.getSubCategory().getMainCategory().getId());
+//							accBookSearchDto.setMainCtgName(accountBook.getSubCategory().getMainCategory().getMainCtgName());
+//						}
+//					}
+//				}
+//			} else {
+//				
+//				if (accBookSearchDtoList.size() == 0) {
+//					
+//					accBookSearchDto.setMoney(accountBook.getMoney());
+//					accBookSearchDto.setMainCtgId(accountBook.getSubCategory().getMainCategory().getId());
+//					accBookSearchDto.setMainCtgName(accountBook.getSubCategory().getMainCategory().getMainCtgName());
+//				} else {
+//					
+//					for (int i = 0; i < accBookSearchDtoList.size(); i++) {
+//						
+//						
+//						int idx = accBookSearchDtoList.get(i).getMainCtgName().indexOf(accountBook.getSubCategory().getMainCategory().getMainCtgName());
+//						
+//						if (idx > -1) {
+//							
+//							long money = accBookSearchDtoList.get(idx).getMoney();
+//							money += accountBook.getMoney();
+//							accBookSearchDtoList.get(idx).setMoney(money);
+//						} else {
+//							
+//							accBookSearchDto.setMoney(accountBook.getMoney());
+//							accBookSearchDto.setMainCtgId(accountBook.getSubCategory().getMainCategory().getId());
+//							accBookSearchDto.setMainCtgName(accountBook.getSubCategory().getMainCategory().getMainCtgName());
+//						}
+//					}
+//				}
+//			}
+		
 		for (AccountBook accountBook : accountBookList) {
 			
 			AccountBookSearchDto accBookSearchDto = new AccountBookSearchDto();
