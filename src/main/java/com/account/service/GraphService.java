@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
@@ -15,10 +13,8 @@ import com.account.dto.AccountBookSearchDto;
 import com.account.dto.MainCategoryDto;
 import com.account.dto.SubCategoryDto;
 import com.account.entity.AccountBook;
-import com.account.entity.MainCategory;
 import com.account.entity.Member;
 import com.account.repository.AccountBookRepository;
-import com.account.repository.MainCategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,7 +25,6 @@ public class GraphService {
 
 	private final AccountBookService accountBookService;
 	private final AccountBookRepository accountBookRepository;
-	private final MainCategoryRepository mainCategoryRepository;
 	private final MemberService memberService;
 	
 	// 기간별 목록조회시 데이터 가져옴
