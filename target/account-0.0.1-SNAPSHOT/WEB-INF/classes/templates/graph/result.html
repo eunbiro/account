@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>기간별 가계부 조회</title>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	
+ 	/* $(function() {
+		var num = 0;
+
+		$('#mainCtg').off().on("change",function() {
+			
+			var mainCtgVal = $('#mainCtg option:selected').val();
+			var mainCtgTxt = $('#mainCtg option:selected').text();
+			
+			$("<a>").addClass("m-1 text-center ctgTag").attr("id", "tag-" + num).val(mainCtgVal).text(mainCtgTxt).appendTo(".ctg-icon");
+			$("<button>").addClass("text-end ctgTagX").attr("id", "tagX-" + num).text("X").appendTo("#tag-" + num);
+			
+			$(".ctgTagX").on("click", function() {
+				
+				var teg = $(this).parent().attr("id");
+				
+				$(this).parent().remove();
+			});
+			
+			num++;
+		});
+	}); */
+	
+	</script>
+</th:block>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-md text-center">
+			<form class="reg-form mx-auto w-100" action="/graph/result" th:object="${AccountBookSearchDto}" method="post">
+				<div class="result-wrap mx-auto rounded-5">
+					<div class="d-flex justify-content-around flex-column mb-3" style="height: 100%;">
+						<h2 class="mx-auto my-5" style="font-size: 3rem; color: #8F73DF; font-weight: bold;">기간별 가계부 조회</h2>
+						<div class="row my-5 w-50 mx-auto">
+							<div class="col-sm-6 float-end">
+								<select th:field="*{searchDateType}" id="searchDate" class="add-ctg-sel px-auto">
+									<th:block th:value="${AccountBookSearchDto.searchDateType}">
+										<option value="all">기간전체</option>
+										<option value="1d">1일</option>
+										<option value="1w">1주</option>
+										<option value="1m">1달</option>
+										<option value="6m">6달</option>
+									</th:block>
+								</select>
+							</div>
+							<div class="col-sm-6 float-end selup">
+								<select th:field="*{mainCtgId}" id="mainCtg" class="add-ctg-sel px-auto">
+									<option value="">카테고리</option>
+									<th:block th:each="mainCtgDto : ${mainCtgDtos}">
+										<option th:value="${mainCtgDto.id}" th:text="${mainCtgDto.mainCtgName}"></option>
+									</th:block>
+								</select>
+							</div>
+						</div>
+						<table class="table table-border fs-4 w-75 mx-auto mt-2 mb-5">
+							<tr style="color: #8F73DF;">
+								<th>날짜</th>
+								<th>내용</th>
+								<th>카테고리</th>
+								<th>금액</th>
+							</tr>
+							<tr th:each="AccBook : ${AccountBookDto}">
+								<td th:text="${AccBook.accDate}"></td>
+								<td th:text="${AccBook.accTitle}"></td>
+								<td th:text="${AccBook.subCategoryDto.mainCategoryDto.mainCtgName}"></td>
+								<td th:text="${AccBook.money}"></td>
+							</tr>
+						</table>
+						<div class="d-flex justify-content-center">
+							<a class="text-start w-25 my-5 pe-5 fs-5" style="color: #8F73DF; text-decoration: underline;"></a>
+							<button type="submit" class="btn member-btn mx-auto">조회하기</button>
+							<a class="text-end w-25 my-5 pe-5 fs-5" style="color: #8F73DF; text-decoration: underline;" href="/graph/pieGp">통계로 확인하기 →</a>
+						</div>
+						<a class="text-end w-100 mt-3 pe-5 fs-5" style="color: green; text-decoration: underline;">엑셀파일로 다운받기 ↓</a>
+					</div>
+				</div>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+			</form>
+		</div>
+	</div>
+</body>
+</html>

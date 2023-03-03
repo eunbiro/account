@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>기입장 목록</title>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	
+	</script>
+</th:block>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-md text-center list-wrap">
+			<div class="list-wrap-img mx-auto">
+				<div class="mx-auto">
+					<div class="fs-1 my-5" th:text="${#temporals.createDate(accDate, 'yyyyMMdd')}"></div>
+					<table class="table table-hover table-border fs-4">
+						<tr>
+							<th>내용</th>
+							<th>구분</th>
+							<th>금액</th>
+						</tr>
+						<tr th:each="accBook : ${accList}" th:onclick="|location.href='@{/accountbook/dtllist/{accId}(accId = ${accBook.accId})}'|">
+							<td th:text="${accBook.accTitle}"></td>
+							<td th:if="${accBook.accStatus == '0'}" th:text="지출"></td>
+							<td th:unless="${accBook.accStatus == '0'}" th:text="수입"></td>
+							<td th:text="${accBook.money}"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

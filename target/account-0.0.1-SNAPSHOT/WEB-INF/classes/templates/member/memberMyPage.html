@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>마이페이지 화면</title>
+
+<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
+<!-- 각 페이지에 스크립트가 작성될 위치 -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		// 회원가입 실패했을 때
+		$(document).ready(function() {
+			
+			var errorMessage = [[${errorMessage}]];
+			if (errorMessage != null) {
+				
+				alert(errorMessage);
+			}
+		});
+		
+		function deleteMember(memberId) {
+			
+			const deleteConf = confirm("회원탈퇴 하시겠습니까?");
+			
+			if (!deleteConf) return;
+			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			
+			var userInputId = getCookie("userInputId");
+			var setCookieYN = getCookie("setCookieYN");
+			
+			var url = "/members/mypage/" + memberId + "/delete";
+			
+			$.ajax({
+				
+				url			: url,
+				type 		: "DELETE",
+				contentType : "application/json",
+				beforeSend 	: function(xhr) {
+					
+								xhr.setRequestHeader(header, token)
+				},
+				dataType 	:"Json",
+				cache 		: false,
+				success 	: function(result, status) {
+					
+								deleteCookie("userInputId");
+								deleteCookie("setCookieYN");
+								alert("회원탈퇴 되었습니다.");
+								location.href = '/';
+				},
+				error 		: function(jqXHR, status, error) {
+
+								if (jqXHR.status == '401') {
+									
+									alert('로그인 후 이용하시오.');
+									location.href = '/members/login';
+								} else {
+									
+									alert(jqXHR.responseText);
+								}
+				}
+			});
+		}
+		
+	</script>
+</th:block>
+
+<!-- 각 페이지에 css가 작성될 위치 -->
+<th:block layout:fragment="css">
+	<style>
+		.fieldError {
+			color: #bd2130;
+		}
+	</style>
+</th:block>
+
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container" style="height: 100%;">
+			<div class="my-wrap mx-auto rounded-5">
+				<!-- 마이페이지박스 -->
+					<form class="reg-form text-center h-100 d-flex align-items-start flex-column pt-5" action="/members/mypage" method="post" th:object="${memberFormDto}">
+						<div class="row my-auto w-50 mx-auto">
+							<label th:for="nickname" class="col-sm-3 col-form-label">닉네임</label>
+							<div class="col-sm-9">
+								<input type="text" th:field="*{nickname}" class="form-control fs-5" placeholder="2자 이상 12자 이하">
+								<p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" class="fieldError text-start fs-5">Incorrect Data</p>
+							</div>
+						</div>
+						<div class="row my-auto w-50 mx-auto">
+							<label th:for="targetExpend" class="col-sm-3 col-form-label">월 목표 지출 금액</label>
+							<div class="col-sm-9">
+								<input type="text" th:field="*{targetExpend}" class="form-control fs-5" id="targetExpend">
+							</div>
+						</div>
+						<div class="row my-auto w-50 mx-auto">
+							<label th:for="targetSaving" class="col-sm-3 col-form-label">월 목표 저축 금액</label>
+							<div class="col-sm-9">
+								<input type="text" th:field="*{targetSaving}" class="form-control fs-5" id="targetSaving">
+							</div>
+						</div>
+						
+						<div class="my-auto justify-content-center w-50 mx-auto">
+							<button type="submit" class="btn member-btn my-4 mx-1">수정</button>
+							<button type="button" th:value="${memberFormDto.memberId}" onclick="deleteMember(this.value)" class="btn member-btn my-4 mx-1">회원탈퇴</button>
+						</div>
+						
+						<input type="hidden" th:field="*{memberId}">
+						
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+					</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

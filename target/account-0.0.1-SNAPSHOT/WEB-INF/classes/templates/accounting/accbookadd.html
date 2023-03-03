@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>기입하기</title>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			
+			var errorMessage = [[${errorMessage}]];
+			if (errorMessage != null) {
+				
+				alert(errorMessage);
+			}
+		});	
+	
+		$(function() {
+			
+			$('#mainCtg').change(function() {
+				
+				var mainCtgId = $('#mainCtg').val();
+				
+				var url = "/accountbook/mainCtg/" + mainCtgId;
+				
+				if (mainCtgId == 10) {
+					
+					$('#subCtg').empty();
+					$("<option>").val(33).text('기타').appendTo('#subCtg');
+					$('#otherCtgName').css('display', 'inline-block');
+				} else if (mainCtgId != '') {
+					
+					$.ajax({
+						
+						type	: 'GET',
+						url		: url,
+						dataType: 'json',
+						cache 	: false,
+						success	: function(result) {
+									$('#subCtg').empty();
+									$('#otherCtgName').css('display', 'none');
+									$("<option>").val('').text('소분류카테고리').appendTo('#subCtg');
+									
+									for (subCtg of result) {
+										
+										if ([[${accountBookDto.subCategoryDto.id}]] == subCtg.id) {
+											
+											$("<option>").val(subCtg.id).text(subCtg.subCtgName).attr("selected", "selected").appendTo('#subCtg');
+										} else {
+											
+											$("<option>").val(subCtg.id).text(subCtg.subCtgName).appendTo('#subCtg');
+										}
+									}
+						},
+						error	: function(a, b, c) {
+							
+									console.log(a, b, c);
+							}
+					});
+				}
+			});
+		});
+	</script>
+</th:block>
+
+<!-- 사용자 CSS 추가 --> 
+<th:block layout:fragment="css">
+     <style>
+     .fieldError {
+        color: #bd2130;
+        font-size: 1.2rem;
+     }
+  </style>
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-md text-center">
+			<div class="add-wrap mx-auto rounded-5">
+			
+				<div class="d-flex align-items-start flex-column mb-3" style="height: 100%;">
+					
+					<!-- 기입장 폼 -->
+					<form class="d-flex align-content-around flex-wrap reg-form mx-auto w-100" style="height: 100%;" method="post" th:object="${accountBookDto}">
+						<h2 class="mx-auto mt-3 w-100" style="font-size: 3rem; color: #8F73DF; font-weight: bold;">기입장</h2>
+					
+						<!-- 날짜 -->
+						<div class="w-100 mx-auto">
+							<div class="row mx-auto w-50">
+								<div class="col-sm-12 mx-auto" th:if="${#strings.isEmpty(accountBookDto.accId)}">
+									<input type="date" id="accDate" th:max="${today}" th:field="*{accDate}" class="form-control mx-auto text-center fs-5 w-100">
+									<p th:if="${#fields.hasErrors('accDate')}" th:errors="*{accDate}" class="fieldError text-start">Incorrect Data</p>
+								</div>
+								<div class="col-sm-12 mx-auto" th:unless="${#strings.isEmpty(accountBookDto.accId)}">
+									<input type="text" id="accDate" th:field="*{accDate}" class="form-control mx-auto text-center fs-5 w-100" readonly>
+								</div>
+							</div>
+						</div>
+						<!-- 지출/수입 금액 -->
+						<div class="w-100 mx-auto">
+							<div class="row mx-auto w-50">
+								<div class="col-sm-4 float-end">
+									<select th:field="*{accStatus}" class="float-start add-sel ps-2">
+										<th:block th:value="${accountBookDto.accStatus}">
+											<option value="">지출 / 수입</option>
+											<option value="0" th:selected="${accountBookDto.accStatus}==0">지출</option>
+											<option value="1" th:selected="${accountBookDto.accStatus}==1">수입</option>
+										</th:block>
+									</select>
+								</div>
+								<div class="col-sm-7">
+									<input type="text" th:field="*{money}" id="money" class="form-control w-100">
+								</div>
+								<label for="money" class="col-sm-1 col-form-label text-start my-auto">원</label>
+								<p th:if="${#fields.hasErrors('money')}" th:errors="*{money}" class="fieldError text-start fs-5">Incorrect Data</p>
+								<p th:if="${#fields.hasErrors('accStatus')}" th:errors="*{accStatus}" class="fieldError text-start">Incorrect Data</p>
+							</div>
+						</div>
+						
+						<!-- 카테고리 -->
+						<div class="w-100 mx-auto">
+							<div class="row w-50 mx-auto">
+								<div class="col-sm-6 text-start">
+									<select th:field="*{subCategoryDto.mainCategoryDto.id}" id="mainCtg" class="add-ctg-sel px-auto">
+										<option value="">대분류카테고리</option>
+										<th:block th:each="mainCtgDto : ${mainCtgDtos}" th:value="${accountBookDto.subCategoryDto.mainCategoryDto.id}">
+											<option th:selected="${accountBookDto.subCategoryDto.mainCategoryDto.id}==${mainCtgDto.id}" th:value="${mainCtgDto.id}" th:text="${mainCtgDto.mainCtgName}"></option>
+										</th:block>
+									</select>
+								</div>
+								<div class="col-sm-6 text-end">
+									<select th:field="*{subCategoryDto.id}" id="subCtg" class="add-ctg-sel px-auto">
+										<th:block th:if="${#strings.isEmpty(accountBookDto.accId)}" th:value="${accountBookDto.subCategoryDto.id}">
+											<option value="" selected>소분류카테고리</option>
+										</th:block>
+										<th:block th:unless="${#strings.isEmpty(accountBookDto.accId)}" th:value="${accountBookDto.subCategoryDto.id}">
+											<option th:selected="${accountBookDto.subCategoryDto.id}" th:value="${accountBookDto.subCategoryDto.id}" th:text="${accountBookDto.subCategoryDto.subCtgName}"></option>
+										</th:block>
+									</select>
+								</div>
+								<p th:if="${#fields.hasErrors('subCategoryDto')}" th:errors="*{subCategoryDto}" class="fieldError text-start">Incorrect Data</p>
+								<div class="col-sm-12 my-auto" th:if="${accountBookDto.subCategoryDto.id != 33}">
+									<input type="text" th:field="*{otherCtgName}" id="otherCtgName" class="form-control w-100 fs-5 text-center mt-2" placeholder="카테고리를 입력해주세요" style="display: none;">
+								</div>
+								<div class="col-sm-12 my-auto" th:unless="${accountBookDto.subCategoryDto.id != 33}">
+									<input type="text" th:field="*{otherCtgName}" id="otherCtgName" class="form-control w-100 fs-5 text-center mt-2" placeholder="카테고리를 입력해주세요">
+								</div>
+							</div>
+						</div>
+						
+						<!-- 타이틀 -->
+						<div class="w-100 mx-auto">
+							<div class="row w-50 mx-auto">
+								<div class="col-sm-12">
+									<input type="text" th:field="*{accTitle}" class="form-control mx-auto text-center fs-5 w-100" placeholder="타이틀을 입력해주세요">
+									<p th:if="${#fields.hasErrors('accTitle')}" th:errors="*{accTitle}" class="fieldError text-start">Incorrect Data</p>
+								</div>
+							</div>
+						</div>
+						
+						<!-- 내용 -->
+						<div class="row w-100 mx-auto">
+							<textarea th:field="*{accDtlMemo}" class="col-sm-12 add-cont mx-auto w-50 p-3" placeholder="상세내용"></textarea>
+						</div>
+						
+						<!-- 버튼 -->
+						<div class="row my-auto w-50 mx-auto">
+							<div th:if="${#strings.isEmpty(accountBookDto.accId)}" class="col-sm-6">
+								<button type="submit" th:formaction="@{/accountbook/add}" class="btn member-btn">기입하기</button>
+							</div>
+							<div th:unless="${#strings.isEmpty(accountBookDto.accId)}" class="col-sm-6">
+								<button type="submit" th:formaction="@{'/accountbook/modify/' + ${accountBookDto.accId} }" class="btn member-btn">수정하기</button>
+							</div>
+							<div class="col-sm-6">
+								<button type="button" class="btn member-btn" onclick="location.href='/'">취소하기</button>
+							</div>
+						</div>
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+					</form>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+		
+</body>
+</html>

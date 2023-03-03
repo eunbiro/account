@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout2}">
+<head>
+<meta charset="UTF-8">
+<title>회원가입 화면</title>
+
+<!-- 각 페이지에 스크립트가 작성될 위치 -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		// 회원가입 실패했을 때
+		$(document).ready(function() {
+			
+			var errorMessage = [[${errorMessage}]];
+			if (errorMessage != null) {
+				
+				alert(errorMessage);
+			}
+		});
+		
+		// 비밀번호 재확인
+		$(function() {
+			
+			$('#password').keyup(function() {
+				
+				$('#chkNotice').html('');
+			});
+			
+			$('#pwCheck').keyup(function() {
+				
+				if ($('#password').val() != $('#pwCheck').val()) {
+					
+					$('#chkNotice').html('비밀번호가 일치하지 않습니다.');
+					$('#chkNotice').attr('color', '#bd2130');
+				} else {
+					
+					$('#chkNotice').html('비밀번호가 일치합니다.');
+					$('#chkNotice').attr('color', 'green');
+				}
+			});
+			
+			
+			// 중복체크
+			$('#userId_chk').click(function() {
+				
+				var userId = $('#userId').val();
+				
+				var url = "/members/login/" + userId;
+				
+				if (userId != '') {
+					
+					$.ajax({
+						
+						type		: 'GET',
+						url			: url,
+						dataType	: 'json',
+						cache 		: false,
+						success		: function(result) {
+							
+										if (result == 0) {
+											
+											$('#chk_result').html('사용 가능한 아이디입니다.');
+											$('#chk_result').attr('color', 'green');
+										} else {
+											
+											$('#chk_result').html('사용 가능불가 아이디입니다.');
+											$('#chk_result').attr('color', '#bd2130');
+										}
+						},
+						error		: function(a, b, c) {
+							
+										console.log(a, b, c);
+										}
+							});
+				} else {
+					
+					$('#chk_result').html('아이디를 입력해주세요.');
+					$('#userId').focus();
+				}
+			});
+		});
+	</script>
+</th:block>
+
+<!-- 각 페이지에 css가 작성될 위치 -->
+<th:block layout:fragment="css">
+	<style>
+		.fieldError {
+			color: #bd2130;
+		}
+	</style>
+</th:block>
+
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container" style="height: 100%;">
+			<div class="reg-wrap">
+				<!-- logo박스 -->
+				<div class="row w-50 mx-auto mb-5">
+					<div class="col-5">
+						<div class="w-100 float-end">
+							<img class="float-end" alt="logo" src="/images/char_logo_01.png" onclick="location.href='/members/login'" style="cursor: pointer;" width="40%" height="40%">
+						</div>
+					</div>
+					<div class="col-7 my-auto">
+						<div class="w-100 float-start mt-2 ms-2">
+							<img class="float-start" alt="logo" src="/images/word_logo_01.png" width="50%" height="50%">
+						</div>
+					</div>
+				</div>
+				<!-- 회원가입박스 -->
+				<form class="reg-form my-4" action="/members/new" method="post" th:object="${memberFormDto}">
+					<div class="row my-5 w-50 mx-auto">
+						<label th:for="userId" class="col-3 col-form-label ess1">아이디</label>
+						<div class="col-7 text-start">
+							<input type="text" th:field="*{userId}" id="userId" class="form-control fs-5" placeholder="4자 이상 16자 이하">
+							<p th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" class="fieldError text-start fs-5">Incorrect Data</p>
+							<font id="chk_result" class="fs-5"></font>
+						</div>
+						<input type="button" id="userId_chk" class="btn col-2 member-btn-id" style="width: 8rem; font-size: 1.2rem;" value="중복확인" />
+					</div>
+					<div class="row my-5 w-50 mx-auto">
+						<label th:for="password" class="col-sm-3 col-form-label ess2">비밀번호</label>
+						<div class="col-sm-9">
+							<input type="password" th:field="*{password}" class="form-control fs-5 inputPw" id="password" placeholder="8자 이상 16자 이하">
+							<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError text-start fs-5">Incorrect Data</p>
+						</div>
+					</div>
+					<div class="row my-5 w-50 mx-auto">
+						<label for="passwordConfirm" class="col-sm-3 col-form-label ess3">비밀번호 재확인</label>
+						<div class="col-sm-9 text-start">
+							<input type="password" class="form-control fs-5 inputPw" id="pwCheck" placeholder="비밀번호를 한번 더 입력해주세요">
+							<font id="chkNotice" class="text-start fs-5"></font>
+						</div>
+					</div>
+					<div class="row my-5 w-50 mx-auto">
+						<label th:for="nickname" class="col-sm-3 col-form-label">닉네임</label>
+						<div class="col-sm-9">
+							<input type="text" th:field="*{nickname}" class="form-control fs-5" placeholder="2자 이상 12자 이하">
+							<p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" class="fieldError text-start fs-5">Incorrect Data</p>
+						</div>
+					</div>
+					<div class="row my-5 w-50 mx-auto">
+						<label th:for="targetExpend" class="col-sm-3 col-form-label">월 목표 지출 금액</label>
+						<div class="col-sm-9">
+							<input type="text" th:field="*{targetExpend}" class="form-control fs-5" id="targetExpend">
+						</div>
+					</div>
+					<div class="row my-5 w-50 mx-auto">
+						<label th:for="targetSaving" class="col-sm-3 col-form-label">월 목표 저축 금액</label>
+						<div class="col-sm-9">
+							<input type="text" th:field="*{targetSaving}" class="form-control fs-5" id="targetSaving">
+						</div>
+					</div>
+					<button type="submit" class="btn member-btn my-4">회원가입</button>
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

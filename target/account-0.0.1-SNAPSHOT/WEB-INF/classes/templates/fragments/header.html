@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- th:fragment=다른 페이지에 포함시킬 영역을 만들어서 이름을 붙여줌 -->
+	<div th:fragment="header">
+		<div class="m-75">
+
+			<div class="accordion" id="accordionExample" style="border: none;">
+				<div class="accordion-item" style="border: none; background: none;">
+					<h2 class="accordion-header text-center my-3" id="headingOne">
+						<button class="accordion-toggle mx-auto my-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="border: none; background: none;">
+							<img alt="logo" src="/images/char_logo_01.png" width="40%" height="40%">
+				      	</button>
+			    	</h2>
+					<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+			    		<div class="accordion-body">
+			    			<div class="d-grid gap-2 nav-icon">
+								<button class="btn rounded-pill mx-auto my-3" style="background-color: #BBD6FF;" type="button" sec:authorize="isAuthenticated()" onclick="location.href='/accountbook/add'">기입<br />하기</button>
+								<button class="btn rounded-pill mx-auto my-3" style="background-color: #BBD6FF;" type="button" sec:authorize="isAuthenticated()" onclick="location.href='/graph/result'">기간별<br />가계부<br />조회</button>
+								<div class="dropstart mx-auto h-100 my-3">
+									<button class="btn dropdown-toggle rounded-pill" style="background-color: #BBD6FF;" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="-50,30">설정</button>
+									<ul class="dropdown-menu nav-icon-drop">
+										<li>
+											<a class="nav-link" sec:authorize="isAuthenticated()" href="/members/mypage">프로필 수정</a>
+										</li>
+										<li>
+											<a class="nav-link" sec:authorize="isAuthenticated()" href="/members/logout">로그아웃</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+			      		</div>
+			    	</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</body>
+</html>
