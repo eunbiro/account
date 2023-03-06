@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.account.dto.MemberFormDto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -36,11 +37,18 @@ public class Member {
 	@Column(length = 25, nullable = false)
 	private String nickname;
 	
+	@Column(nullable = false)
+	private String email;
+	
 	private int targetExpend;
 	
 	private int targetSaving;
 	
 	private String role;
+	
+	private String provider;    // oauth2를 이용할 경우 어떤 플랫폼을 이용하는지
+	
+    private String providerId;  // oauth2를 이용할 경우 아이디값
 	
 	public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 		
@@ -48,6 +56,7 @@ public class Member {
 		member.setUserId(memberFormDto.getUserId());
 		member.setNickname(memberFormDto.getNickname());
 		member.setRole("USER");
+		member.setEmail(memberFormDto.getEmail());
 		
 		if (memberFormDto.getTargetExpend() == 0) {
 			
@@ -70,6 +79,21 @@ public class Member {
 		
 		return member;
 	}
+	
+	public Member() {};
+	
+	@Builder(builderClassName = "OAuth2Register", builderMethodName = "OAuth2Register")
+    public Member(String username, String password, String email, String role, String provider, String providerId) {
+        this.userId = username;
+        this.password = password;
+        this.nickname = "없음";
+        this.email = email;
+        this.role = role;
+        this.provider = provider;
+        this.providerId = providerId;
+        this.targetExpend = 0;
+        this.targetSaving = 0;
+    }
 	
 	public void updateMember(MemberFormDto memberFormDto) {
 		

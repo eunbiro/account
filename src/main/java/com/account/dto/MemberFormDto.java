@@ -26,6 +26,8 @@ public class MemberFormDto {
 	@Length(min = 2, max = 12, message = "닉네임은 2자 이상, 12자 이하로 입력해주세요.")
 	private String nickname;
 	
+	private String email;
+	
 	private int targetExpend;
 	
 	private int targetSaving;
@@ -36,6 +38,7 @@ public class MemberFormDto {
 		
 		this.memberId = member.getId();
 		this.userId = member.getUserId();
+		this.email = member.getEmail();
 		this.nickname = member.getNickname();
 		this.targetExpend = member.getTargetExpend();
 		this.targetSaving = member.getTargetSaving();

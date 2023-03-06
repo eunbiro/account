@@ -2,10 +2,13 @@ package com.account.service;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -111,6 +114,11 @@ public class MemberService implements UserDetailsService {
 													   .orElseThrow(EntityNotFoundException::new);
 		
 		memberRepository.delete(member);
+	}
+	
+	@Bean		// @Configuration 얘랑 주로 같이 사용하고 싱글톤이 보장된다.
+	public PasswordEncoder passwordEncoder() { // 비밀번호 암호화를 위해서 사용하는 빈(Bean)
+		return new BCryptPasswordEncoder();
 	}
 	
 }

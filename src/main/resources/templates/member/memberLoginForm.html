@@ -82,13 +82,15 @@
 					</div>
 					<!-- 카카오 및 어쩌고 -->
 					<div class="row w-50 mx-auto" style="height: 50px;">
+						
 						<div class="col-4 fs-5" style="color: #B0B0B0;">
 						네이버로그인
 						</div>
 						<div class="col-4 fs-5" style="color: #B0B0B0;">
 							<ul>
-								<li onclick="kakaoLogin();" style="list-style: none;">
-							      <a href="javascript:void(0)">
+							<!-- onclick="kakaoLogin();" -->
+								<li  style="list-style: none;">
+							      <a href="/oauth2/authorization/kakao">
 							      	<img alt="kakaologo" src="/images/kakao_login_medium_narrow.png">
 							      </a>
 								</li>
@@ -124,6 +126,9 @@
 				</div>
 			</div>
 		</div>
+		<a href="/form/logininfo">form로그인</a>
+		<a href="/oauth/loginInfo">OAuth2 로그인 정보</a>
+		<a href="/loginInfo">로그인 정보</a>
 		<script th:inline="javascript">
 		 
 			//Kakao.init('dd497cf0cb9fdd978ada1c700c14b46a'); //발급받은 키 중 javascript키를 사용해준다.
