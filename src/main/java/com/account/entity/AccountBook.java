@@ -51,7 +51,7 @@ public class AccountBook extends BaseTimeEntity {
 	@Column(nullable = false)
 	private String accTitle;				// 금액출처
 	
-	@Lob
+	@Column(columnDefinition = "LONGTEXT")
 	private String accDtlMemo;				// 상세내용
 	
 	@ManyToOne(fetch = FetchType.LAZY)
