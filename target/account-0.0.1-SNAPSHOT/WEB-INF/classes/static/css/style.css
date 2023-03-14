@@ -7,8 +7,8 @@ html {
 
 /* 왼쪽헤더 */
 .logo-title div img {
-	width: 60%;
-	height: 60%;
+	width: 80%;
+	height: 80%;
 }
 
 .grp-p {
@@ -44,7 +44,7 @@ html {
 }
 
 .calendar {
-	width: 1000px;
+	width: 100%;
 	margin-top: 20px;
 }
 
@@ -55,14 +55,7 @@ html {
   flex-flow:nowrap;
 }
 
-.nav {
-  display: flex;
-  border-radius: 5px;
-  border: none;
-}
-
 .nav-btn {
-  width: 24rem;
   height: 5rem;
   border: none;
   font-size: 4rem;
@@ -181,6 +174,9 @@ html {
 
 
 /* 로그인페이지 */
+.login-box {
+	width: : 50%;
+}
 
 .login-btn {
 	border: 1px solid #8F73DF;
@@ -194,6 +190,8 @@ html {
 
 .login-wrap {
 	margin-top: 200px;
+	margin-bottom: 200px;
+	width: 66%;
 }
 
 .login-ipt .form-control {
@@ -237,7 +235,11 @@ html {
 
 /* 회원가입 */
 .reg-wrap {
-	margin-top: 150px;
+	width: 100%;
+	height: 100%;
+	min-height: 76rem;
+	margin-top: 100px;
+	margin-bottom: 100px;
 }
 
 .ess1 {
@@ -254,7 +256,7 @@ html {
 	height: 10px;
 	color: #FF0000;
 	content: '*';
-	transform: translate(-250%, -140%);
+	transform: translate(-250%, -250%);
 }
 
 .ess2 {
@@ -271,7 +273,7 @@ html {
 	height: 10px;
 	color: #FF0000;
 	content: '*';
-	transform: translate(-310%, -140%);
+	transform: translate(-310%, -250%);
 }
 
 .ess3 {
@@ -288,7 +290,24 @@ html {
 	height: 10px;
 	color: #FF0000;
 	content: '*';
-	transform: translate(-510%, -140%);
+	transform: translate(-510%, -250%);
+}
+
+.ess4 {
+	position: relative;
+}
+
+.ess4::before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: -1;
+	display: block;
+	width: 10px;
+	height: 10px;
+	color: #FF0000;
+	content: '*';
+	transform: translate(-260%, -250%);
 }
 
 .member-btn {
@@ -309,21 +328,27 @@ html {
 	border-radius: 6px;
 	background-color: #fff;
 	color: #8F73DF;
-	font-size: 1.2rem;
-	width: 8rem;
+	font-size: 1.1rem;
+	width: 15%;
 	height: 3rem;
-	letter-spacing: 2px;
+	letter-spacing: 1px;
 	font-weight: 200;
 	text-align: center;
 }
 
 /* 기입장 */
 
+.reg-form {
+	height: 100%;
+	min-height: 70rem;
+	width: 80%;
+}
+
 .reg-form label {
 	font-size: 1.2rem;
 	color: #8F73DF;
-	height: 20px;
-	line-height: 20px;
+	height: 4rem;
+	line-height: 4rem;
 	padding: 0;
 	margin: 0;
 }
@@ -333,12 +358,10 @@ html {
 	border-radius: 5px;
 	background-color: #fff;
 	color: #8F73DF;
-	height: 3rem;
 }
 
 .add-sel {
-	width: 12rem;
-	height: 3rem;
+	width: 80%;
 	border: 1px solid #8F73DF;
 	border-radius: 5px;
 	color: #8F73DF;
@@ -346,8 +369,7 @@ html {
 }
 
 .add-ctg-sel {
-	width: 18rem;
-	height: 3rem;
+	width: 85%;
 	border: 1px solid #8F73DF;
 	border-radius: 5px;
 	color: #8F73DF;
@@ -359,18 +381,27 @@ html {
 	border-radius: 5px;
 	color: #8F73DF;
 	font-size: 1.2rem;
-	width: 30rem;
+	width: 60%;
 	height: 20rem;
 }
 
 .add-wrap {
 	background-color: #82C395;
-	width: 80rem;
-	height: 70rem;
+	width: 100%;
+	height: 100%;
+	min-height: 76rem;
 	margin-top: 100px;
+	margin-bottom: 100px;
+	
 }
 
+.acc-add-ipt {
+	width: 60%;
+}
 
+.acc-add-ipt input, .acc-add-ipt select {
+	height: 4rem;
+}
 
 
 /* 기입 목록 */
@@ -406,10 +437,16 @@ html {
 /* 기간별 가계부 조회 */
 .result-wrap {
 	background-color: #fcc9ba;
-	width: 80rem;
-	height: 70rem;
+	width: 100%;
+	height: 100%;
+	min-height: 76rem;
 	margin-top: 100px;
+	margin-bottom: 100px;
+}
 
+.table-box{
+	height: 100%;
+	min-height: 10rem;
 }
 
 .ctgTag {
@@ -451,9 +488,11 @@ html {
 
 .my-wrap {
 	background-color: #fdef8e;
-	width: 80rem;
-	height: 70rem;
+	width: 100%;
+	height: 100%;
+	min-height: 76rem;
 	margin-top: 100px;
+	margin-bottom: 100px;
 }
 
 
@@ -468,11 +507,23 @@ html {
 		height: 200px;
 	}
 	
+	.calendar {
+		width: 100%;
+	}
+	
+	.reg-form {
+		width: 100%;
+	}
+	
 }
 
 @media all and (max-width: 768px) {
 	html {
 		font-size: 50%;
+	}
+	
+	.calendar {
+		width: 100%;
 	}
 	
 	.nav-icon-drop {
@@ -488,5 +539,17 @@ html {
 		font-size: 1.5rem;
 		width: 20rem;
 		height: 3rem;
+	}
+}
+
+@media all and (max-width: 500px) {
+	.login-wrap {
+		width: 90%;
+	}
+	.login-box {
+		width: 50%:
+	}
+	.calendar {
+		width: 100%;
 	}
 }

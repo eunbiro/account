@@ -32,8 +32,9 @@ public class SecurityConfig {
 			.loginPage("/members/login")		// 로그인 페이지 url설정
 			.defaultSuccessUrl("/")				// 로그인 성공 시 이동 할 페이지
 			.usernameParameter("userId")		// 로그인 시 사용 할 파라메터 이름
-			.passwordParameter("password")		// 로그인 시 사용 할 비번 파라미터
-			.failureUrl("/members/login")	// 로그인 실패 시 이동 할 url
+			.passwordParameter("password")
+			.loginProcessingUrl("/members/login")
+			.failureUrl("/members/login/error")	// 로그인 실패 시 이동 할 url
 		.and()
 			.logout()
 			.logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))	// 로그아웃 url

@@ -52,7 +52,6 @@ public class AccBookController {
 		LocalDate today = LocalDate.now();
 		
 		
-		expendGP(model, principal.getName());
 		getMainCtg(model);
 		model.addAttribute("accountBookDto", accBookDto);
 		model.addAttribute("today", today);
@@ -65,7 +64,6 @@ public class AccBookController {
 		
 		if (bindingResult.hasErrors()) {
 			
-			expendGP(model, principal.getName());
 			getMainCtg(model);
 			return "accounting/accbookadd";
 		}
@@ -81,7 +79,6 @@ public class AccBookController {
 			
 			model.addAttribute("errorMessage", "기입장 등록 중 에러가 발생했습니다.");
 			getMainCtg(model);
-			expendGP(model, principal.getName());
 			return "accounting/accbookadd";
 		}
 		
@@ -120,7 +117,6 @@ public class AccBookController {
 			return "redirect:/accountbook/add";
 		}
 		
-		expendGP(model, principal.getName());
 		model.addAttribute("accDate", accDate);
 		model.addAttribute("accList", accList);
 		return "accounting/accBookList";	
@@ -133,7 +129,6 @@ public class AccBookController {
 		AccountBookDto accDtl = accountBookService.getDtlList(accId);
 		SubCategoryDto ctg = accountBookService.getCtg(accDtl.getSubCategoryDto().getId());
 		
-		expendGP(model, principal.getName());
 		model.addAttribute("accDtl", accDtl);
 		model.addAttribute("ctg", ctg);
 		return "accounting/accBookDtlList";
@@ -150,13 +145,11 @@ public class AccBookController {
 			String date = accountBookDto.getAccDate();
 			LocalDate today = LocalDate.now();
 			
-			expendGP(model, principal.getName());
 			model.addAttribute("today", today);
 			model.addAttribute("date", date);
 			model.addAttribute("accountBookDto", accountBookDto);
 		} catch (Exception e) {
 			
-			expendGP(model, principal.getName());
 			model.addAttribute("errorMessage", "존재하지 않는 가계부입니다.");
 			model.addAttribute("accountBookDto", new AccountBookDto());
 			return "accounting/accbookadd";
@@ -171,7 +164,6 @@ public class AccBookController {
 
 		if (bindingResult.hasErrors()) {
 			
-			expendGP(model, principal.getName());
 			getMainCtg(model);
 			return "accounting/accbookadd";
 		}
@@ -181,7 +173,6 @@ public class AccBookController {
 			accountBookService.updateAccBook(accountBookDto);
 		} catch (Exception e) {
 			
-			expendGP(model, principal.getName());
 			getMainCtg(model);
 			model.addAttribute("errorMessage", "기입장 수정 중 에러가 발생하였습니다.");
 			return "accounting/accbookadd";
@@ -199,6 +190,7 @@ public class AccBookController {
 		return new ResponseEntity<Long>(accId, HttpStatus.OK);
 	}
 	
+	/*
 	public Model expendGP (Model model, String userId) {
 		
 		MemberFormDto memberFormDto = mainService.getMember(userId);
@@ -206,4 +198,5 @@ public class AccBookController {
 		
 		return model.addAttribute("expendP", expendP);
 	}
+	*/
 }

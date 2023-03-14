@@ -26,8 +26,9 @@ public class MainService {
 		return memberFormDto;
 	}
 	
+	/*
 	@Transactional(readOnly = true)
-	public String getExpendP(Long memberId, int expend) {
+	public String getExpendP(Long memberId, String expend) {
 		DecimalFormat formatter = new DecimalFormat("##,###,###.##%");
 		
 		Long totalExpend = accountBookService.getTotalExpend(memberId);
@@ -44,4 +45,5 @@ public class MainService {
 		}
 		return chk;
 	}
+	*/
 }

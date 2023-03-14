@@ -18,44 +18,39 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<div class="container-md text-center">
-			<form class="reg-form mx-auto w-100" action="/graph/pieGp" th:object="${AccountBookSearchDto}" method="post">
-				<div class="result-wrap mx-auto rounded-5">
-			
-					<div class="d-flex justify-content-around flex-column mb-3" style="height: 100%;">
-						<h2 class="mx-auto my-5" style="font-size: 3rem; color: #8F73DF; font-weight: bold;">기간별 가계부 조회</h2>
-					
-						<div class="row my-5 w-50 mx-auto">
-							<div class="col-sm float-end">
-								<select th:field="*{searchDateType}" id="searchDate" class="add-ctg-sel px-auto">
-									<th:block th:value="${AccountBookSearchDto.searchDateType}">
-										<option value="all">기간전체</option>
-										<option value="1d">1일</option>
-										<option value="1w">1주</option>
-										<option value="1m">1달</option>
-										<option value="6m">6달</option>
-									</th:block>
-								</select>
-							</div>
+		<div class="text-center">
+			<div class="result-wrap mx-auto rounded-5">
+				<form class="d-flex align-content-around flex-wrap reg-form mx-auto" action="/graph/pieGp" th:object="${AccountBookSearchDto}" method="post">
+					<h2 class="mx-auto my-5 w-100" style="font-size: 3rem; color: #8F73DF; font-weight: bold;">기간별 가계부 조회</h2>
+					<div class="row my-5 acc-add-ipt mx-auto">
+						<div class="col-sm">
+							<select th:field="*{searchDateType}" id="searchDate" class="add-ctg-sel px-auto">
+								<th:block th:value="${AccountBookSearchDto.searchDateType}">
+									<option value="all">기간전체</option>
+									<option value="1d">1일</option>
+									<option value="1w">1주</option>
+									<option value="1m">1달</option>
+									<option value="6m">6달</option>
+								</th:block>
+							</select>
 						</div>
-				
-						<div class="w-100">
-							<div class="mx-auto" style="width: 30rem; height: 30rem;">
-								<!--차트가 그려질 부분-->
-								<canvas id="myChart"></canvas>
-							</div>
-						</div>
-						<div class="d-flex justify-content-center">
-							<a class="text-start w-25 my-5 ps-5 fs-5" style="color: #8F73DF; text-decoration: underline;" href="/graph/result">← 리스트로 돌아가기</a>
-							<button type="submit" class="btn member-btn m-auto">조회하기</button>
-							<a class="text-start w-25 my-5 pe-5 fs-5" style="color: #8F73DF; text-decoration: underline;"></a>
-						</div>
-						<a class="text-end w-100 mt-5 pe-5 fs-5" style="color: green; text-decoration: underline;">엑셀파일로 다운받기↓</a>
 					</div>
-				</div>
-				<input type="hidden" class="searchDtoList" th:value="${searchDtoList}">
-				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-			</form>
+			
+					<div class="w-100">
+						<div class="mx-auto" style="width: 35rem; height: 35rem;">
+							<!--차트가 그려질 부분-->
+							<canvas id="myChart"></canvas>
+						</div>
+					</div>
+					<div class="d-flex justify-content-center w-100">
+						<a class="text-start w-25 my-5 ps-5 fs-5" style="color: #8F73DF; text-decoration: underline;" href="/graph/result">← 리스트로 돌아가기</a>
+						<button type="submit" class="btn member-btn m-auto">조회하기</button>
+						<a class="text-start w-25 my-5 pe-5 fs-5" style="color: #8F73DF; text-decoration: underline;"></a>
+					</div>
+					<input type="hidden" class="searchDtoList" th:value="${searchDtoList}">
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+				</form>
+			</div>
 		</div>
 		<script th:inline="javascript">
 

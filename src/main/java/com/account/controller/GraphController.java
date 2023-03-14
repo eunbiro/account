@@ -1,9 +1,16 @@
 package com.account.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,7 +65,7 @@ public class GraphController {
 		return "graph/resultGraph";
 	}
 	
-	// 가계부 조회 화면
+	// 그래프 조회 화면
 	@PostMapping(value = "/pieGp")
 	public String resultGraph(AccountBookSearchDto accountBookSearchDto, Model model, Principal principal) {
 		
@@ -77,5 +84,37 @@ public class GraphController {
 		List<MainCategoryDto> mainCtgDtos = accountBookService.getMainCtg();
 		
 		return model.addAttribute("mainCtgDtos", mainCtgDtos);
+	}
+	
+	// 엑셀 다운로드
+	@PostMapping(value = "/result/exceldownload")
+	public void resultExcel(AccountBookSearchDto accountBookSearchDto, HttpServletResponse response, Principal principal) throws IOException {
+		
+		List<AccountBookDto> AccountBookDtoList = graphService.getSearchAccBook(accountBookSearchDto, principal.getName());
+		
+		Workbook workbook = new HSSFWorkbook();
+		Sheet sheet = workbook.createSheet("가계부 정보");
+		int rowNo = 0;
+		
+		Row headerRow = sheet.createRow(rowNo++);
+        headerRow.createCell(0).setCellValue("날짜");
+        headerRow.createCell(1).setCellValue("내용");
+        headerRow.createCell(2).setCellValue("카테고리");
+        headerRow.createCell(3).setCellValue("금액");
+        
+        for (AccountBookDto accountBookDto : AccountBookDtoList) {
+        	
+        	Row row = sheet.createRow(rowNo++);
+        	row.createCell(0).setCellValue(accountBookDto.getAccDate());
+        	row.createCell(1).setCellValue(accountBookDto.getAccTitle());
+        	row.createCell(2).setCellValue(accountBookDto.getSubCategoryDto().getMainCategoryDto().getMainCtgName());
+        	row.createCell(3).setCellValue(accountBookDto.getMoney());
+        }
+        
+        response.setContentType("ms-vnd/excel");
+        response.setHeader("Content-Disposition", "attachment;filename=accountList.xls");
+
+        workbook.write(response.getOutputStream());
+        workbook.close();
 	}
 }

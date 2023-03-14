@@ -28,9 +28,9 @@ public class MemberFormDto {
 	
 	private String email;
 	
-	private int targetExpend;
+	private String targetExpend;
 	
-	private int targetSaving;
+	private String targetSaving;
 	
 	private Long memberId;
 	

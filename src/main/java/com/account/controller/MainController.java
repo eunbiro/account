@@ -26,11 +26,9 @@ public class MainController {
 		
 		MemberFormDto memberFormDto = mainService.getMember(principal.getName());
 		List<AccountBookDto> accDateList = accountBookService.getAccDate(memberFormDto.getMemberId());
-		String expendP = mainService.getExpendP(memberFormDto.getMemberId(), memberFormDto.getTargetExpend());
 		List<AccountBookDto> todayM = accountBookService.getTodayMoney(memberFormDto.getMemberId());
 		
 		model.addAttribute("todayM", todayM);
-		model.addAttribute("expendP", expendP);
 		model.addAttribute("accDateList", accDateList);
 		model.addAttribute("memberFormDto", memberFormDto);
 		return "main";

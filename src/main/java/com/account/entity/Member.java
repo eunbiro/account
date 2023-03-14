@@ -40,9 +40,9 @@ public class Member {
 	@Column(nullable = false)
 	private String email;
 	
-	private int targetExpend;
+	private String targetExpend;
 	
-	private int targetSaving;
+	private String targetSaving;
 	
 	private String role;
 	
@@ -58,17 +58,17 @@ public class Member {
 		member.setRole("USER");
 		member.setEmail(memberFormDto.getEmail());
 		
-		if (memberFormDto.getTargetExpend() == 0) {
+		if (memberFormDto.getTargetExpend().isEmpty()) {
 			
-			member.setTargetExpend(500000);
+			member.setTargetExpend("500000");
 		} else {
 			
 			member.setTargetExpend(memberFormDto.getTargetExpend());
 		}
 		
-		if (memberFormDto.getTargetSaving() == 0) {
+		if (memberFormDto.getTargetSaving().isEmpty()) {
 			
-			member.setTargetSaving(500000);
+			member.setTargetSaving("500000");
 		} else {
 			
 			member.setTargetSaving(memberFormDto.getTargetSaving());
@@ -91,8 +91,8 @@ public class Member {
         this.role = role;
         this.provider = provider;
         this.providerId = providerId;
-        this.targetExpend = 0;
-        this.targetSaving = 0;
+        this.targetExpend = "0";
+        this.targetSaving = "0";
     }
 	
 	public void updateMember(MemberFormDto memberFormDto) {
